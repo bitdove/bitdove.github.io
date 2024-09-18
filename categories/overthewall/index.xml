@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Over the Wall on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/categories/overthewall/</link>
+        <description>Recent content in Over the Wall on Mason&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Mason</copyright><atom:link href="https://MasonCodingHere.github.io/categories/overthewall/index.xml" rel="self" type="application/rss+xml" />
+    </channel>
+</rss>
