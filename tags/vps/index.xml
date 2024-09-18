@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Over the Wall on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/categories/overthewall/</link>
-        <description>Recent content in Over the Wall on Mason&#39;s Blog</description>
+        <title>VPS on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/tags/vps/</link>
+        <description>Recent content in VPS on Mason&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/overthewall/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/vps/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>BuildYourOwnLadder</title>
         <link>https://MasonCodingHere.github.io/p/buildyourownladder/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
