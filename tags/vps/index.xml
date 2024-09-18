@@ -13,7 +13,93 @@
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
         <guid>https://MasonCodingHere.github.io/p/%E7%A7%81%E4%BA%BA%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA%E4%B8%93%E5%B1%9E%E4%BA%8E%E4%BD%A0%E7%9A%84%E6%A2%AF%E5%AD%90/</guid>
-        <description></description>
+        <description>&lt;img src="https://xtls.github.io/LogoX2.png" alt="Featured image of post 私人代理——搭建专属于你的梯子" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+&lt;/h1&gt;&lt;p&gt;大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。&lt;/p&gt;
+&lt;p&gt;假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是&lt;strong&gt;代理&lt;/strong&gt;的原理，也是一系列翻墙技术得以实现的基础。&lt;/p&gt;
+&lt;h1 id=&#34;购买vps&#34;&gt;购买VPS
+&lt;/h1&gt;&lt;p&gt;我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足我们这个需求。VPS其实就是一台位于海外的云服务器。&lt;/p&gt;
+&lt;p&gt;以Vultr为例，注册并登陆Vultr。&lt;/p&gt;
+&lt;h2 id=&#34;选择vps类型和位置&#34;&gt;选择VPS类型和位置
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/select_type_and_location.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;select_type_and_location&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择系统镜像&#34;&gt;选择系统镜像
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/choose_image.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;choose_image&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;选择plan&#34;&gt;选择Plan
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/choose_plan.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;choose_plan&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;其他设置&#34;&gt;其他设置
+&lt;/h2&gt;&lt;p&gt;去掉Auto Backups和IPv6。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/additional_feature.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;additional_features&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;可以SSH key&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/server_setting.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;server_settings&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;下单&#34;&gt;下单
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/BuildYourOwnLadder/order.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;order&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;配置vps&#34;&gt;配置VPS
+&lt;/h1&gt;&lt;h2 id=&#34;启用ufw防火墙&#34;&gt;启用ufw防火墙
+&lt;/h2&gt;&lt;h2 id=&#34;更改ssh默认端口&#34;&gt;更改SSH默认端口
+&lt;/h2&gt;&lt;h2 id=&#34;禁止密码登陆&#34;&gt;禁止密码登陆
+&lt;/h2&gt;&lt;h2 id=&#34;新建普通用户&#34;&gt;新建普通用户
+&lt;/h2&gt;&lt;h2 id=&#34;禁止root登录&#34;&gt;禁止root登录
+&lt;/h2&gt;&lt;h2 id=&#34;安装fail2ban&#34;&gt;安装Fail2ban
+&lt;/h2&gt;&lt;h1 id=&#34;安装xray-core&#34;&gt;安装XRay-core
+&lt;/h1&gt;&lt;h1 id=&#34;warp解锁chatgpt&#34;&gt;Warp解锁chatGPT
+&lt;/h1&gt;</description>
         </item>
         
     </channel>
