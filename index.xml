@@ -1071,6 +1071,17 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;在客户端连接该节点，可以发现ChatGPT客户端已经可以正常使用。&lt;/p&gt;
+&lt;h1 id=&#34;references&#34;&gt;References
+&lt;/h1&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://xtls.github.io/document/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Project X官方文档&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://blog.laoda.de/archives/how-to-secure-a-linux-server&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;保护好你的小鸡！保姆级服务器安全教程！&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cn.v2ex.com/t/942922&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;vps 解锁 chatgpt&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://surge.tel/13/2116/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;注册Cloudflare并加入ZeroTrust教程&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         </item>
         <item>
