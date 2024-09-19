@@ -4,11 +4,11 @@
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。\n技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。\n在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。\n假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是代理的原理，也是一系列翻墙技术得以实现的基础。\n购买VPS 我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。\n有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。\n注册并登陆Vultr，点击右上角的Deploy按钮按以下步骤部署一台VPS。\n选择VPS类型和位置 类型选Shared CPU即可。\n位置看自己需求，这里以美国Los Angeles为例。\n选择系统镜像 选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。\n选择Plan 根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。\n其他设置 去掉Auto Backups，费钱。\n去掉IPv6，不需要。\n这里可以把SSH key上传一下，把本地电脑~/.ssh/的公钥传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。\n在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。\n下单 这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。\n部署过程或许需要几分钟，耐心等待一下。\n部署完成 Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以100.200.300.400来表示。\n检查IP是否被墙 在站长工具-Ping检测输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。\n如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。\n配置VPS SSH登陆VPS 要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。\n1 ssh root@100.200.300.400 SSH登陆Linux服务器是基本操作，不细说了。\n启用ufw防火墙 登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。\n1 ufw --version 没有安装的自己安装一下。\n执行下述命令设置ufw。\n1 2 3 4 5 6 7 8 9 10 11 #设置ufw默认值 sudo ufw default deny incoming sudo ufw default allow outgoing #允许SSH连接 sudo ufw allow ssh #允许http连接 sudo ufw allow http #允许https连接 sudo ufw allow https #开机启动 sudo ufw enable ufw其他常用命令：\n">
 <title>私人代理——搭建专属于你的梯子</title>
 
-<link rel='canonical' href='https://MasonCodingHere.github.io/p/buildyourownladder/'>
+<link rel='canonical' href='https://MasonCodingHere.github.io/p/build-your-own-ladder/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="私人代理——搭建专属于你的梯子">
 <meta property='og:description' content="前言 大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。\n技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。\n在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。\n假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是代理的原理，也是一系列翻墙技术得以实现的基础。\n购买VPS 我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。\n有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。\n注册并登陆Vultr，点击右上角的Deploy按钮按以下步骤部署一台VPS。\n选择VPS类型和位置 类型选Shared CPU即可。\n位置看自己需求，这里以美国Los Angeles为例。\n选择系统镜像 选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。\n选择Plan 根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。\n其他设置 去掉Auto Backups，费钱。\n去掉IPv6，不需要。\n这里可以把SSH key上传一下，把本地电脑~/.ssh/的公钥传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。\n在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。\n下单 这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。\n部署过程或许需要几分钟，耐心等待一下。\n部署完成 Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以100.200.300.400来表示。\n检查IP是否被墙 在站长工具-Ping检测输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。\n如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。\n配置VPS SSH登陆VPS 要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。\n1 ssh root@100.200.300.400 SSH登陆Linux服务器是基本操作，不细说了。\n启用ufw防火墙 登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。\n1 ufw --version 没有安装的自己安装一下。\n执行下述命令设置ufw。\n1 2 3 4 5 6 7 8 9 10 11 #设置ufw默认值 sudo ufw default deny incoming sudo ufw default allow outgoing #允许SSH连接 sudo ufw allow ssh #允许http连接 sudo ufw allow http #允许https连接 sudo ufw allow https #开机启动 sudo ufw enable ufw其他常用命令：\n">
-<meta property='og:url' content='https://MasonCodingHere.github.io/p/buildyourownladder/'>
+<meta property='og:url' content='https://MasonCodingHere.github.io/p/build-your-own-ladder/'>
 <meta property='og:site_name' content='Mason&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' /><meta property='article:tag' content='XRay' /><meta property='article:published_time' content='2024-09-18T16:26:03&#43;08:00'/><meta property='article:modified_time' content='2024-09-18T16:26:03&#43;08:00'/><meta property='og:image' content='https://xtls.github.io/LogoX2.png' />
 <meta name="twitter:title" content="私人代理——搭建专属于你的梯子">
@@ -289,7 +289,7 @@
     <article class="has-image main-article">
     <header class="article-header">
         <div class="article-image">
-            <a href="/p/buildyourownladder/">
+            <a href="/p/build-your-own-ladder/">
                 
                     <img src="https://xtls.github.io/LogoX2.png" loading="lazy" alt="Featured image of post 私人代理——搭建专属于你的梯子" />
                 
@@ -310,7 +310,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/buildyourownladder/">私人代理——搭建专属于你的梯子</a>
+            <a href="/p/build-your-own-ladder/">私人代理——搭建专属于你的梯子</a>
         </h2>
     
         
