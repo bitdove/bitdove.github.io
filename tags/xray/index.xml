@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Posts on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/post/</link>
-        <description>Recent content in Posts on Mason&#39;s Blog</description>
+        <title>XRay on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/tags/xray/</link>
+        <description>Recent content in XRay on Mason&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/xray/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>私人代理——搭建专属于你的梯子</title>
         <link>https://MasonCodingHere.github.io/p/%E7%A7%81%E4%BA%BA%E4%BB%A3%E7%90%86%E6%90%AD%E5%BB%BA%E4%B8%93%E5%B1%9E%E4%BA%8E%E4%BD%A0%E7%9A%84%E6%A2%AF%E5%AD%90/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
