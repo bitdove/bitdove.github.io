@@ -13,7 +13,7 @@
         <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
         
         <guid>https://MasonCodingHere.github.io/p/build-your-blog/</guid>
-        <description>&lt;img src="https://www.tomasbeuzen.com/post/making-a-website-with-hugo/featured_hu40cbd56aa319431e2f94c340d268efa8_55522_720x0_resize_lanczos_3.png" alt="Featured image of post Hugo &#43; GitHub Pages搭建个人博客" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
+        <description>&lt;img src="https://www.adamormsby.com/posts/000/how-to-set-up-a-hugo-site-on-github-pages-with-submodules/cover.jpg" alt="Featured image of post Hugo &#43; GitHub Pages搭建个人博客" /&gt;&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;本文待完善。&lt;/p&gt;
 &lt;h1 id=&#34;整体思路&#34;&gt;整体思路
 &lt;/h1&gt;&lt;p&gt;使用&lt;code&gt;Hugo&lt;/code&gt;作为博客框架，在本地编写&lt;code&gt;Markdown&lt;/code&gt;文件，构成博客站点源码库。将源码库上传至GitHub仓库&lt;code&gt;MasonHugoBlog&lt;/code&gt;，并设置GitHub Action，由GitHub Action运行&lt;code&gt;hugo&lt;/code&gt;命令生成博客HTML文件并上传至&lt;code&gt;MasonCodingHere.github.io&lt;/code&gt;，最终由GitHub Pages完成部署。&lt;/p&gt;
