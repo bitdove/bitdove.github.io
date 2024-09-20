@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 20 Sep 2024 15:18:02 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Hugo</title>
+        <link>https://MasonCodingHere.github.io/categories/hugo/</link>
+        <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/categories/hugo/</guid>
+        <description>&lt;img src="https://gohugo.io/images/hugo-logo-wide.svg" alt="Featured image of post Hugo" /&gt;</description>
+        </item>
+        <item>
         <title>PassWall</title>
         <link>https://MasonCodingHere.github.io/categories/passwall/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
