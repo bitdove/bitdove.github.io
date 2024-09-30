@@ -7,7 +7,43 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Fri, 20 Sep 2024 15:18:02 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 30 Sep 2024 09:52:09 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>C&#43;&#43; new那些事儿</title>
+        <link>https://MasonCodingHere.github.io/p/things-about-new/</link>
+        <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/things-about-new/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post C&#43;&#43; new那些事儿" /&gt;&lt;h1 id=&#34;new-expression&#34;&gt;new expression
+&lt;/h1&gt;&lt;p&gt;分配内存-调用构造函数-返回指针&lt;/p&gt;
+&lt;p&gt;The new operator is an operator which denotes a request for memory allocation on the Heap. If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The memory for the object is allocated using operator new from heap.&lt;/li&gt;
+&lt;li&gt;The constructor of the class is invoked to properly initialize this memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;operator-new&#34;&gt;operator new
+&lt;/h1&gt;&lt;p&gt;只分配内存-返回指针/抛出异常&lt;/p&gt;
+&lt;p&gt;Operator new is a function that allocates raw memory and conceptually a bit similar to malloc().&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is the mechanism of overriding the default heap allocation logic.&lt;/li&gt;
+&lt;li&gt;It doesn’t initializes the memory i.e constructor is not called. However, after our overloaded new returns, the compiler then automatically calls the constructor also as applicable.&lt;/li&gt;
+&lt;li&gt;It’s also possible to overload operator new either globally, or for a specific class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;new-operator-vs-operator-new&#34;&gt;New operator vs operator new
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;Operator vs function: new is an operator as well as a keyword whereas operator new is only a function.&lt;/li&gt;
+&lt;li&gt;New calls “Operator new”: “new operator” calls “operator new()” , like the way + operator calls operator +()&lt;/li&gt;
+&lt;li&gt;“Operator new” can be Overloaded: Operator new can be overloaded just like functions allowing us to do customized tasks.&lt;/li&gt;
+&lt;li&gt;Memory allocation: ‘new expression’ call ‘operator new’ to allocate raw memory, then call constructor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;references&#34;&gt;References
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>Hugo &#43; GitHub Pages搭建个人博客</title>
         <link>https://MasonCodingHere.github.io/p/build-your-blog/</link>
         <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
