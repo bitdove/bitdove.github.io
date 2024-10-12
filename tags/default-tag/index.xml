@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Default-Tag on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/tags/default-tag/</link>
+        <description>Recent content in Default-Tag on Mason&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Mason</copyright>
+        <lastBuildDate>Sat, 12 Oct 2024 08:37:02 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/default-tag/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Test Blog</title>
+        <link>https://MasonCodingHere.github.io/p/test-blog/</link>
+        <pubDate>Sat, 12 Oct 2024 08:37:02 +0800</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/test-blog/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post Test Blog" /&gt;&lt;p&gt;This is a test blog&lt;/p&gt;
+&lt;h1 id=&#34;references&#34;&gt;References
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
