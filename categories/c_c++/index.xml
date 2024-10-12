@@ -13,7 +13,7 @@
         <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
         
         <guid>https://MasonCodingHere.github.io/p/things-about-new/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post C&#43;&#43; new那些事儿" /&gt;&lt;h1 id=&#34;new-expression&#34;&gt;new expression
+        <description>&lt;h1 id=&#34;new-expression&#34;&gt;new expression
 &lt;/h1&gt;&lt;p&gt;分配内存-调用构造函数-返回指针&lt;/p&gt;
 &lt;p&gt;The new operator is an operator which denotes a request for memory allocation on the Heap. If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).&lt;/p&gt;
 &lt;ul&gt;
