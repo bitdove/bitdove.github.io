@@ -7,13 +7,49 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Sat, 12 Oct 2024 06:19:43 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/c_c++/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 30 Sep 2024 09:52:09 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/c_c++/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>C&#43;&#43; new那些事儿</title>
+        <link>https://MasonCodingHere.github.io/p/things-about-new/</link>
+        <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/things-about-new/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post C&#43;&#43; new那些事儿" /&gt;&lt;h1 id=&#34;new-expression&#34;&gt;new expression
+&lt;/h1&gt;&lt;p&gt;分配内存-调用构造函数-返回指针&lt;/p&gt;
+&lt;p&gt;The new operator is an operator which denotes a request for memory allocation on the Heap. If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The memory for the object is allocated using operator new from heap.&lt;/li&gt;
+&lt;li&gt;The constructor of the class is invoked to properly initialize this memory.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;operator-new&#34;&gt;operator new
+&lt;/h1&gt;&lt;p&gt;只分配内存-返回指针/抛出异常&lt;/p&gt;
+&lt;p&gt;Operator new is a function that allocates raw memory and conceptually a bit similar to malloc().&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;It is the mechanism of overriding the default heap allocation logic.&lt;/li&gt;
+&lt;li&gt;It doesn’t initializes the memory i.e constructor is not called. However, after our overloaded new returns, the compiler then automatically calls the constructor also as applicable.&lt;/li&gt;
+&lt;li&gt;It’s also possible to overload operator new either globally, or for a specific class&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;new-operator-vs-operator-new&#34;&gt;New operator vs operator new
+&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;Operator vs function: new is an operator as well as a keyword whereas operator new is only a function.&lt;/li&gt;
+&lt;li&gt;New calls “Operator new”: “new operator” calls “operator new()” , like the way + operator calls operator +()&lt;/li&gt;
+&lt;li&gt;“Operator new” can be Overloaded: Operator new can be overloaded just like functions allowing us to do customized tasks.&lt;/li&gt;
+&lt;li&gt;Memory allocation: ‘new expression’ call ‘operator new’ to allocate raw memory, then call constructor.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;references&#34;&gt;References
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>美人&#43;鱼=美人鱼——谈C&#43;&#43;多继承</title>
         <link>https://MasonCodingHere.github.io/p/cpp-multiple-inheritance/</link>
-        <pubDate>Sat, 12 Oct 2024 06:19:43 -0700</pubDate>
+        <pubDate>Tue, 22 Jun 2021 06:19:43 -0700</pubDate>
         
         <guid>https://MasonCodingHere.github.io/p/cpp-multiple-inheritance/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post 美人&#43;鱼=美人鱼——谈C&#43;&#43;多继承" /&gt;&lt;h2 id=&#34;引言&#34;&gt;引言
+        <description>&lt;h2 id=&#34;引言&#34;&gt;引言
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;继承&lt;/strong&gt;是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的&lt;strong&gt;调用权&lt;/strong&gt;。
 根据子类继承父类的个数，继承分为单继承、多继承：&lt;/p&gt;
 &lt;ul&gt;
@@ -472,42 +508,6 @@
 &lt;p&gt;以我所知道的，GCC和VC++对于C++对象内存模型的实现差别就很大。比如对于虚基类，GCC的做法是扩展了虚表（virtual table）；而VC++则是模仿虚表，建了一个虚基类表（virtual base class table），正如虚指针vptr指向虚表一样，VC++会在C++对象里加一个虚基类指针vbptr，该指针指向虚基类表。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;这些东西有些繁杂，我也不能保证写的一定正确，很多东西都是自己分析得出，只为建立自己的C++对象模型观。如有朋友发现有误，欢迎指出。&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-        </item>
-        <item>
-        <title>C&#43;&#43; new那些事儿</title>
-        <link>https://MasonCodingHere.github.io/p/things-about-new/</link>
-        <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
-        
-        <guid>https://MasonCodingHere.github.io/p/things-about-new/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/MasonCodingHere/MasonHugoBlogPics1/main/DefaultImg/DefaultPostImg1.jpg" alt="Featured image of post C&#43;&#43; new那些事儿" /&gt;&lt;h1 id=&#34;new-expression&#34;&gt;new expression
-&lt;/h1&gt;&lt;p&gt;分配内存-调用构造函数-返回指针&lt;/p&gt;
-&lt;p&gt;The new operator is an operator which denotes a request for memory allocation on the Heap. If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;The memory for the object is allocated using operator new from heap.&lt;/li&gt;
-&lt;li&gt;The constructor of the class is invoked to properly initialize this memory.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;operator-new&#34;&gt;operator new
-&lt;/h1&gt;&lt;p&gt;只分配内存-返回指针/抛出异常&lt;/p&gt;
-&lt;p&gt;Operator new is a function that allocates raw memory and conceptually a bit similar to malloc().&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;It is the mechanism of overriding the default heap allocation logic.&lt;/li&gt;
-&lt;li&gt;It doesn’t initializes the memory i.e constructor is not called. However, after our overloaded new returns, the compiler then automatically calls the constructor also as applicable.&lt;/li&gt;
-&lt;li&gt;It’s also possible to overload operator new either globally, or for a specific class&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;new-operator-vs-operator-new&#34;&gt;New operator vs operator new
-&lt;/h1&gt;&lt;ul&gt;
-&lt;li&gt;Operator vs function: new is an operator as well as a keyword whereas operator new is only a function.&lt;/li&gt;
-&lt;li&gt;New calls “Operator new”: “new operator” calls “operator new()” , like the way + operator calls operator +()&lt;/li&gt;
-&lt;li&gt;“Operator new” can be Overloaded: Operator new can be overloaded just like functions allowing us to do customized tasks.&lt;/li&gt;
-&lt;li&gt;Memory allocation: ‘new expression’ call ‘operator new’ to allocate raw memory, then call constructor.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h1 id=&#34;references&#34;&gt;References
-&lt;/h1&gt;&lt;blockquote&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;/li&gt;
-&lt;/ol&gt;
 &lt;/blockquote&gt;
 </description>
         </item>
