@@ -50,6 +50,15 @@
     <loc>https://MasonCodingHere.github.io/page/</loc>
     <lastmod>2024-09-17T00:00:00+00:00</lastmod>
   </url><url>
+    <loc>https://MasonCodingHere.github.io/tags/arp/</loc>
+    <lastmod>2024-05-09T00:28:32-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/p/arp-protocol/</loc>
+    <lastmod>2024-05-09T00:28:32-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/tags/protocol/</loc>
+    <lastmod>2024-05-09T00:28:32-07:00</lastmod>
+  </url><url>
     <loc>https://MasonCodingHere.github.io/p/cpp-member-function-calling/</loc>
     <lastmod>2021-06-28T20:24:15-07:00</lastmod>
   </url><url>
@@ -58,9 +67,6 @@
   </url><url>
     <loc>https://MasonCodingHere.github.io/p/cpp-object-model-via-memory-sight/</loc>
     <lastmod>2021-06-21T20:27:56-07:00</lastmod>
-  </url><url>
-    <loc>https://MasonCodingHere.github.io/tags/protocol/</loc>
-    <lastmod>2021-05-17T00:14:35-07:00</lastmod>
   </url><url>
     <loc>https://MasonCodingHere.github.io/tags/tcp/</loc>
     <lastmod>2021-05-17T00:14:35-07:00</lastmod>
@@ -77,8 +83,29 @@
     <loc>https://MasonCodingHere.github.io/p/helloworld-on-network-programming/</loc>
     <lastmod>2021-05-14T06:44:38-07:00</lastmod>
   </url><url>
+    <loc>https://MasonCodingHere.github.io/tags/linux/</loc>
+    <lastmod>2021-05-12T00:48:23-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/p/threads-sync/</loc>
+    <lastmod>2021-05-12T00:48:23-07:00</lastmod>
+  </url><url>
     <loc>https://MasonCodingHere.github.io/p/tcp-introduction/</loc>
     <lastmod>2021-05-10T00:07:46-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/p/basic-of-process-and-thread/</loc>
+    <lastmod>2021-05-07T00:56:15-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/tags/dns/</loc>
+    <lastmod>2021-05-06T00:44:05-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/p/dns-protocol/</loc>
+    <lastmod>2021-05-06T00:44:05-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/tags/dhcp/</loc>
+    <lastmod>2021-05-05T00:37:38-07:00</lastmod>
+  </url><url>
+    <loc>https://MasonCodingHere.github.io/p/dhcp-protocol/</loc>
+    <lastmod>2021-05-05T00:37:38-07:00</lastmod>
   </url><url>
     <loc>https://MasonCodingHere.github.io/archives/</loc>
     <lastmod>2019-05-28T00:00:00+00:00</lastmod>

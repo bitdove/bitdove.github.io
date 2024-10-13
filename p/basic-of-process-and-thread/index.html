@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="引言 从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。\n操作系统的功能有两个：\n提供抽象 管理资源 对于提供抽象这个功能，我总结为：操作系统提供了三个抽象\nCPU 抽象为 进程； 物理内存 抽象为 虚拟地址空间； IO设备（包括磁盘） 抽象为 文件系统。 对于管理资源这个功能，操作系统的任务是在相互竞争的程序间有序地控制对资源的分配，这里，我关注一点，即：\n死锁。 资源就是随着时间的推移，必须能获得、使用以及释放的任何东西。可以是硬件，也可以是一组信息（如数据库中的记录）。\n我会按照这个思路写这系列文章。今天先写第一部分，即将CPU抽象为进程，进程这一部分目前计划为四篇文章：\n进程与线程基础（本篇） 进程间通信问题：管道（PIPE和FIFO）、消息队列、信号量、共享存储、套接字 线程同步：互斥锁、读写锁、自旋锁、条件变量、屏障 进/线程调度 进程 为什么需要进程？ 我们早已习惯了一台计算机“同时”做很多事情，我们举一个例子，有一台Web服务器，它接收到一个网页请求，服务器检查后发现该请求需要的网页不在其缓存中，所以服务器会启动一个磁盘请求去获取该网页。但是，对CPU而言，磁盘请求是非常慢的，在这个过程中，会有其他请求到达服务器。如果存在多个磁盘，那么可以在响应第一个请求之前就向其他磁盘发出后续的请求。\n很明显，我们需要一种方法来模拟并控制这种并发，进程（尤其是线程）就是解决这个问题的。\n严格来讲，在某一个瞬间，一个CPU只能运行一个进程。所以对单核CPU来讲，我们看到的计算机“同时”运行多个进程其实是一种假象，是一种伪并发，这种伪并发是由于CPU在多个进程之间快速地切换，导致看上去就像多个进程同时运行一样。\n什么是进程？ 进程是一个正在执行的程序的实例。每个进程拥有自己的虚拟CPU，即拥有自己的寄存器、程序计数器（PC）等。\n进程和程序的区别：\n程序是一个静态概念，进程是一个动态概念； 我们写的程序经过编译链接生成可执行文件，到此为止，它都可以称为程序；而当把可执行文件跑起来，即装载到内存开始运行之后，它才变成一个进程； 自然，一个程序执行两次，算作两个进程。 进程组成 前面一直说的比较抽象，本小节将把进程这一概念落在实处。\n操作系统内核维护着一张进程表，每个进程占用其中一个表项，成为进程控制块（PCB）。在Linux内核下，PCB就是task_struct结构体，进程表就是一个由很多个task_struct结构体组成的链表。\nPCB即描述进程的数据结构。PCB是进程存在的唯一标志。\nPCB通常包含以下内容：\n进程描述信息 进程控制和管理信息 资源分配清单 CPU相关信息 进程ID（PID） 进程当前状态 代码段指针 通用寄存器值 用户ID（UID） 进程优先级 数据段指针 地址寄存器值（如堆栈指针寄存器ESP） 代码运行入口地址 堆栈段指针 控制寄存器值（如程序计数器PC） 程序的外存地址 文件描述符 标志寄存器值 进入内存时间 键盘 状态字（PSW） CPU占用时间 鼠标 信号量使用 暂且可以这么说，进程由代码段、数据段、PCB三部分组成。\n">
+<title>Basic of Process and Thread</title>
+
+<link rel='canonical' href='https://MasonCodingHere.github.io/p/basic-of-process-and-thread/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Basic of Process and Thread">
+<meta property='og:description' content="引言 从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。\n操作系统的功能有两个：\n提供抽象 管理资源 对于提供抽象这个功能，我总结为：操作系统提供了三个抽象\nCPU 抽象为 进程； 物理内存 抽象为 虚拟地址空间； IO设备（包括磁盘） 抽象为 文件系统。 对于管理资源这个功能，操作系统的任务是在相互竞争的程序间有序地控制对资源的分配，这里，我关注一点，即：\n死锁。 资源就是随着时间的推移，必须能获得、使用以及释放的任何东西。可以是硬件，也可以是一组信息（如数据库中的记录）。\n我会按照这个思路写这系列文章。今天先写第一部分，即将CPU抽象为进程，进程这一部分目前计划为四篇文章：\n进程与线程基础（本篇） 进程间通信问题：管道（PIPE和FIFO）、消息队列、信号量、共享存储、套接字 线程同步：互斥锁、读写锁、自旋锁、条件变量、屏障 进/线程调度 进程 为什么需要进程？ 我们早已习惯了一台计算机“同时”做很多事情，我们举一个例子，有一台Web服务器，它接收到一个网页请求，服务器检查后发现该请求需要的网页不在其缓存中，所以服务器会启动一个磁盘请求去获取该网页。但是，对CPU而言，磁盘请求是非常慢的，在这个过程中，会有其他请求到达服务器。如果存在多个磁盘，那么可以在响应第一个请求之前就向其他磁盘发出后续的请求。\n很明显，我们需要一种方法来模拟并控制这种并发，进程（尤其是线程）就是解决这个问题的。\n严格来讲，在某一个瞬间，一个CPU只能运行一个进程。所以对单核CPU来讲，我们看到的计算机“同时”运行多个进程其实是一种假象，是一种伪并发，这种伪并发是由于CPU在多个进程之间快速地切换，导致看上去就像多个进程同时运行一样。\n什么是进程？ 进程是一个正在执行的程序的实例。每个进程拥有自己的虚拟CPU，即拥有自己的寄存器、程序计数器（PC）等。\n进程和程序的区别：\n程序是一个静态概念，进程是一个动态概念； 我们写的程序经过编译链接生成可执行文件，到此为止，它都可以称为程序；而当把可执行文件跑起来，即装载到内存开始运行之后，它才变成一个进程； 自然，一个程序执行两次，算作两个进程。 进程组成 前面一直说的比较抽象，本小节将把进程这一概念落在实处。\n操作系统内核维护着一张进程表，每个进程占用其中一个表项，成为进程控制块（PCB）。在Linux内核下，PCB就是task_struct结构体，进程表就是一个由很多个task_struct结构体组成的链表。\nPCB即描述进程的数据结构。PCB是进程存在的唯一标志。\nPCB通常包含以下内容：\n进程描述信息 进程控制和管理信息 资源分配清单 CPU相关信息 进程ID（PID） 进程当前状态 代码段指针 通用寄存器值 用户ID（UID） 进程优先级 数据段指针 地址寄存器值（如堆栈指针寄存器ESP） 代码运行入口地址 堆栈段指针 控制寄存器值（如程序计数器PC） 程序的外存地址 文件描述符 标志寄存器值 进入内存时间 键盘 状态字（PSW） CPU占用时间 鼠标 信号量使用 暂且可以这么说，进程由代码段、数据段、PCB三部分组成。\n">
+<meta property='og:url' content='https://MasonCodingHere.github.io/p/basic-of-process-and-thread/'>
+<meta property='og:site_name' content='Mason&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:published_time' content='2021-05-07T00:56:15-07:00'/><meta property='article:modified_time' content='2021-05-07T00:56:15-07:00'/>
+<meta name="twitter:title" content="Basic of Process and Thread">
+<meta name="twitter:description" content="引言 从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。\n操作系统的功能有两个：\n提供抽象 管理资源 对于提供抽象这个功能，我总结为：操作系统提供了三个抽象\nCPU 抽象为 进程； 物理内存 抽象为 虚拟地址空间； IO设备（包括磁盘） 抽象为 文件系统。 对于管理资源这个功能，操作系统的任务是在相互竞争的程序间有序地控制对资源的分配，这里，我关注一点，即：\n死锁。 资源就是随着时间的推移，必须能获得、使用以及释放的任何东西。可以是硬件，也可以是一组信息（如数据库中的记录）。\n我会按照这个思路写这系列文章。今天先写第一部分，即将CPU抽象为进程，进程这一部分目前计划为四篇文章：\n进程与线程基础（本篇） 进程间通信问题：管道（PIPE和FIFO）、消息队列、信号量、共享存储、套接字 线程同步：互斥锁、读写锁、自旋锁、条件变量、屏障 进/线程调度 进程 为什么需要进程？ 我们早已习惯了一台计算机“同时”做很多事情，我们举一个例子，有一台Web服务器，它接收到一个网页请求，服务器检查后发现该请求需要的网页不在其缓存中，所以服务器会启动一个磁盘请求去获取该网页。但是，对CPU而言，磁盘请求是非常慢的，在这个过程中，会有其他请求到达服务器。如果存在多个磁盘，那么可以在响应第一个请求之前就向其他磁盘发出后续的请求。\n很明显，我们需要一种方法来模拟并控制这种并发，进程（尤其是线程）就是解决这个问题的。\n严格来讲，在某一个瞬间，一个CPU只能运行一个进程。所以对单核CPU来讲，我们看到的计算机“同时”运行多个进程其实是一种假象，是一种伪并发，这种伪并发是由于CPU在多个进程之间快速地切换，导致看上去就像多个进程同时运行一样。\n什么是进程？ 进程是一个正在执行的程序的实例。每个进程拥有自己的虚拟CPU，即拥有自己的寄存器、程序计数器（PC）等。\n进程和程序的区别：\n程序是一个静态概念，进程是一个动态概念； 我们写的程序经过编译链接生成可执行文件，到此为止，它都可以称为程序；而当把可执行文件跑起来，即装载到内存开始运行之后，它才变成一个进程； 自然，一个程序执行两次，算作两个进程。 进程组成 前面一直说的比较抽象，本小节将把进程这一概念落在实处。\n操作系统内核维护着一张进程表，每个进程占用其中一个表项，成为进程控制块（PCB）。在Linux内核下，PCB就是task_struct结构体，进程表就是一个由很多个task_struct结构体组成的链表。\nPCB即描述进程的数据结构。PCB是进程存在的唯一标志。\nPCB通常包含以下内容：\n进程描述信息 进程控制和管理信息 资源分配清单 CPU相关信息 进程ID（PID） 进程当前状态 代码段指针 通用寄存器值 用户ID（UID） 进程优先级 数据段指针 地址寄存器值（如堆栈指针寄存器ESP） 代码运行入口地址 堆栈段指针 控制寄存器值（如程序计数器PC） 程序的外存地址 文件描述符 标志寄存器值 进入内存时间 键盘 状态字（PSW） CPU占用时间 鼠标 信号量使用 暂且可以这么说，进程由代码段、数据段、PCB三部分组成。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu5738766142856792928.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Mason&#39;s Blog</a></h1>
+            <h2 class="site-description">Just do it.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/MasonCodingHere'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#引言">引言</a></li>
+    <li><a href="#进程">进程</a>
+      <ol>
+        <li><a href="#为什么需要进程">为什么需要进程？</a></li>
+        <li><a href="#什么是进程">什么是进程？</a></li>
+        <li><a href="#进程组成">进程组成</a></li>
+        <li><a href="#进程状态">进程状态</a></li>
+        <li><a href="#创建进程fork">创建进程：fork</a></li>
+        <li><a href="#孤儿进程与僵尸进程">孤儿进程与僵尸进程</a></li>
+      </ol>
+    </li>
+    <li><a href="#线程">线程</a>
+      <ol>
+        <li><a href="#为什么需要线程">为什么需要线程？</a></li>
+        <li><a href="#什么是线程">什么是线程？</a></li>
+        <li><a href="#线程内容">线程内容</a></li>
+        <li><a href="#posix线程">POSIX线程</a></li>
+      </ol>
+    </li>
+    <li><a href="#多进程与多线程">多进程与多线程</a>
+      <ol>
+        <li><a href="#多进程与多线程的优缺点">多进程与多线程的优缺点</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/linux/" style="background-color: #2a9d8f; color: #fff;">
+                Linux
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/p/basic-of-process-and-thread/">Basic of Process and Thread</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2021/05/07</time>
+            </div>
+        
+
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="引言">引言
+</h1><p>从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。</p>
+<p>操作系统的功能有两个：</p>
+<ul>
+<li><strong>提供抽象</strong></li>
+<li><strong>管理资源</strong></li>
+</ul>
+<p>对于提供抽象这个功能，我总结为：操作系统提供了三个抽象</p>
+<ul>
+<li><strong>CPU</strong> 抽象为 <strong>进程</strong>；</li>
+<li><strong>物理内存</strong> 抽象为 <strong>虚拟地址空间</strong>；</li>
+<li><strong>IO设备</strong>（包括磁盘） 抽象为 <strong>文件系统</strong>。</li>
+</ul>
+<p>对于管理资源这个功能，操作系统的任务是在相互竞争的程序间有序地控制对资源的分配，这里，我关注一点，即：</p>
+<ul>
+<li><strong>死锁</strong>。</li>
+</ul>
+<blockquote>
+<p>资源就是随着时间的推移，必须能获得、使用以及释放的任何东西。可以是硬件，也可以是一组信息（如数据库中的记录）。</p>
+</blockquote>
+<p>我会按照这个思路写这系列文章。今天先写第一部分，即将CPU抽象为进程，进程这一部分目前计划为四篇文章：</p>
+<ol>
+<li>进程与线程基础（本篇）</li>
+<li>进程间通信问题：管道（PIPE和FIFO）、消息队列、信号量、共享存储、套接字</li>
+<li>线程同步：互斥锁、读写锁、自旋锁、条件变量、屏障</li>
+<li>进/线程调度</li>
+</ol>
+<h1 id="进程">进程
+</h1><h2 id="为什么需要进程">为什么需要进程？
+</h2><p>我们早已习惯了一台计算机“同时”做很多事情，我们举一个例子，有一台Web服务器，它接收到一个网页请求，服务器检查后发现该请求需要的网页不在其缓存中，所以服务器会启动一个磁盘请求去获取该网页。但是，对CPU而言，磁盘请求是非常慢的，在这个过程中，会有其他请求到达服务器。如果存在多个磁盘，那么可以在响应第一个请求之前就向其他磁盘发出后续的请求。</p>
+<p>很明显，我们需要一种方法来<strong>模拟并控制这种并发</strong>，进程（尤其是线程）就是解决这个问题的。</p>
+<blockquote>
+<p>严格来讲，在某一个瞬间，一个CPU只能运行一个进程。所以对单核CPU来讲，我们看到的计算机“同时”运行多个进程其实是一种假象，是一种<strong>伪并发</strong>，这种伪并发是由于CPU在多个进程之间快速地切换，导致看上去就像多个进程同时运行一样。</p>
+</blockquote>
+<h2 id="什么是进程">什么是进程？
+</h2><p>进程是一个正在执行的程序的实例。每个进程拥有自己的虚拟CPU，即拥有自己的寄存器、程序计数器（PC）等。</p>
+<blockquote>
+<p>进程和程序的区别：</p>
+<ul>
+<li>程序是一个静态概念，进程是一个动态概念；</li>
+<li>我们写的程序经过编译链接生成可执行文件，到此为止，它都可以称为程序；而当把可执行文件跑起来，即装载到内存开始运行之后，它才变成一个进程；</li>
+<li>自然，一个程序执行两次，算作两个进程。</li>
+</ul>
+</blockquote>
+<h2 id="进程组成">进程组成
+</h2><p>前面一直说的比较抽象，本小节将把进程这一概念落在实处。</p>
+<blockquote>
+<p>操作系统内核维护着一张<strong>进程表</strong>，每个进程占用其中一个表项，成为进程控制块（PCB）。在Linux内核下，PCB就是task_struct结构体，进程表就是一个由很多个task_struct结构体组成的链表。</p>
+<p>PCB即描述进程的数据结构。PCB是进程存在的唯一标志。</p>
+</blockquote>
+<p>PCB通常包含以下内容：</p>
+<div class="table-wrapper"><table>
+  <thead>
+      <tr>
+          <th style="text-align: center">进程描述信息</th>
+          <th style="text-align: center">进程控制和管理信息</th>
+          <th style="text-align: center">资源分配清单</th>
+          <th style="text-align: center">CPU相关信息</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td style="text-align: center">进程ID（PID）</td>
+          <td style="text-align: center">进程当前状态</td>
+          <td style="text-align: center">代码段指针</td>
+          <td style="text-align: center">通用寄存器值</td>
+      </tr>
+      <tr>
+          <td style="text-align: center">用户ID（UID）</td>
+          <td style="text-align: center">进程优先级</td>
+          <td style="text-align: center">数据段指针</td>
+          <td style="text-align: center">地址寄存器值（如堆栈指针寄存器ESP）</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">代码运行入口地址</td>
+          <td style="text-align: center">堆栈段指针</td>
+          <td style="text-align: center">控制寄存器值（如程序计数器PC）</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">程序的外存地址</td>
+          <td style="text-align: center">文件描述符</td>
+          <td style="text-align: center">标志寄存器值</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">进入内存时间</td>
+          <td style="text-align: center">键盘</td>
+          <td style="text-align: center">状态字（PSW）</td>
+      </tr>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">CPU占用时间</td>
+          <td style="text-align: center">鼠标</td>
+          <td style="text-align: center"></td>
+      </tr>
+      <tr>
+          <td style="text-align: center"></td>
+          <td style="text-align: center">信号量使用</td>
+          <td style="text-align: center"></td>
+          <td style="text-align: center"></td>
+      </tr>
+  </tbody>
+</table></div>
+<p>暂且可以这么说，进程由代码段、数据段、PCB三部分组成。</p>
+<h2 id="进程状态">进程状态
+</h2><p>进程有下图所示三种状态：</p>
+<ul>
+<li>运行态：该时刻进程实际占用CPU；</li>
+<li>就绪态：可运行，但因为其他进程正在占用CPU而暂时不运行；</li>
+<li>阻塞态：正在等待某种外部事件（如磁盘IO）发生，否则进程无法运行；</li>
+</ul>
+<p>三种状态之间有四种可能的转换关系：</p>
+<ol>
+<li>运行态至阻塞态：进程因等待外部事件发生而不能继续运行下去；</li>
+<li>运行态至就绪态：由进程调度程序引起，进程的时间片耗尽，调度程序选择其他进程运行；</li>
+<li>就绪态至运行态：由进程调度程序引起，调度程序选择该进程运行；</li>
+<li>阻塞态至就绪态：等待的外部事件发生，由阻塞态转为就绪态，等待调度程序的调度。</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/status-of-process.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<h2 id="创建进程fork">创建进程：fork
+</h2><p>归根结底，新进程的创建都是由于一个已存在的进程执行了一个用于创建进程的系统调用而创建的。</p>
+<p>在UNIX系统中，有且仅有一个系统调用可以用来创建进程：fork。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">pid_t</span> <span class="nf">fork</span><span class="p">(</span><span class="kt">void</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//返回值：子进程返回0，父进程返回子进程PID；若出错，返回-1。
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>由fork创建的新进程称为<strong>子进程</strong>。fork函数被调用一次，但返回两次：</p>
+<ul>
+<li>子进程的返回值是0；</li>
+<li>父进程的返回值是新建子进程的进程ID。</li>
+</ul>
+<blockquote>
+<p><strong>为什么要把子进程的PID返回给父进程？</strong></p>
+<ul>
+<li>因为一个进程可以有多个子进程，且没有函数可以使一个进程获得其所有子进程的PID。</li>
+</ul>
+<p><strong>为什么子进程中fork返回值为0？</strong></p>
+<ul>
+<li>因为一个进程只会有一个父进程，子进程可以通过调用getppid来获得其父进程的PID；</li>
+<li>且进程ID 0 总是由内核交换进程使用，所以一个子进程的进程ID不可能是0。</li>
+</ul>
+</blockquote>
+<p>子进程和父进程继续执行fork之后的指令。子进程获得其父进程的虚拟地址空间中的数据段、堆、栈的副本，而代码段是父进程和子进程共享的。</p>
+<blockquote>
+<p><strong>写时复制技术</strong></p>
+<p>由于fork之后经常跟随着exec，所以现在很多实现并不真的给子进程一个父进程的数据段、堆、栈的副本，而采用写时复制技术作为替代。</p>
+<p>在该技术中，fork之后，父进程的数据段、堆、栈也是同子进程共享的，只是内核会把它们的访问权限变为只读。如果父进程和子进程中的任一个试图修改这些区域，则内核只为修改区域的那块内存制作一个副本，通常是虚拟内存的一个页。</p>
+</blockquote>
+<blockquote>
+<p>注：Windows中没有父子进程这种层次概念，所有进程地位相同。</p>
+</blockquote>
+<h2 id="孤儿进程与僵尸进程">孤儿进程与僵尸进程
+</h2><p>进程是一个动态概念，有创建就有终止。父进程为了决定下一步的对策，需要知道其子进程的死亡原因（终止状态）。具体是通过wait和waitpid两个函数来实现。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/wait.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">pid_t</span> <span class="nf">wait</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">statloc</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">pid_t</span> <span class="nf">waitpid</span><span class="p">(</span><span class="kt">pid_t</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="o">*</span><span class="n">statloc</span><span class="p">,</span> <span class="kt">int</span> <span class="n">options</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//两个函数返回值：若成功则返回进程ID；若出错则返回0或-1。
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>进程的终止状态存放在statloc指针所指向的内存单元内。</p>
+<p>调用wait或waitpid时可能发生什么：</p>
+<ul>
+<li>若其所有子进程都还在运行，则阻塞；</li>
+<li>若一个子进程已终止，正等待父进程获取其终止状态，则取得该子进程的终止状态后立即返回；</li>
+<li>若它没有任何子进程，则立即出错返回。</li>
+</ul>
+<blockquote>
+<p>wait和waitpid的区别如下：</p>
+<ul>
+<li>若子进程都还在运行，wait使父进程阻塞；而waitpid有一选项，可使父进程不阻塞；</li>
+<li>wait等待的是其被调用之后第一个终止的子进程；而waitpid可以指定等待哪个进程的终止；</li>
+</ul>
+</blockquote>
+<p>为了使父进程能够获得子进程的终止状态，一个进程终止之后并非完全消失，内核仍为每个终止子进程保存了一定量的信息。</p>
+<p><strong>僵尸进程</strong>：一个已经终止，但是其父进程尚未对其进行善后处理（获取其终止信息、释放其仍占用的资源）的进程。</p>
+<blockquote>
+<p><strong>僵尸进程的危害</strong></p>
+<p>如果父进程不调用 wait/waitpid的话， 那么内核为每个终止子进程保存的一定量的信息就不会释放，其进程号就会一直被占用，但是系统所能使用的进程号是有限的，如果大量的产生僵尸进程，将因为没有可用的进程号而导致系统不能产生新的进程， 此即为僵尸进程的危害，应当避免 。</p>
+</blockquote>
+<blockquote>
+<p><strong>解决僵尸进程</strong></p>
+<p>僵尸进程的出现，追其根本原因，是其父进程出现了问题，在子进程终止后没有回收子进程的资源，而不是Linux系统的问题；此时运行的程序代码逻辑应该是有问题的，需要整改，如果出现僵尸进程，可以通过以下方法解决：</p>
+<p>直接杀掉其父进程，将此进程变成孤儿进程，交给 init 进程管理，init 进程回收此进程的资源；</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">kill -9 + 父进程号
+</span></span></code></pre></td></tr></table>
+</div>
+</div></blockquote>
+<p><strong>孤儿进程</strong>：在子进程终止之前，父进程先终止了，子进程则成为孤儿进程。</p>
+<p>孤儿进程会被init进程收养。操作过程大概是：在一个进程终止时，内核逐个检查所有活着的进程，以判断它是否是正要终止的进程的子进程，如果是，则该进程的父进程ID就更改为1（init进程）。</p>
+<h1 id="线程">线程
+</h1><h2 id="为什么需要线程">为什么需要线程？
+</h2><p>进程可以使多个程序能并发执行，以提高资源的利用率和系统的吞吐量；但是其具有一些缺点：</p>
+<p>进程在同一时间只能干一件事，如果进程在执行的过程中阻塞，整个进程就会挂起，即使有些工作不依赖于等待的资源，进程仍然不会执行。因此，操作系统引入了比进程粒度更小的线程，作为并发执行的基本单位，从而减少程序在并发执行时所付出的时空开销，提高并发性。</p>
+<h2 id="什么是线程">什么是线程？
+</h2><p>线程可以理解为进程中的一条执行流程。</p>
+<p>线程是CPU调度的最小单位。</p>
+<blockquote>
+<p>传统的进程只包含一个线程。线程是依赖进程而存在的。</p>
+<p>进程负责把资源集中到一起，而线程则是被CPU调度执行的实体。</p>
+</blockquote>
+<h2 id="线程内容">线程内容
+</h2><p>同一进程内的所有线程共享该进程的虚拟地址空间，但每个线程拥有自己的栈。</p>
+<p>进程的虚拟地址空间如下图所示：</p>
+<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/virtual-memory-space.jpg"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>PCB在上图中的Kernel Space中。</p>
+<p>线程<strong>共享</strong>的内容有：</p>
+<ul>
+<li>代码段、数据段；</li>
+<li>堆（Heap）；</li>
+<li>PCB中的文件描述符，即线程共享进程的打开文件；</li>
+<li>PCB中的其他一些内容，我们暂时不关注。</li>
+</ul>
+<p>线程<strong>私有</strong>的内容有：</p>
+<ul>
+<li>栈，即每个线程有自己的栈；</li>
+<li>PCB中的寄存器；</li>
+<li>PCB中某些其他内容，我们暂时不关注。</li>
+</ul>
+<h2 id="posix线程">POSIX线程
+</h2><div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">pthread_create</span><span class="p">(</span><span class="kt">pthread_t</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">tidp</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				   <span class="k">const</span> <span class="kt">pthread_attr_t</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">attr</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">				   <span class="kt">void</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">start_rtn</span><span class="p">)(</span><span class="kt">void</span> <span class="o">*</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">				   <span class="kt">void</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">arg</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="c1">//若成功则返回0；若出错则返回错误编号。
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>pthread_create用于创建线程：</p>
+<ul>
+<li>新创建线程的线程ID会被设置为tidp指向的内存单元；</li>
+<li>attr参数用于定制线程属性，默认为NULL；</li>
+<li>新建的线程从start_rtn函数的地址开始执行，该函数只有一个void*类型的参数arg；</li>
+<li>若要传给start_rtn函数的参数超过一个，那么需要把参数放在一个结构体中，然后把该结构体的地址作为arg参数传给pthread_create函数。</li>
+</ul>
+<blockquote>
+<p>restrict是C99中新增的关键字，它只用于修饰指针；该关键字用于告知编译器，所有修改该指针所指向内容的操作都必须基于该指针，即不存在其它进行修改操作的途径。</p>
+</blockquote>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;pthread.h&gt;</span><span class="cp">
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="nf">pthread_exit</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">rval_ptr</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">pthread_join</span><span class="p">(</span><span class="kt">pthread_t</span> <span class="kr">thread</span><span class="p">,</span> <span class="kt">void</span> <span class="o">**</span><span class="n">rval_ptr</span><span class="p">);</span> <span class="c1">//若成功则返回0；若出错则返回错误编号。
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><p>pthread_exit用于在不终止进程的情况下终止线程：</p>
+<ul>
+<li>rval_ptr指向的内存单元存放线程的终止状态。</li>
+</ul>
+<p>pthread_join用于等待特定线程的终止，在此之前，调用该函数的线程将一直阻塞：</p>
+<ul>
+<li>thread用于指定所等待线程的线程ID；</li>
+<li>rval_ptr用于获取所等待线程的终止状态，若不感兴趣，可以设其为NULL。</li>
+</ul>
+<h1 id="多进程与多线程">多进程与多线程
+</h1><h2 id="多进程与多线程的优缺点">多进程与多线程的优缺点
+</h2><p><strong>多进程的优点：</strong></p>
+<ul>
+<li>
+<p>编程相对容易：通常不需要考虑锁和同步资源的问题；</p>
+</li>
+<li>
+<p>更强的容错性：比起多线程的一个好处是一个进程崩溃了不会影响其他进程。；</p>
+</li>
+<li>
+<p>有内核保证的隔离：数据和错误隔离。 对于使用如C/C++这些语言编写的本地代码，错误隔离是非常有用的：采用多进程架构的程序一般可以做到一定程度的自恢复；（master守护进程监控所有worker进程，发现进程挂掉后将其重启）。</p>
+</li>
+</ul>
+<blockquote>
+<p>chrome浏览器采用多进程方式。</p>
+<p>原因：1. 可能存在一些网页不符合编程规范，容易崩溃，采用多进程一个网页崩溃不会影响其他网页；而采用多线程会。</p>
+<p>​            2.网页之间互相隔离，保证安全，不必担心某个网页中的恶意代码会取得存放在其他网页中的敏感信息。</p>
+</blockquote>
+<p><strong>多线程的优点：</strong></p>
+<ul>
+<li>
+<p>创建速度快，方便高效的数据共享；</p>
+</li>
+<li>
+<p>较轻的上下文切换开销。</p>
+</li>
+</ul>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/linux/">Linux</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/p/threads-sync/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Threads Sync</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/p/helloworld-on-network-programming/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">网络编程领域的HelloWorld程序</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 Mason
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
