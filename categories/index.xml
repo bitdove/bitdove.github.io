@@ -34,10 +34,18 @@
         <item>
         <title>Linux</title>
         <link>https://MasonCodingHere.github.io/categories/linux/</link>
-        <pubDate>Fri, 14 May 2021 06:44:38 -0700</pubDate>
+        <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
         
         <guid>https://MasonCodingHere.github.io/categories/linux/</guid>
         <description>&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1280px-Tux.svg.png" alt="Featured image of post Linux" /&gt;</description>
+        </item>
+        <item>
+        <title>DefaultCategory</title>
+        <link>https://MasonCodingHere.github.io/categories/defaultcategory/</link>
+        <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/categories/defaultcategory/</guid>
+        <description></description>
         </item>
         
     </channel>

@@ -1694,6 +1694,805 @@
 </description>
         </item>
         <item>
+        <title>Interprocess Communication</title>
+        <link>https://MasonCodingHere.github.io/p/interprocess-communication/</link>
+        <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/interprocess-communication/</guid>
+        <description>&lt;h1 id=&#34;引言&#34;&gt;引言
+&lt;/h1&gt;&lt;p&gt;进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。&lt;/p&gt;
+&lt;p&gt;进程间通信方式可以归纳为以下几类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;管道：PIPE、FIFO；&lt;/li&gt;
+&lt;li&gt;系统IPC：消息队列、共享存储；&lt;/li&gt;
+&lt;li&gt;信号（Signal）&lt;/li&gt;
+&lt;li&gt;套接字：socket。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;管道&#34;&gt;管道
+&lt;/h1&gt;&lt;h2 id=&#34;pipe&#34;&gt;PIPE
+&lt;/h2&gt;&lt;p&gt;PIPE是UNIX系统最古老的IPC方式，也叫&lt;strong&gt;未命名管道&lt;/strong&gt;，PIPE有以下两种局限性：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;PIPE是半双工的，即数据只能在一个方向上流动。&lt;/li&gt;
+&lt;li&gt;PIPE只能在具有公共祖先的两个进程之间使用。通常，一个进程创建一个管道，然后进程调用fork之后，这个管道就可以在父进程和子进程之间使用了。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;PIPE通过调用pipe函数来创建：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;unistd.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;pipe&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：成功则返回0；出错则返回-1。
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/after-fork.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;fork之后做什么取决于我们想要的数据流的方向：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况；&lt;/li&gt;
+&lt;li&gt;如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;PIPE的一端被关闭后，下列两条规则起作用：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对写端关闭的PIPE，在所有数据都被读取（read）后，read返回0，表示文件结束；&lt;/li&gt;
+&lt;li&gt;对读端关闭的PIPE，write时将产生SIGPIPE信号，如果忽略该信号或者捕捉该信号并从其处理程序返回，则write返回-1，errno设置为EPIPE。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;以上图从父进程到子进程的管道为例：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果父进程已经关闭了fd[1]，那么在子进程读取完PIPE内所有数据后，read会返回0，表示文件结束；&lt;/li&gt;
+&lt;li&gt;如果子进程已经关闭了fd[0]，父进程还在write时，会产生SIGPIPE信号。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;因为上述创建数据通道的流程（首先要调用pipe创建PIPE，然后调用fork创建子进程，最后还要根据通道方向关闭父/子进程的读/写端）过于繁杂，所以标准I/O库提供了两个函数：popen和pclose，这两个函数实现的操作是：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;popen：创建一个PIPE，fork一个子进程，关闭未使用的管道端，执行一个shell命令；&lt;/li&gt;
+&lt;li&gt;pclose：关闭由popen所建立的管道及文件指针；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;stdio.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FILE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;popen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;cmdstring&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：若成功，返回文件指针；若出错，返回NULL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;pclose&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;FILE&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;fp&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：若成功，返回cmdstring的终止状态；若出错，返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;函数popen先执行fork，然后调用exec执行cmdstring，并且返回一个标准I/O文件指针。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;cmdstring由Bourne shell以下列方式执行：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-sh&#34; data-lang=&#34;sh&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sh -c cmdstring
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;如果type是“r”，则文件指针连接到cmdstring的标准输出；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/r.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果type是“w”，则文件指针连接到cmdstring的标准输入。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/w.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h2 id=&#34;fifo&#34;&gt;FIFO
+&lt;/h2&gt;&lt;p&gt;FIFO也叫&lt;strong&gt;命名管道&lt;/strong&gt;。相比于PIPE，FIFO的最大优势在于：它在两个不相关的进程间也能交换数据。&lt;/p&gt;
+&lt;p&gt;FIFO是一种文件类型。FIFO的路径名存在于文件系统中。创建FIFO类似于创建文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/stat.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mkfifo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;mode_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;mkfifoat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;path&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;mode_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mode&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//两个函数返回值：成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;若path为绝对路径，则fd参数被忽略，mkfifoat和mkfifo类似；&lt;/li&gt;
+&lt;li&gt;若path为相对路径，则fd参数是一个打开目录的有效文件描述符，路径名和目录有关；&lt;/li&gt;
+&lt;li&gt;若path为相对路径，且fd参数有一个特殊值AF_FDCWD，则路径名以当前目录开始，mkfifoat和mkfifo类似。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;mode参数用于指定新建的FIFO文件的访问权限；&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;与PIPE类似：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若write一个尚无进程为读而打开的FIFO，则产生SIGPIPE信号；&lt;/li&gt;
+&lt;li&gt;若FIFO的最后一个写进程关闭了该FIFO，则将为该FIFO的读进程产生一个文件结束标志。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;xsi-ipc&#34;&gt;XSI IPC
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;《APUE》中提到了三种XSI IPC：消息队列、信号量、共享存储。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这里首先要说明一些东西：信号（Signal）和信号量（Semaphore）是两个不同的东西：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;信号（Signal）是软件中断，由用户、系统或者进程发送给目标进程的信息，以通知目标进程某个状态的改变或系统异常；&lt;/li&gt;
+&lt;li&gt;信号量（Semaphore）是一种特殊变量，用于协调进程对共享资源的访问。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;也就是说信号（Signal）是用来传递信息的，尽管它传递的信息量非常小，小到只有一个数字，但它确实在传递消息，所以信号（Signal）可以算是一种进程间通信方式；而信号量（Semaphore）是用来解决多进程或多线程对共享资源的互斥访问问题的，它应该属于进/线程同步机制。所以我会把信号量（Semaphore）放在下一篇讲进/线程同步问题的时候介绍，本篇只介绍XSI IPC里的消息队列和共享内存。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;不过，《APUE》既然提到了三种XSI IPC：消息队列、信号量、共享存储。也就是说信号量同消息队列还有共享存储出自同一家标准，所以它们还是有些联系的。下面简单说一下。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;每个IPC对象（消息队列、信号量、共享存储）都有两个名字：标识符和键。其中标识符是内部名，键是外部名。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;标识符&lt;/strong&gt;不同于文件描述符，它不是小整数，而是连续加1，直到达到最大值之后又回转到0；&lt;/li&gt;
+&lt;li&gt;创建IPC对象时需要指定&lt;strong&gt;键&lt;/strong&gt;，其类型为key_t，通常在头文件&amp;lt;sys/types.h&amp;gt;中被定义为长整型，内核负责把键变换成标识符。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;键的指定有三种方式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IPC_PRIVATE；&lt;/li&gt;
+&lt;li&gt;自己定义；&lt;/li&gt;
+&lt;li&gt;用ftok函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;XSI IPC为每一个IPC结构关联了一个权限结构体ipc_perm，该结构规定了权限和所有者，创建IPC对象后，可以通过***ctl函数来修改这个结构体里某些字段的值。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;XSI IPC的缺点：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IPC结构没有引用计数，终止之后也不会删除，需要通过调用msgctl或者执行命令ipcrm来删除；&lt;/li&gt;
+&lt;li&gt;IPC结构不在文件系统中，也没有文件描述符，所以不能用ls来查看，也不能对它们用select/poll等IO多路复用函数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;消息队列&#34;&gt;消息队列
+&lt;/h2&gt;&lt;p&gt;消息队列是消息的链表，存储在内核中，由消息队列标识符标识。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/msg.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;msgget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;key_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回消息队列ID；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;msgctl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;msqid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cmd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;msqid_ds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;msgsnd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;msqid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nbytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;ssize_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;msgrcv&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;msqid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;ptr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;nbytes&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;long&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回消息数据部分的长度；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;msgget函数用于创建一个新队列或打开一个现有队列，其中flag参数用于设置权限（ipc_perm中的mode成员）；&lt;/li&gt;
+&lt;li&gt;msgctl函数用于修改ipc_perm结构的成员值，也用于删除消息队列以及仍在该队列中的所有数据；&lt;/li&gt;
+&lt;li&gt;msgsnd函数用于讲新消息添加到队列尾端；&lt;/li&gt;
+&lt;li&gt;msgrcv函数用于从队列中取消息。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;并不一定要以先进先出顺序取消息，也可以按照消息的类型（type）字段取消息。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;共享存储&#34;&gt;共享存储
+&lt;/h2&gt;&lt;p&gt;共享存储允许两个或多个进程共享一个给定的存储区。因为数据不需要在进程之间复制，所以这是最快的一种IPC。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;共享存储有两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;内存文件映射：即通过mmap函数，将同一个文件映射到多个进程的虚拟地址空间；&lt;/li&gt;
+&lt;li&gt;XSI共享存储：与内存文件映射相比，它没有相关文件，它的共享存储段是内存的匿名段。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;xsi-共享存储&#34;&gt;XSI 共享存储
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/shm.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shmget&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;key_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回共享存储ID；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shmctl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;shmid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;cmd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;shmid_ds&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;buf&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;shmat&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;shmid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回指向共享存储段的指针；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;shmdt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;shmget函数用于获得一个共享存储标识符，size为共享存储段的长度（以字节为单位），flag参数设置权限；&lt;/li&gt;
+&lt;li&gt;shmctl函数用于修改ipc_perm结构的成员值，也用于删除共享存储以及仍在该共享存储中的所有数据；&lt;/li&gt;
+&lt;li&gt;shmat函数用于将共享存储段与进程地址空间连接起来，addr参数用于指定连接地址，一般为0，指连接地址由系统决定；&lt;/li&gt;
+&lt;li&gt;shmdt函数用于在对共享存储段的操作结束之后，将进程地址空间与该共享存储段分离，注意，仅分离，并不删除。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;内存文件映射&#34;&gt;内存文件映射
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/mman.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;mmap&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;size_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;prot&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;flag&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;fd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;off_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;off&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回映射区起始地址；出错返回MAP_FAILED
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;addr参数用于指定映射区的起始地址，一般为0，指起始地址由系统决定；&lt;/li&gt;
+&lt;li&gt;len参数为映射的字节数；&lt;/li&gt;
+&lt;li&gt;fd参数为要映射的文件的文件描述符；&lt;/li&gt;
+&lt;li&gt;off参数为要映射字节在文件中的起始偏移量；&lt;/li&gt;
+&lt;li&gt;prot参数指定映射区的保护要求；&lt;/li&gt;
+&lt;li&gt;flag参数影响映射区的多种属性，不详细展开。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/mmap.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;信号&#34;&gt;信号
+&lt;/h1&gt;&lt;p&gt;信号是软件中断。它只能用于通知进程某事件的发生，并不能传输数据。&lt;/p&gt;
+&lt;p&gt;通过kill -l命令可以看到目前Linux支持的全部信号，已经达到了62种（32号和33号没有）。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;每个信号的名字都是以SIG开头，这些信号名在头文件&amp;lt;signal.h&amp;gt;中被定义为正整数常量（信号编号）。&lt;/p&gt;
+&lt;p&gt;在某个信号出现时，可以告诉内核按下列三种方式之一处理：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;忽略该信号；&lt;/li&gt;
+&lt;li&gt;捕捉信号。为了做到这一点，要通知内核在某种信号发生时，调用一个用户函数。在用户函数中，可执行用户希望对这种事件进行的处理；&lt;/li&gt;
+&lt;li&gt;执行系统默认动作。大多数信号的系统默认动作是终止该进程；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;UNIX系统信号机制最简单的接口是signal函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;signal.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;signal&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;signo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;func&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)))&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回以前的信号处理配置；出错返回SIG_ERR
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;signo是我们要处理的信号的信号名；func是我们对信号signo要进行的处理方式，有以下三种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若为SIG_IGN则向内核表示忽略该信号（SIGKILL和SIGSTOP不能忽略）；&lt;/li&gt;
+&lt;li&gt;若为SIG_DFL则向内核表示接到此信号后的动作是系统默认动作；&lt;/li&gt;
+&lt;li&gt;若为函数地址，则在信号发生时，调用该函数。该函数则叫做信号处理程序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;signal函数现在已基本被sigaction函数替代&lt;/strong&gt;：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;signal.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;sigaction&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;signo&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigaction&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;act&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigaction&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;oact&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;sigaction函数的功能是检查或修改与指定信号相关联的处理动作：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;signo参数是要检测或修改其具体动作的信号编号；&lt;/li&gt;
+&lt;li&gt;act用于指定新的信号处理方式；&lt;/li&gt;
+&lt;li&gt;oact若不为NULL，则通过它返回之前的信号处理方式。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;sigaction结构体里的sa_handler成员指定信号处理方式。详见《APUE》。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;套接字&#34;&gt;套接字
+&lt;/h1&gt;&lt;h2 id=&#34;套接字描述符&#34;&gt;套接字描述符
+&lt;/h2&gt;&lt;p&gt;套接字实现通过网络相连的不同计算机之间的进程间通信。在UNIX系统中，套接字也是一种文件类型，故它也有自己的文件描述符，叫做套接字描述符。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/socket.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;socket&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;type&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;protocol&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回套接字（文件）描述符；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;domain参数确定通信的特性，其常见取值为:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;AF_INET：代表IPv4；&lt;/li&gt;
+&lt;li&gt;AF_INET6：代表IPv6。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;type参数确定套接字类型，进一步确定通信特征，常见取值为：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SOCK_DGRAM：固定长度、无连接、不可靠报文传递；&lt;/li&gt;
+&lt;li&gt;SOCK_STREAM：有序、可靠、双向、面向连接的字节流。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;protocol参数通常为0，表示为给定的domain和type选择默认协议：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;domain=AF_INET，type=SOCK_STREAM时，默认协议为TCP；&lt;/li&gt;
+&lt;li&gt;domain=AF_INET，type=SOCK_DGRAM时，默认协议为UDP。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;尽管套接字描述符本质上是文件描述符，但并非所有参数为文件描述符的函数都可以接受套接字描述符。如lseek就不能，因为套接字没有文件偏移量的概念。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;寻址及关联&#34;&gt;寻址及关联
+&lt;/h2&gt;&lt;p&gt;我们想跟另一台主机上的进程通信，首先要能够标识我们的目标通信进程，需要两个信息：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;IP地址：锁定要通信的计算机；&lt;/li&gt;
+&lt;li&gt;端口号：锁定要通信的进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;可以称（IP，Port）为套接字地址。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;但是有这样一个CPU架构特性——字节序，字节序分两种：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;大端字节序：高位存在低地址，低位存在高地址；&lt;/li&gt;
+&lt;li&gt;小端字节序：低位存在低地址，高位存在高地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;不同的计算机使用的CPU不同，那主机字节序就有可能不同，这个问题必须解决，要不然我这边是0x01020304，传到那边成0x04030201了，这是绝对不可以的。解决方案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;由网络协议指定一种字节序，称为网络字节序。通信双方收到数据后再转成自己的字节序。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TCP/IP协议栈采用大端字节序。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;UNIX提供了四个函数，用于完成主机字节序和网络字节序的相互转换：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;arpa/inet.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint32_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;htonl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint32_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hostint32&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//32位整数的主机字节序到网络字节序的转换
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;htons&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;hostint16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//16位整数的主机字节序到网络字节序的转换
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint32_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;ntohl&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint32_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;netint32&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//32位整数的网络字节序到主机字节序的转换
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;ntohs&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;uint16_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;netint16&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;&lt;span class=&#34;c1&#34;&gt;//16位整数的网络字节序到主机字节序的转换
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;在IPv4因特网中，套接字地址用结构体sockaddr_in表示：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;9
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;in_addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;in_addr_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;s_addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;//IPv4地址
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;};&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockaddr_in&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;{&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;	&lt;span class=&#34;kt&#34;&gt;sa_family_t&lt;/span&gt;    &lt;span class=&#34;n&#34;&gt;sin_family&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt; &lt;span class=&#34;c1&#34;&gt;//协议族
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;kt&#34;&gt;in_port_t&lt;/span&gt;      &lt;span class=&#34;n&#34;&gt;sin_port&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;//端口号
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;	&lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;in_addr&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sin_addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;;&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;//IPv4地址
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;IP地址我们经常用点分十进制表示，但是计算机只能理解二进制格式，所以还有两个用来转换点分十进制和二进制地址的函数：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 4
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 5
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 6
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 7
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 8
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 9
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;10
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;arpa/inet.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;nf&#34;&gt;inet_ntop&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                      &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                      &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                      &lt;span class=&#34;kt&#34;&gt;socklen_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;size&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：成功则返回点分十进制地址字符串的指针；出错返回NULL
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;inet_pton&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;domain&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;char&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;str&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;              &lt;span class=&#34;kt&#34;&gt;void&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：成功则返回1；若格式无效则返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;inet_ntop函数将网络字节序二进制地址转换为点分十进制；&lt;/li&gt;
+&lt;li&gt;inet_pton函数将点分十进制转换为网络字节序的二进制地址。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;客户端程序的套接字由系统选择默认端口即可；而对于服务端程序，我们需要把其套接字关联到一个固定的套接字地址上，这个过程由bind函数完成：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/socket.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;bind&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockaddr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;socklen_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;sockfd参数为要关联地址的套接字描述符（socket函数的返回值）；&lt;/li&gt;
+&lt;li&gt;addr参数为套接字地址结构体，对sockaddr_in结构体进行类型转换即可；&lt;/li&gt;
+&lt;li&gt;len参数为addr变量的大小，可由sizeof()得出。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;建立连接&#34;&gt;建立连接
+&lt;/h2&gt;&lt;p&gt;对于面向连接的套接字类型（如SOCK_STREAM），在开始交换数据之前，需要在客户端和服务端之间建立连接，发起连接的一般为客户端，这由connect函数完成：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/socket.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;connect&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;const&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockaddr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;socklen_t&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;sock参数是要发起连接的套接字描述符（即客户端的套接字描述符）；&lt;/li&gt;
+&lt;li&gt;addr参数是服务端的套接字（即对方的套接字地址结构）；&lt;/li&gt;
+&lt;li&gt;len参数addr变量的大小，可由sizeof()得出。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;因为我们通常不会用bind函数给客户端的套接字绑定一个地址（端口号），所以connect函数会给客户端套接字绑定一个默认地址，即客户端进程的端口号在这时产生。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;服务器调用listen函数来宣告它愿意接受连接请求：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/socket.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;listen&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;backlog&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//返回值：成功返回0；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;sockfd参数为服务端套接字描述符；&lt;/li&gt;
+&lt;li&gt;backlog参数规定了内核应该为该套接字排队的最大连接个数。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;backlog参数牵扯到TCP连接的内容，以后细讲。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;调用listen之后，服务端套接字就能接收连接请求，使用accept函数获得连接请求并建立连接：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-c&#34; data-lang=&#34;c&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;#include&lt;/span&gt; &lt;span class=&#34;cpf&#34;&gt;&amp;lt;sys/socket.h&amp;gt;&lt;/span&gt;&lt;span class=&#34;cp&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;cp&#34;&gt;&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;accept&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;kt&#34;&gt;int&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockfd&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;struct&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sockaddr&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;addr&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;socklen&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt;&lt;span class=&#34;kr&#34;&gt;restrict&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;len&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;);&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;//成功返回新的套接字描述符；出错返回-1
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;ul&gt;
+&lt;li&gt;sockfd参数为服务端套接字描述符；&lt;/li&gt;
+&lt;li&gt;如果不关心客户端的身份，addr和len可以均设为NULL。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;accept函数返回一个新的套接字描述符，这个新的套接字与客户端套接字连接在一起，并用来交换数据；&lt;/p&gt;
+&lt;p&gt;这个新的套接字与原始套接字（sockfd）具有相同的套接字类型和地址族；&lt;/p&gt;
+&lt;p&gt;原始套接字继续保持可用状态并接收其他连接请求。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;时序图&#34;&gt;时序图
+&lt;/h2&gt;&lt;p&gt;一图胜千言，下面是面向连接的TCP socket通信时序图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/princple.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;h1 id=&#34;总结&#34;&gt;总结
+&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;《APUE》中明确指明，要尽量避免使用消息队列及信号量（Semaphore）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;为什么共享存储是最快的IPC方式？&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;使用PIPE、FIFO、消息队列如下图所示：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;使用PIPE、FIFO、消息队列从一个文件传输信息到另外一个文件需要复制4次：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;服务端将信息从相应的文件复制到服务端临时缓冲区中；&lt;/li&gt;
+&lt;li&gt;从服务端临时缓冲区中复制到PIPE（FIFO/消息队列）；&lt;/li&gt;
+&lt;li&gt;客户端将信息从PIPE（FIFO/消息队列）复制到客户端临时缓冲区中；&lt;/li&gt;
+&lt;li&gt;从客户端临时缓冲区将信息复制到输出文件中。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;共享内存的消息复制只有两次：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;从输入文件到共享内存；&lt;/li&gt;
+&lt;li&gt;从共享内存到输出文件。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;PIPE、FIFO、消息队列都属于间接通信，它们要经过内核；而共享存储属于直接通信，共享存储段分配在虚拟地址空间中的用户那一部分，客户端和服务端共享，不经过内核而直接读写，所以快。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;共享存储的缺点就是需要进行同步操作。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
+        <title>进程调度</title>
+        <link>https://MasonCodingHere.github.io/p/process-scheduling/</link>
+        <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/process-scheduling/</guid>
+        <description>&lt;h1 id=&#34;调度的概念&#34;&gt;调度的概念
+&lt;/h1&gt;&lt;p&gt;首先，在《进程与线程基础》一文中，我们已经了解到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;进程是资源分配的基本单位；&lt;/li&gt;
+&lt;li&gt;线程是CPU调度的基本单位。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个单核CPU在某一时刻只能允许一个线程执行，但是现在的计算机总是有一大堆进/线程等待执行。这就需要某种规则来决定处理这些进/线程的顺序，这就是&lt;strong&gt;调度&lt;/strong&gt;要研究的问题。&lt;/p&gt;
+&lt;p&gt;回忆之前提到的进程状态：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/process-states.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;运行态&lt;/strong&gt;：当前正在占有CPU的进/线程；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;就绪态&lt;/strong&gt;：具备运行条件，等待系统分配CPU的进/线程；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;阻塞态&lt;/strong&gt;：不具备运行条件，正在等待某外部事件发生的进/线程。&lt;/p&gt;
+&lt;p&gt;所谓&lt;strong&gt;进程调度&lt;/strong&gt;，就是指在处于就绪态的一堆进/线程里，按照一定的调度算法，选出一个进/线程并给它分配CPU时间让它运行，从而实现多进程/多线程的并发执行。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;进程调度与线程调度尽管有些不同，但大部分是相同的，本文仅关注二者共同的部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;进程切换的基本流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先用户态必须切换到内核态；&lt;/li&gt;
+&lt;li&gt;保存当前进程的状态，包括在其PCB中保存CPU各寄存器值，以便日后重新执行；&lt;/li&gt;
+&lt;li&gt;调度算法选定一个新进程；&lt;/li&gt;
+&lt;li&gt;新进程的内存地址空间重新装入MMU（内存管理单元）；&lt;/li&gt;
+&lt;li&gt;新进程开始执行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;调度目标&#34;&gt;调度目标
+&lt;/h1&gt;&lt;h2 id=&#34;所有系统&#34;&gt;所有系统
+&lt;/h2&gt;&lt;p&gt;对于所有系统，都应该有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;公平——给每个进程公平的CPU份额；&lt;/li&gt;
+&lt;li&gt;策略强制执行——保证规定的调度策略被执行；&lt;/li&gt;
+&lt;li&gt;平衡——保证系统的所有部分都在忙碌。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;批处理系统&#34;&gt;批处理系统
+&lt;/h2&gt;&lt;p&gt;批处理系统更适合非抢占式调度算法（见下文），应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;吞吐量——每小时最大作业数；&lt;/li&gt;
+&lt;li&gt;周转时间——从提交到终止的最短时间；&lt;/li&gt;
+&lt;li&gt;CPU利用率——保持CPU始终忙碌。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;交互式系统&#34;&gt;交互式系统
+&lt;/h2&gt;&lt;p&gt;交互式系统更适合抢占式调度算法（见下文），应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;响应时间——快速响应请求；&lt;/li&gt;
+&lt;li&gt;均衡性——满足用户的期望。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;实时系统&#34;&gt;实时系统
+&lt;/h2&gt;&lt;p&gt;对于实时系统，应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;满足截止时间——避免丢失数据；&lt;/li&gt;
+&lt;li&gt;可预测性——如多媒体系统中避免品质降低。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;调度算法&#34;&gt;调度算法
+&lt;/h1&gt;&lt;p&gt;进程调度的核心自然是调度规则，即各种调度算法。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;计算机都有一个&lt;strong&gt;硬件时钟&lt;/strong&gt;，也叫RTC或CMOS，它独立于操作系统，由主板上一块电池供电的芯片，所以即使计算机断电，RTC也可以维持时间。这个硬件时钟会周期性的发出时钟中断。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;根据如何处理时钟中断，可以把调度算法分为两类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非抢占式调度算法：发生时钟中断时不调度；&lt;/li&gt;
+&lt;li&gt;抢占式调度算法：通过时钟中断使CPU控制权返回给调度程序，进而调度其它进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;非抢占式调度算法：正在运行的进程只有在该进程执行完成或发生阻塞（如I/O请求）的情况下才会释放CPU；&lt;/p&gt;
+&lt;p&gt;抢占式调度算法：分给进程的时间片耗尽之后，无论当前进程有没有执行完成，调度程序均选择其他进程执行。&lt;/p&gt;
+&lt;h2 id=&#34;非抢占式调度算法&#34;&gt;非抢占式调度算法
+&lt;/h2&gt;&lt;h3 id=&#34;先来先服务&#34;&gt;先来先服务
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;先来先服务算法&lt;/strong&gt;（FCFS）：按照进程请求CPU的顺序调度它们。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;意思就是，所有的就绪状态的进程在一个队列中，申请使用CPU的进程按照先来后到的顺序排在队列尾部，每执行完一个进程，系统就从该队列的头部取出第一个进程来执行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;易于理解且算法实现简单；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对短进程不利。排在长进程后面的短进程需要等待很长时间，短进程的响应时间可能会很长。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;最短作业优先&#34;&gt;最短作业优先
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;最短作业优先算法&lt;/strong&gt;（SJF）：每次调度时选择当前已到达的、且运行时间最短的作业。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对比FCFS，平均等待时间、平均周转时间、平均带权周转时间均有提高；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;需提前掌握各作业的运行时间；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对长作业不利。因为如果一直有短作业到来，那么长作业永远得不到调度，长作业有可能会&lt;strong&gt;饿死&lt;/strong&gt;，处于一直等待短作业执行完毕的状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;周转时间：从进程请求CPU到进程执行完毕为止的统计平均时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;非抢占式优先级调度&#34;&gt;非抢占式优先级调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;优先级调度&lt;/strong&gt;：每个进程被赋予一个优先级，允许优先级最高的可运行进程先运行。&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;非抢占式优先级调度&lt;/strong&gt;，当一个进程到达就绪队列时，比较它的优先级与当前运行进程的优先级。如果新到达进程的优先级高于当前运行进程的优先级，非抢占优先级调度算法只是将新的进程加到就绪队列的头部，而不会进行进程切换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若有源源不断的高优先级进程到来，低优先级进程会导致饥饿。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;抢占式调度算法&#34;&gt;抢占式调度算法
+&lt;/h2&gt;&lt;h3 id=&#34;最短剩余时间优先&#34;&gt;最短剩余时间优先
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;最短剩余时间优先&lt;/strong&gt;（SRTN）：当一个新的进程到达时，把它所需要的整个运行时间与当前进程的剩余运行时间作比较。如果新的进程需要的时间更少，则挂起当前进程，运行新的进程，否则新的进程等待。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以使新的短进程得到良好的服务。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;需提前掌握各进程的运行时间；&lt;/li&gt;
+&lt;li&gt;对长进程不利。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;最短剩余时间优先&lt;/strong&gt;（SRTN）是最短作业优先的抢占式版本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;轮转调度&#34;&gt;轮转调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;轮转调度&lt;/strong&gt;（RR）:每个进程被分配一个时间段，称为时间片，即允许该进程在该时间段内运行。如果在时间片结束时该进程还在运行，则剥夺其CPU并分配给另一个进程；如果该进程在时间片结束前阻塞或结束，则立即进行进程切换。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;轮转调度算法对每个进程都一视同仁，就好比大家都排好队，一个一个来，每个人都运行一会儿再接着重新排队等待运行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/Round-Robin-Scheduling.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;易理解且算法易实现；&lt;/li&gt;
+&lt;li&gt;可以兼顾长进程和短进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;平均等待时间较长，频繁上下文切换比较费时；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;时间片的长度选取困难。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;时间片设置的太短会导致过多的进程切换，降低CPU效率；&lt;/p&gt;
+&lt;p&gt;时间片设置的太长又可能会引起对短的交互请求的响应时间变长。&lt;/p&gt;
+&lt;p&gt;通常时间片设为20-50ms是一个较合理的折中。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;抢占式优先级调度&#34;&gt;抢占式优先级调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;优先级调度&lt;/strong&gt;：每个进程被赋予一个优先级，允许优先级最高的可运行进程先运行。&lt;/p&gt;
+&lt;p&gt;优先级调度的问题在于高优先级进程可能无休止地运行下去，对此有两种解决方案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调度程序可能在每个时钟中断降低当前进程的优先级。如果调整后该进程的优先级低于次高优先级的进程，则进行进程切换。&lt;/li&gt;
+&lt;li&gt;给每个进程赋予一个允许运行的最大时间片，时间片耗尽，次高优先级的进程就获得运行机会。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;优先级有&lt;strong&gt;静态赋予&lt;/strong&gt;和&lt;strong&gt;动态赋予&lt;/strong&gt;两种方式。&lt;/p&gt;
+&lt;p&gt;静态赋予即在创建进程时人为确定进程的优先级，并且规定它在进程的整个运行期间保持不变；&lt;/p&gt;
+&lt;p&gt;动态赋予即在创建进程时赋予该进程一个初始优先级，然后系统根据进程的执行情况的变化而不断改变其优先级，以便获得更好的调度性能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于&lt;strong&gt;抢占式优先级调度&lt;/strong&gt;，当一个进程到达就绪队列时，比较它的优先级与当前运行进程的优先级。如果新到达进程的优先级高于当前运行进程的优先级，那么抢占式优先级调度算法就会进行进程切换，让新到的高优先级进程运行。&lt;/p&gt;
+&lt;h3 id=&#34;多级反馈队列&#34;&gt;多级反馈队列
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;多级反馈队列&lt;/strong&gt;：在系统中设置多个就绪队列，并为每个队列赋予不同的优先级，从第一个开始逐个降低。不同队列中的进程所赋予的执行时间也不同，&lt;strong&gt;优先级越高，时间片越小。&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先调度优先级高的队列中的进程。若高优先级中队列中已没有调度的进程，则调度次优先级队列中的进程；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于同一个队列中的各个进程，按照时间片&lt;strong&gt;轮转调度&lt;/strong&gt;；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当一个进程用完分配的时间片后，它被移到低一级优先级队列。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;彩票调度&#34;&gt;彩票调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;彩票调度&lt;/strong&gt;：为进程提供各种系统资源（如CPU时间）的彩票。一旦要做出调度决策时，就随机抽取一张彩票，拥有该彩票的进程则获得该资源。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为了增加重要进程“中彩票”的机率，可以给它们额外的彩票。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;公平分享调度&#34;&gt;公平分享调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;公平分享调度&lt;/strong&gt;：考虑进程的拥有者是谁，保证每个用户公平的分享CPU。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;之前的调度算法都不关注进程所有者是谁。这样做的结果是，如果用户1启动9个进程而用户2启动1个进程，使用轮转或相同优先级调度算法，那么用户1将得到90%的CPU时间，而用户2只得到10%的CPU时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        <item>
         <title>C&#43;&#43;成员函数调用方式</title>
         <link>https://MasonCodingHere.github.io/p/cpp-member-function-calling/</link>
         <pubDate>Mon, 28 Jun 2021 20:24:15 -0700</pubDate>

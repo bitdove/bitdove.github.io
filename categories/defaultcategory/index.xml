@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>DefaultCategory on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/categories/defaultcategory/</link>
+        <description>Recent content in DefaultCategory on Mason&#39;s Blog</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Mason</copyright>
+        <lastBuildDate>Mon, 06 Jun 2022 01:14:52 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/defaultcategory/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>进程调度</title>
+        <link>https://MasonCodingHere.github.io/p/process-scheduling/</link>
+        <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/p/process-scheduling/</guid>
+        <description>&lt;h1 id=&#34;调度的概念&#34;&gt;调度的概念
+&lt;/h1&gt;&lt;p&gt;首先，在《进程与线程基础》一文中，我们已经了解到：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;进程是资源分配的基本单位；&lt;/li&gt;
+&lt;li&gt;线程是CPU调度的基本单位。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;一个单核CPU在某一时刻只能允许一个线程执行，但是现在的计算机总是有一大堆进/线程等待执行。这就需要某种规则来决定处理这些进/线程的顺序，这就是&lt;strong&gt;调度&lt;/strong&gt;要研究的问题。&lt;/p&gt;
+&lt;p&gt;回忆之前提到的进程状态：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/process-states.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;运行态&lt;/strong&gt;：当前正在占有CPU的进/线程；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;就绪态&lt;/strong&gt;：具备运行条件，等待系统分配CPU的进/线程；&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;阻塞态&lt;/strong&gt;：不具备运行条件，正在等待某外部事件发生的进/线程。&lt;/p&gt;
+&lt;p&gt;所谓&lt;strong&gt;进程调度&lt;/strong&gt;，就是指在处于就绪态的一堆进/线程里，按照一定的调度算法，选出一个进/线程并给它分配CPU时间让它运行，从而实现多进程/多线程的并发执行。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;进程调度与线程调度尽管有些不同，但大部分是相同的，本文仅关注二者共同的部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;进程切换的基本流程：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;首先用户态必须切换到内核态；&lt;/li&gt;
+&lt;li&gt;保存当前进程的状态，包括在其PCB中保存CPU各寄存器值，以便日后重新执行；&lt;/li&gt;
+&lt;li&gt;调度算法选定一个新进程；&lt;/li&gt;
+&lt;li&gt;新进程的内存地址空间重新装入MMU（内存管理单元）；&lt;/li&gt;
+&lt;li&gt;新进程开始执行。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h1 id=&#34;调度目标&#34;&gt;调度目标
+&lt;/h1&gt;&lt;h2 id=&#34;所有系统&#34;&gt;所有系统
+&lt;/h2&gt;&lt;p&gt;对于所有系统，都应该有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;公平——给每个进程公平的CPU份额；&lt;/li&gt;
+&lt;li&gt;策略强制执行——保证规定的调度策略被执行；&lt;/li&gt;
+&lt;li&gt;平衡——保证系统的所有部分都在忙碌。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;批处理系统&#34;&gt;批处理系统
+&lt;/h2&gt;&lt;p&gt;批处理系统更适合非抢占式调度算法（见下文），应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;吞吐量——每小时最大作业数；&lt;/li&gt;
+&lt;li&gt;周转时间——从提交到终止的最短时间；&lt;/li&gt;
+&lt;li&gt;CPU利用率——保持CPU始终忙碌。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;交互式系统&#34;&gt;交互式系统
+&lt;/h2&gt;&lt;p&gt;交互式系统更适合抢占式调度算法（见下文），应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;响应时间——快速响应请求；&lt;/li&gt;
+&lt;li&gt;均衡性——满足用户的期望。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;实时系统&#34;&gt;实时系统
+&lt;/h2&gt;&lt;p&gt;对于实时系统，应有以下调度目标：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;满足截止时间——避免丢失数据；&lt;/li&gt;
+&lt;li&gt;可预测性——如多媒体系统中避免品质降低。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;调度算法&#34;&gt;调度算法
+&lt;/h1&gt;&lt;p&gt;进程调度的核心自然是调度规则，即各种调度算法。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;计算机都有一个&lt;strong&gt;硬件时钟&lt;/strong&gt;，也叫RTC或CMOS，它独立于操作系统，由主板上一块电池供电的芯片，所以即使计算机断电，RTC也可以维持时间。这个硬件时钟会周期性的发出时钟中断。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;根据如何处理时钟中断，可以把调度算法分为两类：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;非抢占式调度算法：发生时钟中断时不调度；&lt;/li&gt;
+&lt;li&gt;抢占式调度算法：通过时钟中断使CPU控制权返回给调度程序，进而调度其它进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;非抢占式调度算法：正在运行的进程只有在该进程执行完成或发生阻塞（如I/O请求）的情况下才会释放CPU；&lt;/p&gt;
+&lt;p&gt;抢占式调度算法：分给进程的时间片耗尽之后，无论当前进程有没有执行完成，调度程序均选择其他进程执行。&lt;/p&gt;
+&lt;h2 id=&#34;非抢占式调度算法&#34;&gt;非抢占式调度算法
+&lt;/h2&gt;&lt;h3 id=&#34;先来先服务&#34;&gt;先来先服务
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;先来先服务算法&lt;/strong&gt;（FCFS）：按照进程请求CPU的顺序调度它们。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;意思就是，所有的就绪状态的进程在一个队列中，申请使用CPU的进程按照先来后到的顺序排在队列尾部，每执行完一个进程，系统就从该队列的头部取出第一个进程来执行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;易于理解且算法实现简单；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对短进程不利。排在长进程后面的短进程需要等待很长时间，短进程的响应时间可能会很长。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;最短作业优先&#34;&gt;最短作业优先
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;最短作业优先算法&lt;/strong&gt;（SJF）：每次调度时选择当前已到达的、且运行时间最短的作业。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;对比FCFS，平均等待时间、平均周转时间、平均带权周转时间均有提高；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;需提前掌握各作业的运行时间；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对长作业不利。因为如果一直有短作业到来，那么长作业永远得不到调度，长作业有可能会&lt;strong&gt;饿死&lt;/strong&gt;，处于一直等待短作业执行完毕的状态。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;周转时间：从进程请求CPU到进程执行完毕为止的统计平均时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;非抢占式优先级调度&#34;&gt;非抢占式优先级调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;优先级调度&lt;/strong&gt;：每个进程被赋予一个优先级，允许优先级最高的可运行进程先运行。&lt;/p&gt;
+&lt;p&gt;对于&lt;strong&gt;非抢占式优先级调度&lt;/strong&gt;，当一个进程到达就绪队列时，比较它的优先级与当前运行进程的优先级。如果新到达进程的优先级高于当前运行进程的优先级，非抢占优先级调度算法只是将新的进程加到就绪队列的头部，而不会进行进程切换。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;若有源源不断的高优先级进程到来，低优先级进程会导致饥饿。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;抢占式调度算法&#34;&gt;抢占式调度算法
+&lt;/h2&gt;&lt;h3 id=&#34;最短剩余时间优先&#34;&gt;最短剩余时间优先
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;最短剩余时间优先&lt;/strong&gt;（SRTN）：当一个新的进程到达时，把它所需要的整个运行时间与当前进程的剩余运行时间作比较。如果新的进程需要的时间更少，则挂起当前进程，运行新的进程，否则新的进程等待。&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;可以使新的短进程得到良好的服务。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;需提前掌握各进程的运行时间；&lt;/li&gt;
+&lt;li&gt;对长进程不利。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;最短剩余时间优先&lt;/strong&gt;（SRTN）是最短作业优先的抢占式版本。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;轮转调度&#34;&gt;轮转调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;轮转调度&lt;/strong&gt;（RR）:每个进程被分配一个时间段，称为时间片，即允许该进程在该时间段内运行。如果在时间片结束时该进程还在运行，则剥夺其CPU并分配给另一个进程；如果该进程在时间片结束前阻塞或结束，则立即进行进程切换。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;轮转调度算法对每个进程都一视同仁，就好比大家都排好队，一个一个来，每个人都运行一会儿再接着重新排队等待运行。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/Round-Robin-Scheduling.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;优点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;易理解且算法易实现；&lt;/li&gt;
+&lt;li&gt;可以兼顾长进程和短进程。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;缺点&lt;/strong&gt;：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;平均等待时间较长，频繁上下文切换比较费时；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;时间片的长度选取困难。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;时间片设置的太短会导致过多的进程切换，降低CPU效率；&lt;/p&gt;
+&lt;p&gt;时间片设置的太长又可能会引起对短的交互请求的响应时间变长。&lt;/p&gt;
+&lt;p&gt;通常时间片设为20-50ms是一个较合理的折中。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;抢占式优先级调度&#34;&gt;抢占式优先级调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;优先级调度&lt;/strong&gt;：每个进程被赋予一个优先级，允许优先级最高的可运行进程先运行。&lt;/p&gt;
+&lt;p&gt;优先级调度的问题在于高优先级进程可能无休止地运行下去，对此有两种解决方案：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;调度程序可能在每个时钟中断降低当前进程的优先级。如果调整后该进程的优先级低于次高优先级的进程，则进行进程切换。&lt;/li&gt;
+&lt;li&gt;给每个进程赋予一个允许运行的最大时间片，时间片耗尽，次高优先级的进程就获得运行机会。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;优先级有&lt;strong&gt;静态赋予&lt;/strong&gt;和&lt;strong&gt;动态赋予&lt;/strong&gt;两种方式。&lt;/p&gt;
+&lt;p&gt;静态赋予即在创建进程时人为确定进程的优先级，并且规定它在进程的整个运行期间保持不变；&lt;/p&gt;
+&lt;p&gt;动态赋予即在创建进程时赋予该进程一个初始优先级，然后系统根据进程的执行情况的变化而不断改变其优先级，以便获得更好的调度性能。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;对于&lt;strong&gt;抢占式优先级调度&lt;/strong&gt;，当一个进程到达就绪队列时，比较它的优先级与当前运行进程的优先级。如果新到达进程的优先级高于当前运行进程的优先级，那么抢占式优先级调度算法就会进行进程切换，让新到的高优先级进程运行。&lt;/p&gt;
+&lt;h3 id=&#34;多级反馈队列&#34;&gt;多级反馈队列
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;多级反馈队列&lt;/strong&gt;：在系统中设置多个就绪队列，并为每个队列赋予不同的优先级，从第一个开始逐个降低。不同队列中的进程所赋予的执行时间也不同，&lt;strong&gt;优先级越高，时间片越小。&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;首先调度优先级高的队列中的进程。若高优先级中队列中已没有调度的进程，则调度次优先级队列中的进程；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;对于同一个队列中的各个进程，按照时间片&lt;strong&gt;轮转调度&lt;/strong&gt;；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;当一个进程用完分配的时间片后，它被移到低一级优先级队列。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;彩票调度&#34;&gt;彩票调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;彩票调度&lt;/strong&gt;：为进程提供各种系统资源（如CPU时间）的彩票。一旦要做出调度决策时，就随机抽取一张彩票，拥有该彩票的进程则获得该资源。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;为了增加重要进程“中彩票”的机率，可以给它们额外的彩票。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&#34;公平分享调度&#34;&gt;公平分享调度
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;公平分享调度&lt;/strong&gt;：考虑进程的拥有者是谁，保证每个用户公平的分享CPU。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;之前的调度算法都不关注进程所有者是谁。这样做的结果是，如果用户1启动9个进程而用户2启动1个进程，使用轮转或相同优先级调度算法，那么用户1将得到90%的CPU时间，而用户2只得到10%的CPU时间。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
