@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Mon, 30 Sep 2024 09:52:09 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 13 Oct 2024 02:27:51 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Default-Tag</title>
+        <link>https://MasonCodingHere.github.io/tags/default-tag/</link>
+        <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/tags/default-tag/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>C&#43;&#43;</title>
         <link>https://MasonCodingHere.github.io/tags/c&#43;&#43;/</link>
         <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
@@ -61,14 +69,6 @@
         <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
         
         <guid>https://MasonCodingHere.github.io/tags/linux/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Default-Tag</title>
-        <link>https://MasonCodingHere.github.io/tags/default-tag/</link>
-        <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
-        
-        <guid>https://MasonCodingHere.github.io/tags/default-tag/</guid>
         <description></description>
         </item>
         <item>

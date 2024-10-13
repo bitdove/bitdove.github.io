@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Mon, 30 Sep 2024 09:52:09 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 13 Oct 2024 02:27:51 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>DefaultCategory</title>
+        <link>https://MasonCodingHere.github.io/categories/defaultcategory/</link>
+        <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/categories/defaultcategory/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>C/C&#43;&#43;</title>
         <link>https://MasonCodingHere.github.io/categories/c_c&#43;&#43;/</link>
         <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
@@ -38,14 +46,6 @@
         
         <guid>https://MasonCodingHere.github.io/categories/linux/</guid>
         <description>&lt;img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Tux.svg/1280px-Tux.svg.png" alt="Featured image of post Linux" /&gt;</description>
-        </item>
-        <item>
-        <title>DefaultCategory</title>
-        <link>https://MasonCodingHere.github.io/categories/defaultcategory/</link>
-        <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
-        
-        <guid>https://MasonCodingHere.github.io/categories/defaultcategory/</guid>
-        <description></description>
         </item>
         
     </channel>
