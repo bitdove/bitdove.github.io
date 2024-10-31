@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="关联式容器 关联式容器概述 关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。\n关联式容器没有头尾之分，自然也就没有push_back()、pop_front()等操作。\n关联式容器的内部结构只有两种：\n以红黑树（RB-tree）为底层结构: set map multiset multimap 以哈希表（Hash-table）为底层结构: unordered_set unordered_map unordered_multiset unordered_multimap Tree的导览 节点的大小：该节点及其所有子节点的节点总数； 路径长度：A节点到B节点的唯一路径经过的边数； 节点的高度：该节点到其最深子节点（叶节点）的路径长度； 节点的深度：根节点到该节点的路径长度 二叉搜索树 二叉搜索树的性质：左子树的节点值 &lt; 根节点的值 &lt; 右子树的节点值\n查找：找最小就一直往左走，找最大就一直往右走； 插入：从根节点开始，遇到大的就向左，遇到小的就向右，一直到尾端，即为插入点。 删除：分两种情况： 目标节点只有一个子节点，直接将其子节点连至其父节点。 目标节点有两个子节点，以右子树中的最小值取而代之即可。 平衡二叉搜索树 所谓平衡，即没有任何一个节点过深。\n平衡二叉搜索树是加了“额外平衡条件”的二叉搜索树。\n平衡二叉搜索树比一般的二叉搜索树要复杂，插入节点和删除节点的平均时间也更长，但是它们可以避免极难应付的最坏（高度不平衡）情况，而且由于它们总是保持着某种程度的平衡，所以元素的查找时间平均而言就比较少。\n平衡二叉搜索树相较一般的二叉搜索树：\n查找更快； 插入和删除节点较慢。 常见的平衡二叉搜索树有AVL树、红黑树。\nAVL树 为了确保整棵树的深度为O(logN)，AVL树的“额外平衡条件”是：\n任何节点的左右子树高度相差最多为1。 最佳的平衡条件肯定是每个节点的左右子树有相同高度，但这个条件过于严苛，很难保证插入新元素而又保持这种平衡。所以AVL树退而求其次，允许每个节点的左右子树高度相差1，虽然这个条件会把平衡弱化，但仍能保证“对数深度”平衡状态。\n插入新节点后，可能会有节点违反平衡条件，且只有插入点到根节点这条路径上的各节点可能违反平衡状态。只要调整其中最深的那个节点，便可使整棵树重新获得平衡。\n假设该最深节点为X，由于节点最多有两个子节点，而所谓“平衡被破坏”意味着X的左右子树的高度相差2，因此可以分为四种情况：\n插入点位于X的左子节点的左子树——左左； 插入点位于X的左子节点的右子树——左右； 插入点位于X的右子节点的左子树——右左； 插入点位于X的右子节点的右子树——右右。 左左和右右彼此对称，称为外侧插入，可用单旋转解决； 左右和右左彼此对此，称为内侧插入，可用双旋转解决。\n单旋转 对于外侧插入，以左左为例，情况肯定是这样的，X的左子节点的左子树因新节点插入而成长了一层，导致X的左子树比右子树深度多2.\n调整方法（左左为例）：将X的左子节点提起来，使X自然下滑，并将X的左子节点的右子树挂到下滑后的X的左侧，即可重新获得平衡。\n这么做的原因呢？\n二叉树的规则使我们知道，X值肯定大于X的左子节点值，所以X必须成为调整后的X的左子节点的右子节点； 同时，X的左子节点的右子树的所有节点值肯定介于X和X的左子节点的值之间，所以X的左子节点的右子树应该落在调整后的X的左侧。 可以看出，左左的单旋转是一次顺时针旋转；右右的单旋转对称，是一次逆时针旋转。\n双旋转 对于内侧插入，以左右为例，单旋转无法解决问题。\n调整方法：双旋转利用两次单旋转完成：\n先对X的左子节点和X的左子节点的右子节点做一次单旋转； 再对X和第一次调整后的新的X的左子节点（原来的X的左子节点的右子节点）做一次单旋转。 AVL树的平衡条件仍较为严苛，对于set和map来说，需要频繁的插入和删除，若用AVL树作底层结构，会影响性能。AVL树只适合查找较多而插入删除操作较少的情况。\nRB-tree(红黑树) 红黑树不仅是二叉搜索树，而且满足以下规则：\n每个节点不是红色就是黑色； 根节点是黑色； 如果节点为红，其子节点必须为黑；(即父子节点不得同时为红)； 任一节点至NULL的任何路径，所含黑节点树必须相同。 根据规则4，新增节点必须为红； 根据规则3，新增节点的父节点必须为黑。 当新节点按照二叉搜索树的规则到达插入点，却未能符合上述条件时，就必须调整颜色和旋转树形。\n">
+<title>Cpp STL Container</title>
+
+<link rel='canonical' href='https://MasonCodingHere.github.io/posts/cpp-stl-container/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Cpp STL Container">
+<meta property='og:description' content="关联式容器 关联式容器概述 关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。\n关联式容器没有头尾之分，自然也就没有push_back()、pop_front()等操作。\n关联式容器的内部结构只有两种：\n以红黑树（RB-tree）为底层结构: set map multiset multimap 以哈希表（Hash-table）为底层结构: unordered_set unordered_map unordered_multiset unordered_multimap Tree的导览 节点的大小：该节点及其所有子节点的节点总数； 路径长度：A节点到B节点的唯一路径经过的边数； 节点的高度：该节点到其最深子节点（叶节点）的路径长度； 节点的深度：根节点到该节点的路径长度 二叉搜索树 二叉搜索树的性质：左子树的节点值 &lt; 根节点的值 &lt; 右子树的节点值\n查找：找最小就一直往左走，找最大就一直往右走； 插入：从根节点开始，遇到大的就向左，遇到小的就向右，一直到尾端，即为插入点。 删除：分两种情况： 目标节点只有一个子节点，直接将其子节点连至其父节点。 目标节点有两个子节点，以右子树中的最小值取而代之即可。 平衡二叉搜索树 所谓平衡，即没有任何一个节点过深。\n平衡二叉搜索树是加了“额外平衡条件”的二叉搜索树。\n平衡二叉搜索树比一般的二叉搜索树要复杂，插入节点和删除节点的平均时间也更长，但是它们可以避免极难应付的最坏（高度不平衡）情况，而且由于它们总是保持着某种程度的平衡，所以元素的查找时间平均而言就比较少。\n平衡二叉搜索树相较一般的二叉搜索树：\n查找更快； 插入和删除节点较慢。 常见的平衡二叉搜索树有AVL树、红黑树。\nAVL树 为了确保整棵树的深度为O(logN)，AVL树的“额外平衡条件”是：\n任何节点的左右子树高度相差最多为1。 最佳的平衡条件肯定是每个节点的左右子树有相同高度，但这个条件过于严苛，很难保证插入新元素而又保持这种平衡。所以AVL树退而求其次，允许每个节点的左右子树高度相差1，虽然这个条件会把平衡弱化，但仍能保证“对数深度”平衡状态。\n插入新节点后，可能会有节点违反平衡条件，且只有插入点到根节点这条路径上的各节点可能违反平衡状态。只要调整其中最深的那个节点，便可使整棵树重新获得平衡。\n假设该最深节点为X，由于节点最多有两个子节点，而所谓“平衡被破坏”意味着X的左右子树的高度相差2，因此可以分为四种情况：\n插入点位于X的左子节点的左子树——左左； 插入点位于X的左子节点的右子树——左右； 插入点位于X的右子节点的左子树——右左； 插入点位于X的右子节点的右子树——右右。 左左和右右彼此对称，称为外侧插入，可用单旋转解决； 左右和右左彼此对此，称为内侧插入，可用双旋转解决。\n单旋转 对于外侧插入，以左左为例，情况肯定是这样的，X的左子节点的左子树因新节点插入而成长了一层，导致X的左子树比右子树深度多2.\n调整方法（左左为例）：将X的左子节点提起来，使X自然下滑，并将X的左子节点的右子树挂到下滑后的X的左侧，即可重新获得平衡。\n这么做的原因呢？\n二叉树的规则使我们知道，X值肯定大于X的左子节点值，所以X必须成为调整后的X的左子节点的右子节点； 同时，X的左子节点的右子树的所有节点值肯定介于X和X的左子节点的值之间，所以X的左子节点的右子树应该落在调整后的X的左侧。 可以看出，左左的单旋转是一次顺时针旋转；右右的单旋转对称，是一次逆时针旋转。\n双旋转 对于内侧插入，以左右为例，单旋转无法解决问题。\n调整方法：双旋转利用两次单旋转完成：\n先对X的左子节点和X的左子节点的右子节点做一次单旋转； 再对X和第一次调整后的新的X的左子节点（原来的X的左子节点的右子节点）做一次单旋转。 AVL树的平衡条件仍较为严苛，对于set和map来说，需要频繁的插入和删除，若用AVL树作底层结构，会影响性能。AVL树只适合查找较多而插入删除操作较少的情况。\nRB-tree(红黑树) 红黑树不仅是二叉搜索树，而且满足以下规则：\n每个节点不是红色就是黑色； 根节点是黑色； 如果节点为红，其子节点必须为黑；(即父子节点不得同时为红)； 任一节点至NULL的任何路径，所含黑节点树必须相同。 根据规则4，新增节点必须为红； 根据规则3，新增节点的父节点必须为黑。 当新节点按照二叉搜索树的规则到达插入点，却未能符合上述条件时，就必须调整颜色和旋转树形。\n">
+<meta property='og:url' content='https://MasonCodingHere.github.io/posts/cpp-stl-container/'>
+<meta property='og:site_name' content='Mason&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:tag' content='STL' /><meta property='article:published_time' content='2024-10-30T23:34:54-07:00'/><meta property='article:modified_time' content='2024-10-30T23:34:54-07:00'/>
+<meta name="twitter:title" content="Cpp STL Container">
+<meta name="twitter:description" content="关联式容器 关联式容器概述 关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。\n关联式容器没有头尾之分，自然也就没有push_back()、pop_front()等操作。\n关联式容器的内部结构只有两种：\n以红黑树（RB-tree）为底层结构: set map multiset multimap 以哈希表（Hash-table）为底层结构: unordered_set unordered_map unordered_multiset unordered_multimap Tree的导览 节点的大小：该节点及其所有子节点的节点总数； 路径长度：A节点到B节点的唯一路径经过的边数； 节点的高度：该节点到其最深子节点（叶节点）的路径长度； 节点的深度：根节点到该节点的路径长度 二叉搜索树 二叉搜索树的性质：左子树的节点值 &lt; 根节点的值 &lt; 右子树的节点值\n查找：找最小就一直往左走，找最大就一直往右走； 插入：从根节点开始，遇到大的就向左，遇到小的就向右，一直到尾端，即为插入点。 删除：分两种情况： 目标节点只有一个子节点，直接将其子节点连至其父节点。 目标节点有两个子节点，以右子树中的最小值取而代之即可。 平衡二叉搜索树 所谓平衡，即没有任何一个节点过深。\n平衡二叉搜索树是加了“额外平衡条件”的二叉搜索树。\n平衡二叉搜索树比一般的二叉搜索树要复杂，插入节点和删除节点的平均时间也更长，但是它们可以避免极难应付的最坏（高度不平衡）情况，而且由于它们总是保持着某种程度的平衡，所以元素的查找时间平均而言就比较少。\n平衡二叉搜索树相较一般的二叉搜索树：\n查找更快； 插入和删除节点较慢。 常见的平衡二叉搜索树有AVL树、红黑树。\nAVL树 为了确保整棵树的深度为O(logN)，AVL树的“额外平衡条件”是：\n任何节点的左右子树高度相差最多为1。 最佳的平衡条件肯定是每个节点的左右子树有相同高度，但这个条件过于严苛，很难保证插入新元素而又保持这种平衡。所以AVL树退而求其次，允许每个节点的左右子树高度相差1，虽然这个条件会把平衡弱化，但仍能保证“对数深度”平衡状态。\n插入新节点后，可能会有节点违反平衡条件，且只有插入点到根节点这条路径上的各节点可能违反平衡状态。只要调整其中最深的那个节点，便可使整棵树重新获得平衡。\n假设该最深节点为X，由于节点最多有两个子节点，而所谓“平衡被破坏”意味着X的左右子树的高度相差2，因此可以分为四种情况：\n插入点位于X的左子节点的左子树——左左； 插入点位于X的左子节点的右子树——左右； 插入点位于X的右子节点的左子树——右左； 插入点位于X的右子节点的右子树——右右。 左左和右右彼此对称，称为外侧插入，可用单旋转解决； 左右和右左彼此对此，称为内侧插入，可用双旋转解决。\n单旋转 对于外侧插入，以左左为例，情况肯定是这样的，X的左子节点的左子树因新节点插入而成长了一层，导致X的左子树比右子树深度多2.\n调整方法（左左为例）：将X的左子节点提起来，使X自然下滑，并将X的左子节点的右子树挂到下滑后的X的左侧，即可重新获得平衡。\n这么做的原因呢？\n二叉树的规则使我们知道，X值肯定大于X的左子节点值，所以X必须成为调整后的X的左子节点的右子节点； 同时，X的左子节点的右子树的所有节点值肯定介于X和X的左子节点的值之间，所以X的左子节点的右子树应该落在调整后的X的左侧。 可以看出，左左的单旋转是一次顺时针旋转；右右的单旋转对称，是一次逆时针旋转。\n双旋转 对于内侧插入，以左右为例，单旋转无法解决问题。\n调整方法：双旋转利用两次单旋转完成：\n先对X的左子节点和X的左子节点的右子节点做一次单旋转； 再对X和第一次调整后的新的X的左子节点（原来的X的左子节点的右子节点）做一次单旋转。 AVL树的平衡条件仍较为严苛，对于set和map来说，需要频繁的插入和删除，若用AVL树作底层结构，会影响性能。AVL树只适合查找较多而插入删除操作较少的情况。\nRB-tree(红黑树) 红黑树不仅是二叉搜索树，而且满足以下规则：\n每个节点不是红色就是黑色； 根节点是黑色； 如果节点为红，其子节点必须为黑；(即父子节点不得同时为红)； 任一节点至NULL的任何路径，所含黑节点树必须相同。 根据规则4，新增节点必须为红； 根据规则3，新增节点的父节点必须为黑。 当新节点按照二叉搜索树的规则到达插入点，却未能符合上述条件时，就必须调整颜色和旋转树形。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">Mason&#39;s Blog</a></h1>
+            <h2 class="site-description">Just do it.</h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/bitdove'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#关联式容器">关联式容器</a>
+      <ol>
+        <li><a href="#关联式容器概述">关联式容器概述</a></li>
+        <li><a href="#tree的导览">Tree的导览</a>
+          <ol>
+            <li><a href="#二叉搜索树">二叉搜索树</a></li>
+            <li><a href="#平衡二叉搜索树">平衡二叉搜索树</a>
+              <ol>
+                <li><a href="#avl树">AVL树</a></li>
+                <li><a href="#rb-tree红黑树">RB-tree(红黑树)</a></li>
+              </ol>
+            </li>
+          </ol>
+        </li>
+        <li><a href="#以红黑树为底层结构的关联容器">以红黑树为底层结构的关联容器</a>
+          <ol>
+            <li><a href="#set">set</a></li>
+            <li><a href="#map">map</a></li>
+            <li><a href="#multiset">multiset</a></li>
+            <li><a href="#multimap">multimap</a></li>
+          </ol>
+        </li>
+        <li><a href="#哈希表hash-table">哈希表（Hash-table）</a></li>
+        <li><a href="#以哈希表为底层结构的关联容器">以哈希表为底层结构的关联容器</a>
+          <ol>
+            <li><a href="#unordered_set">unordered_set</a></li>
+            <li><a href="#unordered_map">unordered_map</a></li>
+            <li><a href="#unordered_multiset">unordered_multiset</a></li>
+            <li><a href="#unordered_multimap">unordered_multimap</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
+    <li><a href="#容器概述">容器概述</a></li>
+    <li><a href="#序列式容器">序列式容器</a>
+      <ol>
+        <li><a href="#array">array</a></li>
+        <li><a href="#vector">vector</a></li>
+        <li><a href="#list">list</a></li>
+        <li><a href="#deque">deque</a></li>
+        <li><a href="#forward_list">forward_list</a></li>
+      </ol>
+    </li>
+    <li><a href="#adapter配接器">Adapter（配接器）</a>
+      <ol>
+        <li><a href="#stack">stack</a></li>
+        <li><a href="#queue">queue</a></li>
+        <li><a href="#priority_queue">priority_queue</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/learning_notes/" style="background-color: #2a9d8f; color: #fff;">
+                Learning Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/cpp-stl-container/">Cpp STL Container</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/10/30</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    2 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="关联式容器">关联式容器
+</h1><h2 id="关联式容器概述">关联式容器概述
+</h2><p>关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。</p>
+<p>关联式容器没有头尾之分，自然也就没有push_back()、pop_front()等操作。</p>
+<p>关联式容器的内部结构只有两种：</p>
+<ul>
+<li>以红黑树（RB-tree）为底层结构:
+<ul>
+<li>set</li>
+<li>map</li>
+<li>multiset</li>
+<li>multimap</li>
+</ul>
+</li>
+<li>以哈希表（Hash-table）为底层结构:
+<ul>
+<li>unordered_set</li>
+<li>unordered_map</li>
+<li>unordered_multiset</li>
+<li>unordered_multimap</li>
+</ul>
+</li>
+</ul>
+<h2 id="tree的导览">Tree的导览
+</h2><ul>
+<li>节点的大小：该节点及其所有子节点的节点总数；</li>
+<li>路径长度：A节点到B节点的唯一路径经过的边数；</li>
+<li>节点的高度：该节点到其最深子节点（叶节点）的路径长度；</li>
+<li>节点的深度：根节点到该节点的路径长度</li>
+</ul>
+<h3 id="二叉搜索树">二叉搜索树
+</h3><p>二叉搜索树的性质：左子树的节点值 &lt; 根节点的值 &lt; 右子树的节点值</p>
+<ul>
+<li>查找：找最小就一直往左走，找最大就一直往右走；</li>
+<li>插入：从根节点开始，遇到大的就向左，遇到小的就向右，一直到尾端，即为插入点。</li>
+<li>删除：分两种情况：
+<ul>
+<li>目标节点只有一个子节点，直接将其子节点连至其父节点。</li>
+<li>目标节点有两个子节点，以右子树中的最小值取而代之即可。</li>
+</ul>
+</li>
+</ul>
+<h3 id="平衡二叉搜索树">平衡二叉搜索树
+</h3><p>所谓平衡，即没有任何一个节点过深。</p>
+<p>平衡二叉搜索树是加了“额外平衡条件”的二叉搜索树。</p>
+<p>平衡二叉搜索树比一般的二叉搜索树要复杂，插入节点和删除节点的平均时间也更长，但是它们可以避免极难应付的最坏（高度不平衡）情况，而且由于它们总是保持着某种程度的平衡，所以元素的查找时间平均而言就比较少。</p>
+<blockquote>
+<p>平衡二叉搜索树相较一般的二叉搜索树：</p>
+<ul>
+<li>查找更快；</li>
+<li>插入和删除节点较慢。</li>
+</ul>
+</blockquote>
+<p>常见的平衡二叉搜索树有AVL树、红黑树。</p>
+<h4 id="avl树">AVL树
+</h4><p>为了确保整棵树的深度为O(logN)，AVL树的“额外平衡条件”是：</p>
+<ul>
+<li>任何节点的左右子树高度相差最多为1。</li>
+</ul>
+<blockquote>
+<p>最佳的平衡条件肯定是每个节点的左右子树有相同高度，但这个条件过于严苛，很难保证插入新元素而又保持这种平衡。所以AVL树退而求其次，允许每个节点的左右子树高度相差1，虽然这个条件会把平衡弱化，但仍能保证“对数深度”平衡状态。</p>
+</blockquote>
+<p>插入新节点后，可能会有节点违反平衡条件，且只有插入点到根节点这条路径上的各节点可能违反平衡状态。只要<strong>调整</strong>其中最深的那个节点，便可使整棵树重新获得平衡。</p>
+<p>假设该最深节点为X，由于节点最多有两个子节点，而所谓“平衡被破坏”意味着X的左右子树的高度相差2，因此可以分为四种情况：</p>
+<ol>
+<li>插入点位于X的左子节点的左子树——左左；</li>
+<li>插入点位于X的左子节点的右子树——左右；</li>
+<li>插入点位于X的右子节点的左子树——右左；</li>
+<li>插入点位于X的右子节点的右子树——右右。</li>
+</ol>
+<p>左左和右右彼此对称，称为<strong>外侧插入</strong>，可用<strong>单旋转</strong>解决；
+左右和右左彼此对此，称为<strong>内侧插入</strong>，可用<strong>双旋转</strong>解决。</p>
+<h5 id="单旋转">单旋转
+</h5><p>对于外侧插入，以左左为例，情况肯定是这样的，X的左子节点的左子树因新节点插入而成长了一层，导致X的左子树比右子树深度多2.</p>
+<p>调整方法（左左为例）：将X的左子节点提起来，使X自然下滑，并将X的左子节点的右子树挂到下滑后的X的左侧，即可重新获得平衡。</p>
+<p>这么做的原因呢？</p>
+<ol>
+<li>二叉树的规则使我们知道，X值肯定大于X的左子节点值，所以X必须成为调整后的X的左子节点的右子节点；</li>
+<li>同时，X的左子节点的右子树的所有节点值肯定介于X和X的左子节点的值之间，所以X的左子节点的右子树应该落在调整后的X的左侧。</li>
+</ol>
+<blockquote>
+<p>可以看出，左左的单旋转是一次顺时针旋转；右右的单旋转对称，是一次逆时针旋转。</p>
+</blockquote>
+<h5 id="双旋转">双旋转
+</h5><p>对于内侧插入，以左右为例，单旋转无法解决问题。</p>
+<p>调整方法：双旋转利用两次单旋转完成：</p>
+<ol>
+<li>先对X的左子节点和X的左子节点的右子节点做一次单旋转；</li>
+<li>再对X和第一次调整后的新的X的左子节点（原来的X的左子节点的右子节点）做一次单旋转。</li>
+</ol>
+<blockquote>
+<p>AVL树的平衡条件仍较为严苛，对于set和map来说，需要频繁的插入和删除，若用AVL树作底层结构，会影响性能。AVL树只适合查找较多而插入删除操作较少的情况。</p>
+</blockquote>
+<h4 id="rb-tree红黑树">RB-tree(红黑树)
+</h4><p>红黑树不仅是二叉搜索树，而且满足以下规则：</p>
+<ol>
+<li>每个节点不是红色就是黑色；</li>
+<li>根节点是黑色；</li>
+<li>如果节点为红，其子节点必须为黑；(即父子节点不得同时为红)；</li>
+<li>任一节点至NULL的任何路径，所含黑节点树必须相同。</li>
+</ol>
+<ul>
+<li>根据规则4，新增节点必须为红；</li>
+<li>根据规则3，新增节点的父节点必须为黑。</li>
+</ul>
+<p>当新节点按照二叉搜索树的规则到达插入点，却未能符合上述条件时，就必须调整颜色和旋转树形。</p>
+<blockquote>
+<p>新插入节点导致破坏红黑树的规则肯定是破坏3，即父子节点同时为红了。
+NULL节点可视为黑色。</p>
+</blockquote>
+<p>设新节点为X，其父节点为P，伯父节点为S，祖父节点为G，曾祖父节点为GG。根据规则4，X必为红，若P亦为红（这就违反了规则3，需要调整），则G必为黑（因为原为RB-tree，得符合规则3）。那么，根据X的插入位置及外围节点（S和GG）的颜色，可分为以下四种情况：</p>
+<ol>
+<li>S为黑且X为外侧插入。对这种情况，只需对P、G做一次单旋转，并更改P、G颜色，即可重新满足红黑树的规则3;</li>
+<li>S为黑且X为内侧插入。对这种情况，必须先对P、X做一次单旋转，并更改G、X颜色，再将结果对G做一次单旋转，即可重新满足规则3；</li>
+<li>S为红且X为外侧插入。对这种情况，先对P、G做一次单旋转，并改变X的颜色。此时如果GG为黑，一切搞定。若GG为红，见情况4；</li>
+<li>S为红且X为外侧插入。对这种情况，先对P、G做一次单旋转，并改变X的颜色。如果此时GG为红，还得持续往上做，直到不再有父子连续为红的情况。</li>
+</ol>
+<h2 id="以红黑树为底层结构的关联容器">以红黑树为底层结构的关联容器
+</h2><h3 id="set">set
+</h3><p>set的特性是，所有的元素都会根据key值自动被排序。</p>
+<blockquote>
+<p>set的key值就是value值，value值就是key值。set不允许两个元素有相同的key值。</p>
+</blockquote>
+<p>不能通过set的迭代器更改set的元素值。因为set元素值就是其key值，关系到set元素的排列规则。如果任意改变set元素值，会严重破坏set组织。set的迭代器其实被定义成底层红黑树的const迭代器了，杜绝写入操作。</p>
+<p>对set进行插入和删除操作后，之前的迭代器不会失效。（当然，被删除元素的迭代器肯定是失效了）</p>
+<h3 id="map">map
+</h3><p>map的特性是，所有元素会根据各自的key值自动被排序。</p>
+<p>map的元素是pair类型，同时拥有key值和value值。pair的第一元素被视为key，第二元素被视为value。map不允许两个元素有相同的key值。</p>
+<p>通过map的迭代器可以修改map元素的value值，不可以修改map的key值，因为key值关系到map的排列规则，任意更改map元素的key值会破坏map组织。</p>
+<p>对map进行插入和删除操作后，之前的迭代器不会失效。（当然，被删除元素的迭代器肯定是失效了）</p>
+<h3 id="multiset">multiset
+</h3><p>multiset的特性及用法与set完全相同，唯一的差别在于它允许key值重复。</p>
+<h3 id="multimap">multimap
+</h3><p>multimap的特性及用法与set完全相同，唯一的差别在于它允许key值重复。</p>
+<h2 id="哈希表hash-table">哈希表（Hash-table）
+</h2><p>二叉搜索树具有对数平均时间的表现建立在“输入的数据有足够的随机性”这样一种假设上。</p>
+<p>哈希表在查找、插入、删除等操作上具有“常数平均时间”的表现，且这种表现是以统计为基础的，不需依赖输入元素的随机性。</p>
+<p>哈希函数：将哈希表中元素的键值映射为元素存储位置的函数。
+</p>
+$$ Address = Hash(key)$$<p>哈希冲突：可能出现不同的元素被映射到相同的位置。</p>
+<blockquote>
+<p>比如采用求余的哈希函数的话，2和5对3求余都是2，这样2和5就都存到位置2上了，这就是哈希冲突。</p>
+</blockquote>
+<p>解决哈希冲突的方法：</p>
+<ul>
+<li>线性探测</li>
+<li>二次探测</li>
+<li>开链法</li>
+</ul>
+<h2 id="以哈希表为底层结构的关联容器">以哈希表为底层结构的关联容器
+</h2><p>红黑树有自动排序功能，哈希表没有。所以以哈希表为底层的关联容器在C++标准里都以unordered_开头。</p>
+<h3 id="unordered_set">unordered_set
+</h3><p>与set一样，unordered_set的key值就是value值，value值就是key值。</p>
+<h3 id="unordered_map">unordered_map
+</h3><p>与map一样，unordered_map的元素是pair类型，同时拥有key值和value值。pair的第一元素被视为key，第二元素被视为value。</p>
+<h3 id="unordered_multiset">unordered_multiset
+</h3><p>unordered_multiset与multiset的特性完全相同，唯一的差别在于其底层是哈希表，所以其元素不会被自动排序。</p>
+<h3 id="unordered_multimap">unordered_multimap
+</h3><p>unordered_multimap与multimap的特性完全相同，唯一的差别在于其底层是哈希表，所以其元素不会被自动排序。</p>
+<h1 id="容器概述">容器概述
+</h1><p>C++标准里提供了以下容器或容器配接器：</p>
+<ul>
+<li>序列式容器：
+<ul>
+<li>array</li>
+<li>vector</li>
+<li>list</li>
+<li>deque</li>
+<li>forward_list</li>
+</ul>
+</li>
+<li>关联式容器
+<ul>
+<li>set</li>
+<li>map</li>
+<li>multiset</li>
+<li>multimap</li>
+</ul>
+</li>
+<li>不定序关联容器
+<ul>
+<li>unordered_set</li>
+<li>unordered_map</li>
+<li>unordered_multiset</li>
+<li>unordered_multimap</li>
+</ul>
+</li>
+<li>配接器
+<ul>
+<li>stack</li>
+<li>queue</li>
+<li>priority_queue</li>
+</ul>
+</li>
+</ul>
+<h1 id="序列式容器">序列式容器
+</h1><h2 id="array">array
+</h2><p>array是静态连续空间，一经配置，大小不可改变。</p>
+<p>就是数组，除了空间的灵活性不足，其他与vector很像。用的也比较少，一般都用vector了，这里就不多说了。</p>
+<h2 id="vector">vector
+</h2><p>vector的数据安排与操作方式，与array很相似。二者唯一的差别在于空间的运用的灵活性。</p>
+<ul>
+<li>array是静态空间，一旦配置不能改变；</li>
+<li>vector是动态空间，随着元素加入，内部机制会自行扩充空间以容纳新元素。</li>
+</ul>
+<p>vector维护的是<strong>连续线性空间</strong>，其迭代器就是普通指针。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;::</span><span class="n">iterator</span> <span class="n">iter</span><span class="p">;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>那么iter其实就是<code>int*</code>类型。</p>
+<p>两个迭代器start和finish之间是连续空间中目前已被使用的空间，end_of_storage指向整块连续空间的尾端。</p>
+<p>为了降低频繁空间配置带来的成本开销，vector实际配置的大小会比客户需求的更大一些，以备将来可能的扩充。这便是capacity的概念。</p>
+<ul>
+<li>[start,finish]是size();</li>
+<li>[start, end_of_storage]是capacity();</li>
+<li>[finish, end_of_storage]是备用空间。</li>
+</ul>
+<p>一旦size() == capacity(),便是满载。下次再有新增元素，整个vector就要另觅他所了。“另觅他所”的过程会经历“重新配置大空间，元素移动，释放原空间”这一系列动作，工程浩大。</p>
+<p>所谓动态增加大小，并不是在原空间之后接续新空间（因为无法保证原空间之后有可供配置的空间），而是以<strong>原空间大小的两倍</strong>另外配置一块较大空间，然后将原内容拷贝过来，然后才开始在原内容后边构造新元素，并释放原空间。</p>
+<p>因此，对vector的任何操作，一旦引起空间重新配置，指向原vector的所有迭代器就都失效了，这是一个经常犯的错误，务必小心。</p>
+<h2 id="list">list
+</h2><p>list是环状双向链表。它的好处在于每次插入或删除一个元素，就配置或释放一个元素空间，与vector相比，list对空间运用更加精准，绝不浪费。且对于任何位置的元素插入或移除，list永远是常数时间。</p>
+<p>vector和list适用场景与以下有关：</p>
+<ul>
+<li>元素多寡</li>
+<li>元素的构造复杂度（有无non-trival copy constructor， non-trival copy assignment operator）</li>
+<li>元素存取行为的特性</li>
+</ul>
+<p>list的节点结构如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-cpp" data-lang="cpp"><span class="line"><span class="cl"><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+</span></span><span class="line"><span class="cl"><span class="k">struct</span> <span class="nc">__list_node</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="k">typedef</span> <span class="kt">void</span><span class="o">*</span> <span class="n">void_pointer</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">void_pointer</span> <span class="n">prev</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">void_pointer</span> <span class="n">next</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">T</span> <span class="n">data</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">};</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>由于list的内存空间无法保证是连续的，所以它的迭代器不再是普通指针。list的迭代器必须有能力指向list节点，并进行正确的递增、递减、取值、成员存取等操作。</p>
+<p>list的操作大多不会使迭代器失效，即便是删除操作，也只有指向被删除元素的那个迭代器失效。</p>
+<p>由于list是一个环状双向链表，所以它只需要一个指针，便可以完整遍历整个链表。</p>
+<p>对于insert操作，新节点将位于哨兵迭代器（标示出插入点）所指节点的前方，这是STL对插入操作的标准规范。</p>
+<h2 id="deque">deque
+</h2><p>vector是单向开口的连续线性空间，deque则是一种双向开口的线性连续空间。所谓双向开口，即可以在首尾两端分别做元素的插入和删除操作。</p>
+<p>deque其实是动态地以<strong>分段</strong>连续空间组合而成。但是这些分段的连续空间，在用户看来确实一整块连续空间，这其实是deque做出的假象。这种假象由deque的中控器map（注意，不是STL中的map容器）负责维持。</p>
+<p>这个map可以理解为映射，它是一个指针，指向一小段连续内存空间，这块空间中的每个元素又都是一个指针，每个指针都指向deque的分段连续空间中的某一段。默认每一段是512字节。</p>
+<h2 id="forward_list">forward_list
+</h2><p>forward_list是单向链表。</p>
+<p>前边说了，对于insert操作，新节点将位于哨兵迭代器（标示出插入点）所指节点的前方，这是STL对插入操作的标准规范。</p>
+<p>但是forward_list作为单向链表，它没有什么方便方法回头定出前一个位置，它只能从头找起，所以除了forward_list起点处附近的区域外，在其他位置insert()或erase()就很慢，对此，forward_list特别提供了insert_after()和erase_after()。</p>
+<p>同样出于效率考虑，它不提供push_back()，只提供push_front()。</p>
+<h1 id="adapter配接器">Adapter（配接器）
+</h1><h2 id="stack">stack
+</h2><p>stack是先进后出（FILO）的数据结构。他只有一个出口，除了最顶端元素外，没有其他方法获得stack的其他元素。即stack是不允许有遍历行为的，自然也就没有迭代器了。</p>
+<p>STL中的stack其实不算是container，而是adapter，因为其底层默认是deque，把deque的头端封闭，便形成一个stack。</p>
+<blockquote>
+<p>具有“修改某物接口，形成另一种风貌”之性质者，谓之adapter。</p>
+</blockquote>
+<p>除了deque，list也是双向开口的，所以list也可以做stack的底层结构。</p>
+<h2 id="queue">queue
+</h2><p>queue是先进先出（FIFO）的数据结构。它有两个出入口，但都是被限制的，尾端只进不出，头端只出不进。除了尾端进，头端出之外，没有其他方法存取queue的其他元素，即queue也是不允许遍历的，自然也就没有迭代器了。</p>
+<p>queue也是一种adapter，它同stack一样，默认以deque作为底层结构，list同样也可以做其底层结构。</p>
+<blockquote>
+<p>封闭deque的头端入口和尾端出口，就成了一个queue。</p>
+</blockquote>
+<h2 id="priority_queue">priority_queue
+</h2><p>priority_queue是拥有权值观念的queue。</p>
+<p>所谓拥有权值观念，可以理解为有序的，其内的元素并非按照加入的次序排列，而是按照元素的权值排列，权值最高者排在最前边。</p>
+<p>默认状态下，priority_queue是用一个大根堆（max-heap）来完成，而大根堆是一个以vector表现得完全二叉树。</p>
+<blockquote>
+<p>大根堆：max-heap，父节点值大于或等于子节点值的完全二叉树；
+小根堆：min-heap，父节点值小于或等于子节点值的完全二叉树。</p>
+</blockquote>
+<p>所以，priority_queue是以vector为底层结构，辅以heap处理规则来实现的，所以它也是一种adapter。</p>
+<p>priority_queue也不允许遍历，自然也没有迭代器。</p>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/c/c&#43;&#43;/">C/C&#43;&#43;</a>
+        
+            <a href="/tags/stl/">STL</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/cpp-constructor-destructor-calling-order/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cpp Constructor Destructor Calling Order</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/cpp-type-size-test/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cpp Type Size Test</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/cpp-static/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43; Static</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/cpp-const/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cpp Const</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/things-about-new/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">C&#43;&#43; new那些事儿</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2020 - 
+        
+        2024 Mason
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
