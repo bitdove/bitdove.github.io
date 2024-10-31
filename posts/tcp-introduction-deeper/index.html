@@ -10,7 +10,7 @@
 <meta property='og:description' content="引言 在《TCP的三次握手与四次挥手》中，我们已经了解了一个TCP连接的建立与终止的规则及这个过程中发送的各个类型的报文段。这些决定TCP应该做什么的规则其实是由当前TCP连接所属的状态决定的。当前的状态会在各种触发条件下发生改变。常见的触发条件如：\n传输或接收到某报文段； 计时器超时； 客户端/服务端应用程序的读写操作； 来自其他层的信息。 这些规则可以概括为TCP的状态转换图。\n本文就以TCP状态转换为出发点，再探TCP的连接管理相关内容。\nTCP状态转换图 TCP定义了11种状态，状态名字基于netstat命令所输出的名称。\nCLOSED状态作为开始状态点和终止状态点，但它并不能算一个“官方”状态。\n典型TCP过程 所谓典型TCP过程，这个词是我定的，即上图中黑线表示的过程的有序集合。这些黑线组成的典型TCP过程不考虑同时打开与关闭、重置等特殊情况。本节描述这个过程。\n可以看到除了CLOSING，其他10种状态均在典型TCP过程中。\n开始时，客户端/服务端均处于CLOSED状态； 服务端进程启动，调用listen函数后，服务端由CLOSED转换为LISTEN； 客户端进程启动，调用connect函数后，TCP三路握手建立连接过程被激起，客户端发送第一路握手请求的SYN报文段，然后由CLOSED转换为SYN_SENT； 服务端接收到客户端发来的SYN报文段，发起第二路握手请求，向客户端发送SYNACK报文段，然后由LISTEN转换为SYN_RCVD； 客户端接收到服务端发来的SYNACK报文段，发起第三路握手请求，向服务端发送ACK报文段，然后由SYN_SENT转换为ESTABLISHED，至此，客户端已完成连接； 服务端收到客户端发来的ACK报文段，也由SYN_RCVD转换为ESTABLISHED，至此双方连接建立完成； ESTABLISHED是通信双方双向传输数据的状态； 尽管双方均可发起主动关闭操作，但我们以客户端负责执行主动关闭为例。\n数据传输结束，客户端调用close函数关闭套接字描述符，激起TCP四路握手关闭连接的过程，客户端发送第一路握手的FIN报文段，然后由ESTABLISHED转换为FIN_WAIT_1； 服务端收到客户端发来的FIN报文段，发起第二路握手，向客户端发送ACK报文段，然后由ESTABLISHED转换为CLOSE_WAIT； 客户端收到服务端发来的ACK报文段，什么都不发送，由FIN_WAIT_1转换为FIN_WAIT_2； 服务端调用close函数，发起第三路握手，向客户端发送FIN报文段，由CLOSE_WAIT转换为LAST_ACK； 客户端收到服务端发来的FIN报文段，发起第四路握手，向服务端发送ACK报文段，由FIN_WAIT_2转换为TIME_WAIT； 服务端收到客户端发来的ACK报文段，什么都不发送，由LAST_ACK转换为CLOSED，至此服务端关闭； 客户端等待2MSL，计时器超时后，客户端由TIME_WAIT转换为CLOSED，至此双方连接彻底关闭。 非典型TCP过程 TCP状态转换图中还有一些非典型过程，在图中用蓝色表示。下边我们描述一下这些部分。这些非典型过程包括以下内容：\n连接建立超时 同时打开 同时关闭 重置报文段（RST） 连接建立超时 有时会存在连接不能建立的情况，比如服务器关闭的情况。\n当客户端发送SYN报文段，但迟迟得不到回应的时候，客户端就会频繁地发送SYN报文段，直到达到限定的次数，客户端放弃与服务端进行连接，由SYN_SENT转换为CLOSED。\nLinux系统默认重试次数为5次。\n指数回退：首个SYN报文段发送后3秒发送第二个SYN报文段，第二个报文段发送后6秒后发送第三个SYN报文段，第三个报文段发送后12秒后发送第四个SYN报文段，以此类推，即每一次回退数值都是前一次的两倍。\n同时打开过程 TCP支持双方同时打开的情况，要实现同时打开，有两个要求：\n通信双方均有彼此的套接字地址结构sockaddr_in；（正常情况下，只有客户端知道服务端的套接字地址，而服务端不知道客户端的。）；\n通信双方在收到来自对方的SYN报文段之前必须先发送一个SYN报文段。\n由于双方均同时扮演了客户端与服务端的角色，所以不能将任何一方称为客户端或服务端。\n如上图所示，同时打开的过程如下：\n双方在CLOSED状态时，通过调用connect函数，均在接收到对方的SYN报文段之前，自己就先发送了一个SYN报文段，双方均进入SYN_SENT状态； 在接收到对方发来的SYN报文段后，双方均向彼此发送SYNACK报文段，并进入SYN_RCVD状态； 双方在接收到彼此的SYNACK报文段后，均进入ESTABLISHED状态，连接建立完成。 可以看到，同时打开过程需要交换四个报文段，比普通的三路握手增加了一个。\n同时关闭过程 在接收到对方发来的FIN报文段之前，双方均向对方发送FIN报文段，这会触发同时关闭过程。\n如上图，同时关闭过程如下：\n双方在ESTABLISHED状态时，通过调用close函数，均在收到对方的FIN报文段之前，向对方发送了FIN报文段，双方均进入FIN_WAIT_1状态； 双方并没有如预期收到对方的ACK报文段，而是收到了FIN报文段，双方均向对方回应ACK报文段，均进入CLOSING状态； 双方收到对方发来的ACK报文段后，均进入TIME_WAIT状态，待2MSL超时后，进入CLOSED状态，至此连接彻底关闭。 FIN报文段还包含一个ACK段用于确认对方最近一次发来的数据。\n可以看到同时关闭过程与正常关闭过程交换相同数量的报文段，二者的区别在于：\n正常关闭过程中报文段序列是不交叉的，一个发，另一个收到之后再发； 同时关闭过程中报文段序列是交叉的，一个发的同时另一个也再发。 同时关闭过程用到了一个正常过程中没有的状态：CLOSING。\n重置报文段（RST） 一个将TCP头部中的RST字段置1的报文段称为重置报文段，它用于关闭那些已经没有必要继续存在的连接。\n以下是常见的产生重置报文段的场景：\n客户端发起一个连接请求，服务端却没有相应的进程在目的端口监听时，服务端就会给该客户端发送一个重置报文段；\n终止一条连接。在任何时刻均可以发送一个重置报文段替代FIN来终止一条连接，通过这种方式终止连接时，任何排队的数据都将被抛弃，重置报文段立即发送出去；\n在不告知另一方的情况下，通信的一端关闭或终止了连接，将导致这条TCP连接处于半开状态。这通常发生在通信一方的主机崩溃的情况下。这种情况下只要不尝试通过这条半开连接传输数据，正常工作的一端将不会检测到另一端已经崩溃（因为崩溃的一端连重置报文段或者FIN报文段都没办法发出去）。这时如果崩溃的一端重新连接，它对这条连接上另一端发送过来的数据一无所知，TCP规定此时崩溃一方将回复一个重置报文段以关闭这个连接。\n">
 <meta property='og:url' content='https://MasonCodingHere.github.io/posts/tcp-introduction-deeper/'>
 <meta property='og:site_name' content='Mason&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='TCP' /><meta property='article:tag' content='TCP/IP' /><meta property='article:published_time' content='2021-05-17T00:14:35-07:00'/><meta property='article:modified_time' content='2021-05-17T00:14:35-07:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='TCP/IP' /><meta property='article:published_time' content='2021-05-17T00:14:35-07:00'/><meta property='article:modified_time' content='2021-05-17T00:14:35-07:00'/>
 <meta name="twitter:title" content="Tcp Introduction Deeper">
 <meta name="twitter:description" content="引言 在《TCP的三次握手与四次挥手》中，我们已经了解了一个TCP连接的建立与终止的规则及这个过程中发送的各个类型的报文段。这些决定TCP应该做什么的规则其实是由当前TCP连接所属的状态决定的。当前的状态会在各种触发条件下发生改变。常见的触发条件如：\n传输或接收到某报文段； 计时器超时； 客户端/服务端应用程序的读写操作； 来自其他层的信息。 这些规则可以概括为TCP的状态转换图。\n本文就以TCP状态转换为出发点，再探TCP的连接管理相关内容。\nTCP状态转换图 TCP定义了11种状态，状态名字基于netstat命令所输出的名称。\nCLOSED状态作为开始状态点和终止状态点，但它并不能算一个“官方”状态。\n典型TCP过程 所谓典型TCP过程，这个词是我定的，即上图中黑线表示的过程的有序集合。这些黑线组成的典型TCP过程不考虑同时打开与关闭、重置等特殊情况。本节描述这个过程。\n可以看到除了CLOSING，其他10种状态均在典型TCP过程中。\n开始时，客户端/服务端均处于CLOSED状态； 服务端进程启动，调用listen函数后，服务端由CLOSED转换为LISTEN； 客户端进程启动，调用connect函数后，TCP三路握手建立连接过程被激起，客户端发送第一路握手请求的SYN报文段，然后由CLOSED转换为SYN_SENT； 服务端接收到客户端发来的SYN报文段，发起第二路握手请求，向客户端发送SYNACK报文段，然后由LISTEN转换为SYN_RCVD； 客户端接收到服务端发来的SYNACK报文段，发起第三路握手请求，向服务端发送ACK报文段，然后由SYN_SENT转换为ESTABLISHED，至此，客户端已完成连接； 服务端收到客户端发来的ACK报文段，也由SYN_RCVD转换为ESTABLISHED，至此双方连接建立完成； ESTABLISHED是通信双方双向传输数据的状态； 尽管双方均可发起主动关闭操作，但我们以客户端负责执行主动关闭为例。\n数据传输结束，客户端调用close函数关闭套接字描述符，激起TCP四路握手关闭连接的过程，客户端发送第一路握手的FIN报文段，然后由ESTABLISHED转换为FIN_WAIT_1； 服务端收到客户端发来的FIN报文段，发起第二路握手，向客户端发送ACK报文段，然后由ESTABLISHED转换为CLOSE_WAIT； 客户端收到服务端发来的ACK报文段，什么都不发送，由FIN_WAIT_1转换为FIN_WAIT_2； 服务端调用close函数，发起第三路握手，向客户端发送FIN报文段，由CLOSE_WAIT转换为LAST_ACK； 客户端收到服务端发来的FIN报文段，发起第四路握手，向服务端发送ACK报文段，由FIN_WAIT_2转换为TIME_WAIT； 服务端收到客户端发来的ACK报文段，什么都不发送，由LAST_ACK转换为CLOSED，至此服务端关闭； 客户端等待2MSL，计时器超时后，客户端由TIME_WAIT转换为CLOSED，至此双方连接彻底关闭。 非典型TCP过程 TCP状态转换图中还有一些非典型过程，在图中用蓝色表示。下边我们描述一下这些部分。这些非典型过程包括以下内容：\n连接建立超时 同时打开 同时关闭 重置报文段（RST） 连接建立超时 有时会存在连接不能建立的情况，比如服务器关闭的情况。\n当客户端发送SYN报文段，但迟迟得不到回应的时候，客户端就会频繁地发送SYN报文段，直到达到限定的次数，客户端放弃与服务端进行连接，由SYN_SENT转换为CLOSED。\nLinux系统默认重试次数为5次。\n指数回退：首个SYN报文段发送后3秒发送第二个SYN报文段，第二个报文段发送后6秒后发送第三个SYN报文段，第三个报文段发送后12秒后发送第四个SYN报文段，以此类推，即每一次回退数值都是前一次的两倍。\n同时打开过程 TCP支持双方同时打开的情况，要实现同时打开，有两个要求：\n通信双方均有彼此的套接字地址结构sockaddr_in；（正常情况下，只有客户端知道服务端的套接字地址，而服务端不知道客户端的。）；\n通信双方在收到来自对方的SYN报文段之前必须先发送一个SYN报文段。\n由于双方均同时扮演了客户端与服务端的角色，所以不能将任何一方称为客户端或服务端。\n如上图所示，同时打开的过程如下：\n双方在CLOSED状态时，通过调用connect函数，均在接收到对方的SYN报文段之前，自己就先发送了一个SYN报文段，双方均进入SYN_SENT状态； 在接收到对方发来的SYN报文段后，双方均向彼此发送SYNACK报文段，并进入SYN_RCVD状态； 双方在接收到彼此的SYNACK报文段后，均进入ESTABLISHED状态，连接建立完成。 可以看到，同时打开过程需要交换四个报文段，比普通的三路握手增加了一个。\n同时关闭过程 在接收到对方发来的FIN报文段之前，双方均向对方发送FIN报文段，这会触发同时关闭过程。\n如上图，同时关闭过程如下：\n双方在ESTABLISHED状态时，通过调用close函数，均在收到对方的FIN报文段之前，向对方发送了FIN报文段，双方均进入FIN_WAIT_1状态； 双方并没有如预期收到对方的ACK报文段，而是收到了FIN报文段，双方均向对方回应ACK报文段，均进入CLOSING状态； 双方收到对方发来的ACK报文段后，均进入TIME_WAIT状态，待2MSL超时后，进入CLOSED状态，至此连接彻底关闭。 FIN报文段还包含一个ACK段用于确认对方最近一次发来的数据。\n可以看到同时关闭过程与正常关闭过程交换相同数量的报文段，二者的区别在于：\n正常关闭过程中报文段序列是不交叉的，一个发，另一个收到之后再发； 同时关闭过程中报文段序列是交叉的，一个发的同时另一个也再发。 同时关闭过程用到了一个正常过程中没有的状态：CLOSING。\n重置报文段（RST） 一个将TCP头部中的RST字段置1的报文段称为重置报文段，它用于关闭那些已经没有必要继续存在的连接。\n以下是常见的产生重置报文段的场景：\n客户端发起一个连接请求，服务端却没有相应的进程在目的端口监听时，服务端就会给该客户端发送一个重置报文段；\n终止一条连接。在任何时刻均可以发送一个重置报文段替代FIN来终止一条连接，通过这种方式终止连接时，任何排队的数据都将被抛弃，重置报文段立即发送出去；\n在不告知另一方的情况下，通信的一端关闭或终止了连接，将导致这条TCP连接处于半开状态。这通常发生在通信一方的主机崩溃的情况下。这种情况下只要不尝试通过这条半开连接传输数据，正常工作的一端将不会检测到另一端已经崩溃（因为崩溃的一端连重置报文段或者FIN报文段都没办法发出去）。这时如果崩溃的一端重新连接，它对这条连接上另一端发送过来的数据一无所知，TCP规定此时崩溃一方将回复一个重置报文段以关闭这个连接。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -592,8 +592,6 @@
     
     <section class="article-tags">
         
-            <a href="/tags/tcp/">TCP</a>
-        
             <a href="/tags/tcp/ip/">TCP/IP</a>
         
     </section>
@@ -628,12 +626,12 @@
             
                 
 <article class="">
-    <a href="/posts/tcp-introduction/">
+    <a href="/posts/arp-protocol/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">TCP:传输控制协议</h2>
+            <h2 class="article-title">ARP Protocol</h2>
         </div>
     </a>
 </article>
@@ -641,12 +639,12 @@
             
                 
 <article class="">
-    <a href="/posts/arp-protocol/">
+    <a href="/posts/tcp-introduction/">
         
         
 
         <div class="article-details">
-            <h2 class="article-title">ARP Protocol</h2>
+            <h2 class="article-title">TCP:传输控制协议</h2>
         </div>
     </a>
 </article>

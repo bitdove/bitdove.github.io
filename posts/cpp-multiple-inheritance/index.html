@@ -10,7 +10,7 @@
 <meta property='og:description' content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n单继承，子类继承一个父类 多继承：子类继承多个父类 另外还有一种虚继承，虚继承其实是为了解决多继承带了的问题而引入的。后边再详述。 单继承没什么好说的，所以不单独列一节。并且下边的美人鱼例子，虽是为讲多继承而设计，但它也包含了单继承的内容。\n多继承 我们以美人鱼为例，美人鱼既有美人的某些属性，又有鱼的某些属性，可以把美人和鱼看作美人鱼的父类；而美人和鱼都是动物，可以把动物看作美人和鱼的共同父类。这样我们就可以定义如下几个类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Animal{ public: int data_Animal; }; class Beauty : public Animal{ public: int data_Beauty; }; class Fish : public Animal{ public: int data_Fish; }; class BeautyFish : public Beauty, public Fish{ public: int data_BeautyFish; }; 如果把这四个类的继承关系画成图，你就会发现，四个类组成一个菱形，这就是菱形继承。\n那么这四个类的对象会占用多大的内存呢？我在64位Linux平台下，用g++编译器的-fdump-class-hierarchy选项做了测试，为忽略内存对齐影响，使用#pragma pack(1)设为1字节对齐。测试结果如下：\n1 2 3 4 sizeof(Animal) == 4 sizeof(Beauty) == 8 sizeof(Fish) == 8 sizeof(BeautyFish) == 20 -fdump-class-hierarchy生成的文件内容如下（只保留以上四个类）\n">
 <meta property='og:url' content='https://MasonCodingHere.github.io/posts/cpp-multiple-inheritance/'>
 <meta property='og:site_name' content='Mason&#39;s Blog'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C&#43;&#43;' /><meta property='article:published_time' content='2021-06-22T06:19:43-07:00'/><meta property='article:modified_time' content='2021-06-22T06:19:43-07:00'/>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:published_time' content='2021-06-22T06:19:43-07:00'/><meta property='article:modified_time' content='2021-06-22T06:19:43-07:00'/>
 <meta name="twitter:title" content="美人+鱼=美人鱼——谈C++多继承">
 <meta name="twitter:description" content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n单继承，子类继承一个父类 多继承：子类继承多个父类 另外还有一种虚继承，虚继承其实是为了解决多继承带了的问题而引入的。后边再详述。 单继承没什么好说的，所以不单独列一节。并且下边的美人鱼例子，虽是为讲多继承而设计，但它也包含了单继承的内容。\n多继承 我们以美人鱼为例，美人鱼既有美人的某些属性，又有鱼的某些属性，可以把美人和鱼看作美人鱼的父类；而美人和鱼都是动物，可以把动物看作美人和鱼的共同父类。这样我们就可以定义如下几个类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Animal{ public: int data_Animal; }; class Beauty : public Animal{ public: int data_Beauty; }; class Fish : public Animal{ public: int data_Fish; }; class BeautyFish : public Beauty, public Fish{ public: int data_BeautyFish; }; 如果把这四个类的继承关系画成图，你就会发现，四个类组成一个菱形，这就是菱形继承。\n那么这四个类的对象会占用多大的内存呢？我在64位Linux平台下，用g++编译器的-fdump-class-hierarchy选项做了测试，为忽略内存对齐影响，使用#pragma pack(1)设为1字节对齐。测试结果如下：\n1 2 3 4 sizeof(Animal) == 4 sizeof(Beauty) == 8 sizeof(Fish) == 8 sizeof(BeautyFish) == 20 -fdump-class-hierarchy生成的文件内容如下（只保留以上四个类）\n">
     <link rel="shortcut icon" href="/favicon.ico" />
@@ -800,7 +800,7 @@
     
     <section class="article-tags">
         
-            <a href="/tags/c&#43;&#43;/">C&#43;&#43;</a>
+            <a href="/tags/c/c&#43;&#43;/">C/C&#43;&#43;</a>
         
     </section>
 
