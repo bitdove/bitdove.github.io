@@ -23,7 +23,7 @@
         (function() {
             const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
-                localStorage.setItem(colorSchemeKey, "auto");
+                localStorage.setItem(colorSchemeKey, "dark");
             }
         })();
     </script><script>
@@ -223,7 +223,42 @@
     </ol>
 </aside>
 
-    
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li>
+      <ol>
+        <li><a href="#gpg-public-key--fingerprint">GPG Public Key &amp; Fingerprint</a></li>
+      </ol>
+    </li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
 
             <main class="main full-width">
     <article class="main-article">
@@ -265,6 +300,20 @@
         
 
         
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
     </footer>
     
 
@@ -278,6 +327,75 @@
     
     <p>Hello, everyone.
 I&rsquo;m Mason. Welcome to my blog.</p>
+<h2 id="gpg-public-key--fingerprint">GPG Public Key &amp; Fingerprint
+</h2><ul>
+<li>
+<p>GPG Public Key</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">-----BEGIN PGP PUBLIC KEY BLOCK-----
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mDMEZyBs0BYJKwYBBAHaRw8BAQdA8z3lIwqqOQtO0Hlaoo5PXhQj8xoT6bFeAGI3
+</span></span><span class="line"><span class="cl">ocIjOBq0M2JpdGRvdmUgPDM4NjAzNDMxK2JpdGRvdmVAdXNlcnMubm9yZXBseS5n
+</span></span><span class="line"><span class="cl">aXRodWIuY29tPoiQBBMWCgA4FiEEU3Ue42pyF0pI1dN8APtuEdpbXTgFAmcgbNAC
+</span></span><span class="line"><span class="cl">GwEFCwkIBwMFFQoJCAsFFgIDAQACHgECF4AACgkQAPtuEdpbXTjRMgD/eV/xodv5
+</span></span><span class="line"><span class="cl">74Vme9HpgMJppt+9lauqB2ZwSD0+j34sw1sBAILzKetiFzt4k03rPtII7sdnIMI6
+</span></span><span class="line"><span class="cl">Xk1fH2HGTc+z9eINuDMEZyBubhYJKwYBBAHaRw8BAQdA+6KrQQ7PHJNzVY5f3Tg9
+</span></span><span class="line"><span class="cl">mwsiCYhxtpNgOt/3a/+tiJWI7wQYFgoAIBYhBFN1HuNqchdKSNXTfAD7bhHaW104
+</span></span><span class="line"><span class="cl">BQJnIG5uAhsCAIEJEAD7bhHaW104diAEGRYKAB0WIQRdvas7KzhS0jMrwYAQY/+Y
+</span></span><span class="line"><span class="cl">YA2KIQUCZyBubgAKCRAQY/+YYA2KIVYjAQC37RRLBHu6XVZZVjeB2nvQQwaHcdZT
+</span></span><span class="line"><span class="cl">Q/ROaPWMy/7NrQEAtsE9EyDTcjwrzD6+w6tukvRg1y0xONDm5B/Jhduixg43sgD+
+</span></span><span class="line"><span class="cl">P2q4HmYGKXvex+PB+4TaJ464ZHeusp7fllIIuqNZswEA/iKxNdDv9Js+tJpLY6C3
+</span></span><span class="line"><span class="cl">r+XmRl80AkhaXhpu3btSzOINuDgEZyButxIKKwYBBAGXVQEFAQEHQENx4izb0NRK
+</span></span><span class="line"><span class="cl">FuZqt+LIfwNJ3bZp5oFx1jyA2ottkYZCAwEIB4h4BBgWCgAgFiEEU3Ue42pyF0pI
+</span></span><span class="line"><span class="cl">1dN8APtuEdpbXTgFAmcgbrcCGwwACgkQAPtuEdpbXTjo3gEAjEPwnLnrhK/CMkNr
+</span></span><span class="line"><span class="cl">hoolYJA/k1HZOYombCcj7fcIDaEA/RTOpHnwyQsbByjhEEBX3lY6HssJzOff6EWq
+</span></span><span class="line"><span class="cl">Aez3CGAFuDMEZyBu1hYJKwYBBAHaRw8BAQdAjAHHHRcAxes1aagrbXccHLYSam6b
+</span></span><span class="line"><span class="cl">OvzuMtkI+8VwR3SIeAQYFgoAIBYhBFN1HuNqchdKSNXTfAD7bhHaW104BQJnIG7W
+</span></span><span class="line"><span class="cl">AhsgAAoJEAD7bhHaW104PfIA/3fUqnSwNTEzk1HbwNWpNaiTo3h+EWbh+64/qZwh
+</span></span><span class="line"><span class="cl">WIzdAQCP6AGhZwB9XYjF2uzPlTB/lA+U5b5XpsEdoyy/PI11BA==
+</span></span><span class="line"><span class="cl">=w/17
+</span></span><span class="line"><span class="cl">-----END PGP PUBLIC KEY BLOCK-----
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+<li>
+<p>Fingerprint</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">5375 1EE3 6A72 174A 48D5  D37C 00FB 6E11 DA5B 5D38
+</span></span></code></pre></td></tr></table>
+</div>
+</div></li>
+</ul>
 
 </section>
 

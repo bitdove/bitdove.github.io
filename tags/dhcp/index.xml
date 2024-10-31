@@ -9,10 +9,10 @@
         <copyright>Mason</copyright>
         <lastBuildDate>Wed, 05 May 2021 00:37:38 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/dhcp/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>DHCP Protocol</title>
-        <link>https://MasonCodingHere.github.io/p/dhcp-protocol/</link>
+        <link>https://MasonCodingHere.github.io/posts/dhcp-protocol/</link>
         <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/p/dhcp-protocol/</guid>
+        <guid>https://MasonCodingHere.github.io/posts/dhcp-protocol/</guid>
         <description>&lt;h1 id=&#34;何为dhcp&#34;&gt;何为DHCP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DHCP是&lt;strong&gt;D&lt;/strong&gt;ynamic &lt;strong&gt;H&lt;/strong&gt;ost &lt;strong&gt;C&lt;/strong&gt;onfiguration &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;动态主机配置协议&lt;/strong&gt;。&lt;/p&gt;

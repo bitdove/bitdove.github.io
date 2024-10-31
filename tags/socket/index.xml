@@ -9,10 +9,10 @@
         <copyright>Mason</copyright>
         <lastBuildDate>Fri, 14 May 2021 06:44:38 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/socket/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>网络编程领域的HelloWorld程序</title>
-        <link>https://MasonCodingHere.github.io/p/helloworld-on-network-programming/</link>
+        <link>https://MasonCodingHere.github.io/posts/helloworld-on-network-programming/</link>
         <pubDate>Fri, 14 May 2021 06:44:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/p/helloworld-on-network-programming/</guid>
+        <guid>https://MasonCodingHere.github.io/posts/helloworld-on-network-programming/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;Echo客户端/服务端程序应该是网络编程领域的入门首选，可以视为网络编程领域的HelloWorld程序。&lt;/p&gt;
 &lt;p&gt;为了深入学习网络编程，我写了这样一个程序，姑且叫它Simplest_Socket。这确实是最简单的socket通信程序。与一般的Echo服务器不同，Simplest_Socket会把客户端传来的英文字符串转换为大写再返回给客户端；而不像Echo服务器那样原样返回。&lt;/p&gt;
