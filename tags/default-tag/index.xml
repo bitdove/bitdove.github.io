@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Diary Essays on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/categories/diary_essays/</link>
-        <description>Recent content in Diary Essays on Mason&#39;s Blog</description>
+        <title>Default-Tag on Mason&#39;s Blog</title>
+        <link>https://MasonCodingHere.github.io/tags/default-tag/</link>
+        <description>Recent content in Default-Tag on Mason&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Thu, 31 Oct 2024 03:04:42 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/diary_essays/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 31 Oct 2024 03:04:42 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/default-tag/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Actiontest</title>
         <link>https://MasonCodingHere.github.io/posts/actiontest/</link>
         <pubDate>Thu, 31 Oct 2024 03:04:42 -0700</pubDate>
