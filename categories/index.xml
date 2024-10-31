@@ -7,37 +7,37 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Mason</copyright>
-        <lastBuildDate>Thu, 31 Oct 2024 03:04:42 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Diary Essays</title>
-        <link>https://MasonCodingHere.github.io/categories/diary_essays/</link>
-        <pubDate>Thu, 31 Oct 2024 03:04:42 -0700</pubDate>
-        
-        <guid>https://MasonCodingHere.github.io/categories/diary_essays/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Diary-Essays.png" alt="Featured image of post Diary Essays" /&gt;</description>
-        </item>
-        <item>
+        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Learning Notes</title>
         <link>https://MasonCodingHere.github.io/categories/learning_notes/</link>
-        <pubDate>Thu, 31 Oct 2024 03:04:42 -0700</pubDate>
+        <pubDate>Wed, 30 Oct 2024 23:48:55 -0700</pubDate>
         
         <guid>https://MasonCodingHere.github.io/categories/learning_notes/</guid>
         <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Learning-Notes.png" alt="Featured image of post Learning Notes" /&gt;</description>
         </item>
         <item>
-        <title>Projects</title>
-        <link>https://MasonCodingHere.github.io/categories/projects/</link>
-        <pubDate>Thu, 31 Oct 2024 03:04:42 -0700</pubDate>
-        
-        <guid>https://MasonCodingHere.github.io/categories/projects/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Projects.png" alt="Featured image of post Projects" /&gt;</description>
-        </item>
-        <item>
         <title>Solutions</title>
         <link>https://MasonCodingHere.github.io/categories/solutions/</link>
-        <pubDate>Thu, 31 Oct 2024 03:04:42 -0700</pubDate>
+        <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
         
         <guid>https://MasonCodingHere.github.io/categories/solutions/</guid>
         <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Solutions.png" alt="Featured image of post Solutions" /&gt;</description>
+        </item>
+        <item>
+        <title>Diary Essays</title>
+        <link>https://MasonCodingHere.github.io/categories/diary_essays/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/categories/diary_essays/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Diary-Essays.png" alt="Featured image of post Diary Essays" /&gt;</description>
+        </item>
+        <item>
+        <title>Projects</title>
+        <link>https://MasonCodingHere.github.io/categories/projects/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>https://MasonCodingHere.github.io/categories/projects/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Projects.png" alt="Featured image of post Projects" /&gt;</description>
         </item>
         
     </channel>
