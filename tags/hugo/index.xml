@@ -16,11 +16,11 @@
         <description>&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;本文待完善。&lt;/p&gt;
 &lt;h1 id=&#34;整体思路&#34;&gt;整体思路
-&lt;/h1&gt;&lt;p&gt;使用&lt;code&gt;Hugo&lt;/code&gt;作为博客框架，在本地编写&lt;code&gt;Markdown&lt;/code&gt;文件，构成博客站点源码库。将源码库上传至GitHub仓库&lt;code&gt;MasonHugoBlog&lt;/code&gt;，并设置GitHub Action，由GitHub Action运行&lt;code&gt;hugo&lt;/code&gt;命令生成博客HTML文件并上传至&lt;code&gt;MasonCodingHere.github.io&lt;/code&gt;，最终由GitHub Pages完成部署。&lt;/p&gt;
+&lt;/h1&gt;&lt;p&gt;使用&lt;code&gt;Hugo&lt;/code&gt;作为博客框架，在本地编写&lt;code&gt;Markdown&lt;/code&gt;文件，构成博客站点源码库。将源码库上传至GitHub仓库&lt;code&gt;Hugoblog&lt;/code&gt;，并设置GitHub Action，由GitHub Action运行&lt;code&gt;hugo&lt;/code&gt;命令生成博客HTML文件并上传至&lt;code&gt;bitdove.github.io&lt;/code&gt;，最终由GitHub Pages完成部署。&lt;/p&gt;
 &lt;p&gt;所以需要两个GitHub仓库。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;code&gt;MasonHugoBlog&lt;/code&gt;：用于存储站点源码。&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;MasonCodingHere.github.io&lt;/code&gt;：用于存储生成的HTML文件。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;Hugoblog&lt;/code&gt;：用于存储站点源码。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;bitdove.github.io&lt;/code&gt;：用于存储生成的HTML文件。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h1 id=&#34;hugo安装与配置&#34;&gt;Hugo安装与配置
 &lt;/h1&gt;&lt;p&gt;参考&lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/categories/installation/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -58,10 +58,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo new site MasonHugoBlog
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;hugo new site HugoBlog
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;这样会出现一个名为&lt;code&gt;MasonHugoBlog&lt;/code&gt;的文件夹，这就是博客源码。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;这样会出现一个名为&lt;code&gt;HugoBlog&lt;/code&gt;的文件夹，这就是博客源码。&lt;/p&gt;
 &lt;h2 id=&#34;选择主题&#34;&gt;选择主题
 &lt;/h2&gt;&lt;p&gt;在&lt;a class=&#34;link&#34; href=&#34;https://themes.gohugo.io/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;官方主题库&lt;/a&gt;选择一个主题，当然也可以去GitHub找官方主题库里没有的主题。本文选择&lt;a class=&#34;link&#34; href=&#34;https://stack.jimmycai.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
@@ -74,7 +74,7 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; MasonHugoblog
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;cd&lt;/span&gt; Hugoblog
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git init
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
@@ -82,8 +82,8 @@
 &lt;/div&gt;&lt;p&gt;这样&lt;code&gt;theme&lt;/code&gt;文件夹下就会出现该主题。我想让我的博客跟Stack主题提供的&lt;a class=&#34;link&#34; href=&#34;https://demo.stack.jimmycai.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Demo站点&lt;/a&gt;一样，所以做了一下事情。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;把&lt;code&gt;MasonHugoblog/themes/Hugo-theme-stack/exampleSite/content/&lt;/code&gt;下的内容复制到&lt;code&gt;MasonHugoblog/content/&lt;/code&gt;。&lt;/li&gt;
-&lt;li&gt;删除&lt;code&gt;MasonHugoblog/hugo.toml&lt;/code&gt;，把&lt;code&gt;MasonHugoblog/themes/Hugo-theme-stack/Hugo.yaml&lt;/code&gt;复制到&lt;code&gt;MasonHugoblog/&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;把&lt;code&gt;Hugoblog/themes/Hugo-theme-stack/exampleSite/content/&lt;/code&gt;下的内容复制到&lt;code&gt;Hugoblog/content/&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;删除&lt;code&gt;Hugoblog/hugo.toml&lt;/code&gt;，把&lt;code&gt;Hugoblog/themes/Hugo-theme-stack/Hugo.yaml&lt;/code&gt;复制到&lt;code&gt;Hugoblog/&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;这样执行以下命令，在本地预览，发现已经跟Demo一致。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
@@ -102,8 +102,8 @@
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;github-actions&#34;&gt;GitHub Actions
 &lt;/h1&gt;&lt;h2 id=&#34;push-to-github&#34;&gt;Push to GitHub
-&lt;/h2&gt;&lt;p&gt;接下来就是把整个文件夹推到GitHub，在GitHub新建一个仓库MasonHugoBlog。把本地的&lt;code&gt;MasonHugoBlog&lt;/code&gt;文件夹推到这个仓库。不细说了。&lt;/p&gt;
-&lt;p&gt;之后，因为我们以后写文章、更新博客，都是要推这个文件夹，所以写一个脚本更方便，在&lt;code&gt;MasonHugoBlog&lt;/code&gt;下新建一个名为&lt;code&gt;deploy.sh&lt;/code&gt;的脚本文件，把以下内容复制粘贴过去。这样以后写完md文件，直接执行&lt;code&gt;./deploy.sh&lt;/code&gt;就完成部署了。&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;接下来就是把整个文件夹推到GitHub，在GitHub新建一个仓库Hugoblog。把本地的&lt;code&gt;Hugoblog&lt;/code&gt;文件夹推到这个仓库。不细说了。&lt;/p&gt;
+&lt;p&gt;之后，因为我们以后写文章、更新博客，都是要推这个文件夹，所以写一个脚本更方便，在&lt;code&gt;Hugoblog&lt;/code&gt;下新建一个名为&lt;code&gt;deploy.sh&lt;/code&gt;的脚本文件，把以下内容复制粘贴过去。这样以后写完md文件，直接执行&lt;code&gt;./deploy.sh&lt;/code&gt;就完成部署了。&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -179,11 +179,11 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;deploy-key&#34;&gt;Deploy Key
 &lt;/h2&gt;&lt;p&gt;在本地用sshkeygen生成一对key&lt;/p&gt;
-&lt;p&gt;公钥给MasonCodingHere.github.io的Deploy key&lt;/p&gt;
-&lt;p&gt;私钥给MasonHugoBlog的Actions的secrets。&lt;/p&gt;
-&lt;p&gt;MasonHugoBlog的Workflow permissions改为Read and write permissions&lt;/p&gt;
+&lt;p&gt;公钥给bitdove.github.io的Deploy key&lt;/p&gt;
+&lt;p&gt;私钥给Hugoblog的Actions的secrets。&lt;/p&gt;
+&lt;p&gt;Hugoblog的Workflow permissions改为Read and write permissions&lt;/p&gt;
 &lt;h2 id=&#34;github-actions-1&#34;&gt;GitHub Actions
-&lt;/h2&gt;&lt;p&gt;给MasonHugoBlog添加Actions&lt;/p&gt;
+&lt;/h2&gt;&lt;p&gt;给Hugoblog添加Actions&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -252,7 +252,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;        &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;with&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;deploy_key&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;${{ secrets.DEPLOY_KEY }}&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;publish_dir&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;./public &lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;c&#34;&gt;# This is the directory where Hugo generates static files&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;external_repository&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;MasonCodingHere/MasonCodingHere.github.io&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;external_repository&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;bitdove/bitdove.github.io&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;w&#34;&gt;          &lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;publish_branch&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;&lt;span class=&#34;w&#34;&gt; &lt;/span&gt;&lt;span class=&#34;l&#34;&gt;main&lt;/span&gt;&lt;span class=&#34;w&#34;&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;

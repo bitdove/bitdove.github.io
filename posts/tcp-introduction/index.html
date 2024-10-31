@@ -390,7 +390,7 @@
 <li>接收方收到分组的顺序与发送方的发送顺序不同，即乱序问题如何解决？</li>
 </ul>
 <p>为了解决这些问题，引入了<strong>滑动窗口机制</strong>。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/slide-window-1.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/slide-window-1.png"
 	
 	
 	
@@ -400,7 +400,7 @@
 ></p>
 <p>上图显示了一个发送方窗口，3号分组已被发送并确认，所以由发送方保存的它的副本可以被释放；7号分组在发送方已准备好，但还未被发送，因为它还没有进入窗口。</p>
 <p>现在我们可以想象，发送方下一步就接收到分组4的ACK，所以整个窗口向右滑动一个分组，变成下图：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/slide-window-2.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/slide-window-2.png"
 	
 	
 	
@@ -459,7 +459,7 @@
 <p><strong>窗口通告：<strong>因为TCP提供的是</strong>双工</strong>服务，A给B发数据时的TCP报文段同时也包含了对B发给A的数据的ACK，同时每个报文段也包含一个<strong>窗口通告</strong>实现相反方向上的流量控制。</p>
 <p><strong>乱序问题</strong>：TCP绝不会以杂乱次序给上层应用程序发数据。因此，TCP接收端可能会被迫先保持大序列号的数据不交给应用程序，直到缺失的小序列号报文段一一到达，空洞被填满再往应用程序交付数据。</p>
 <h1 id="tcp头部结构">TCP头部结构
-</h1><p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/TCP-header.png"
+</h1><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/TCP-header.png"
 	
 	
 	

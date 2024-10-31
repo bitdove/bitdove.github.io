@@ -368,7 +368,7 @@
 <p>注：这里所说的ARP帧实际上是指ARP消息封装成的以太网帧。</p>
 </blockquote>
 <h2 id="以太网帧的格式">以太网帧的格式
-</h2><p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png"
+</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png"
 	
 	
 	
@@ -399,7 +399,7 @@
 <p>有效载荷部分的最大长度，即1500字节，也被称为以太网的MTU（最大传输单元）。</p>
 </blockquote>
 <h2 id="arp消息的格式">ARP消息的格式
-</h2><p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png"
+</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png"
 	
 	
 	
@@ -424,7 +424,7 @@
 <p>当所请求的系统接收到ARP请求，它填充自己的硬件地址，将两个源地址和两个目的地址互换，将Op字段设置为2，然后发送生成的应答。</p>
 </blockquote>
 <h2 id="arp帧的格式-1">ARP帧的格式
-</h2><p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png"
+</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png"
 	
 	
 	
@@ -438,7 +438,7 @@
 <h1 id="arp缓存">ARP缓存
 </h1><p>ARP高效运行的关键是每个主机和路由器上的<strong>ARP缓存</strong>。</p>
 <p>在Linux下，我们可以使用arp命令查看本机的ARP缓存。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/arp-command.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/arp-command.png"
 	
 	
 	
@@ -466,7 +466,7 @@
 </blockquote>
 <h2 id="arp请求">ARP请求
 </h2><p>主机A发现自己不知道主机B的MAC地址，无法封装以太网帧，所以发出如下ARP请求帧：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-asking.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-asking.png"
 	
 	
 	
@@ -478,7 +478,7 @@
 <p>由于是广播，所以子网内的所有主机的以太网接口都可以接收到该ARP请求帧，IP地址不是10.0.0.3的主机将主动丢弃该帧。</p>
 <h2 id="arp应答">ARP应答
 </h2><p>而主机B接收到ARP请求后，发现自己的IP地址与请求中的IP地址一致，所以它做出反应：发送ARP应答帧：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-response.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-response.png"
 	
 	
 	
@@ -493,7 +493,7 @@
 </blockquote>
 <h1 id="代理arp">代理ARP
 </h1><p>代理ARP的原理就是当出现跨网段的ARP请求时，路由器将自己的MAC地址返回给发送ARP请求的发送者，实现MAC地址代理（善意的欺骗），最终使得主机能够通信。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/proxy-ARP.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/proxy-ARP.png"
 	
 	
 	
@@ -509,7 +509,7 @@
 <li>更新自己的MAC地址。如果主机的MAC地址变了（如更换了网卡），而IP地址没变。则可以发送一个免费ARP，告诉其他主机：我换MAC地址了，你们注意下。收到免费ARP的其他主机，就可以在自己的ARP缓存里找IP地址与免费ARP里的IP地址一致的条目，然后把这个IP地址对应的MAC地址更新为免费ARP里指明的新MAC地址。</li>
 </ul>
 <p>如上述主机A检测自己的IP地址是否冲突，可发送免费ARP如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/free-ARP.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/free-ARP.png"
 	
 	
 	
@@ -526,7 +526,7 @@
 <h2 id="arp探测消息">ARP探测消息
 </h2><p>ARP探测消息是一个特殊的ARP请求，特殊在其源IP地址字段被设置为0。ARP探测分组用于查看IP地址是否被其他主机占用。</p>
 <p>还是以上述的主机A为例，ARP探测消息如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-detect.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-detect.png"
 	
 	
 	
@@ -545,7 +545,7 @@
 <p>以上两种情况，主机A都会生成一个地址冲突消息，如果是DHCP分配的该IP地址，则发送DHCPDECLINE消息拒绝该IP地址。</p>
 <h2 id="arp通告消息">ARP通告消息
 </h2><p>如果通过ARP探测消息发现，10.0.0.56没有被其他主机占用，即没有出现IP地址冲突，则主机A会间隔2秒向子网广播发送2个ARP通告消息，以表明它现在占用这个IP地址（10.0.0.56）。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-announcement.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-announcement.png"
 	
 	
 	

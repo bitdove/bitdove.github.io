@@ -385,7 +385,7 @@
 <li>参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。</li>
 </ul>
 <p>通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/after-fork.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/after-fork.png"
 	
 	
 	
@@ -398,7 +398,7 @@
 <li>如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况；</li>
 <li>如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png"
 	
 	
 	
@@ -454,7 +454,7 @@
 <ul>
 <li>如果type是“r”，则文件指针连接到cmdstring的标准输出；</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/r.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/r.png"
 	
 	
 	
@@ -465,7 +465,7 @@
 <ul>
 <li>如果type是“w”，则文件指针连接到cmdstring的标准输入。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/w.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/w.png"
 	
 	
 	
@@ -615,7 +615,7 @@
 <li>prot参数指定映射区的保护要求；</li>
 <li>flag参数影响映射区的多种属性，不详细展开。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/mmap.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/mmap.png"
 	
 	
 	
@@ -626,7 +626,7 @@
 <h1 id="信号">信号
 </h1><p>信号是软件中断。它只能用于通知进程某事件的发生，并不能传输数据。</p>
 <p>通过kill -l命令可以看到目前Linux支持的全部信号，已经达到了62种（32号和33号没有）。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png"
 	
 	
 	
@@ -897,7 +897,7 @@
 </blockquote>
 <h2 id="时序图">时序图
 </h2><p>一图胜千言，下面是面向连接的TCP socket通信时序图：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/princple.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/princple.png"
 	
 	
 	
@@ -911,7 +911,7 @@
 </blockquote>
 <p><strong>为什么共享存储是最快的IPC方式？</strong></p>
 <p>使用PIPE、FIFO、消息队列如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png"
 	
 	
 	
@@ -926,7 +926,7 @@
 <li>客户端将信息从PIPE（FIFO/消息队列）复制到客户端临时缓冲区中；</li>
 <li>从客户端临时缓冲区将信息复制到输出文件中。</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png"
 	
 	
 	

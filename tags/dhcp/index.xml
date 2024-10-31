@@ -35,7 +35,7 @@
 &lt;p&gt;租用期是可以延长的，即客户端可以续约。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;dhcp消息格式&#34;&gt;DHCP消息格式
-&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-message.png&#34;
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-message.png&#34;
 	
 	
 	
@@ -73,7 +73,7 @@
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;dhcp协议操作&#34;&gt;DHCP协议操作
 &lt;/h1&gt;&lt;p&gt;接下来我将通过一个实际场景描述DHCP协议的基本工作流程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-procedure.jpeg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-procedure.jpeg&#34;
 	
 	
 	
@@ -88,7 +88,7 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcprequest&#34;&gt;DHCPREQUEST
 &lt;/h2&gt;&lt;p&gt;由于小明的笔记本电脑会记住之前在校园网中使用的IP地址（假定为172.16.1.34），所以在连接到新的网络（小明家的网络）时，它首先通过一个DHCPREQUEST消息尝试继续使用该地址。该DHCPREQUEST消息封装如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPREQUEST.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPREQUEST.png&#34;
 	
 	
 	
@@ -116,7 +116,7 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpnak&#34;&gt;DHCPNAK
 &lt;/h2&gt;&lt;p&gt;附近的DHCP服务器会收到客户机的DHCPREQUEST消息，由于连接到了新网络，172.16.1.34不在当前网络中，所以当前的DHCP服务器无法给小明的笔记本分配其请求的IP地址（172.16.1.34）。因此服务器会发送一个DHCPNAK消息，拒绝客户机的请求。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPNAK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPNAK.png&#34;
 	
 	
 	
@@ -137,7 +137,7 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpdiscover&#34;&gt;DHCPDISCOVER
 &lt;/h2&gt;&lt;p&gt;对IP地址172.16.1.34的请求被拒绝，所以此后客户机不再使用该IP地址，而是通过一个DHCPDISCOVER消息重新寻找新的IP地址。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPDISCOVER.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPDISCOVER.png&#34;
 	
 	
 	
@@ -157,7 +157,7 @@
 &lt;p&gt;然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:13:02:20:b9:18，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。&lt;/p&gt;
 &lt;h2 id=&#34;dhcpoffer&#34;&gt;DHCPOFFER
 &lt;/h2&gt;&lt;p&gt;在接收一个DHCPDISCOVER消息后，DHCP服务器会响应一个IP地址、租约和其他配置信息的确认，它们包含在一个DHCPOFFER消息中。（在本例中，DHCP服务器同时也是路由器和DNS服务器）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPOFFER.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPOFFER.png&#34;
 	
 	
 	
@@ -183,7 +183,7 @@
 &lt;p&gt;然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:04:5a:9f:9e:80，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。&lt;/p&gt;
 &lt;h2 id=&#34;dhcprequest-1&#34;&gt;DHCPREQUEST
 &lt;/h2&gt;&lt;p&gt;当客户机收到一个DHCPOFFER消息，并决定租用服务器提供的IP地址10.0.0.57，它会发送第二个DHCPREQUEST消息。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPREQUEST_2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPREQUEST_2.png&#34;
 	
 	
 	
@@ -205,7 +205,7 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpack&#34;&gt;DHCPACK
 &lt;/h2&gt;&lt;p&gt;当选中的DHCP服务器接收到DHCPREQUEST消息并同意绑定，它会使用一个DHCPACK消息来响应。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPACK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPACK.png&#34;
 	
 	
 	
@@ -254,7 +254,7 @@
 &lt;p&gt;ACD是一个持续的过程，当小明的笔记本通告它正使用的IP地址后，它会继续检查收到的ARP请求或应答，查看自己的IP地址是否出现在这些ARP消息的源IP地址字段中，如果是，说明其他主机与自己在使用相同的地址，然后采取进一步措施，或放弃IP或保留IP并防御，当然也可能不理会冲突。&lt;/p&gt;
 &lt;h1 id=&#34;dhcp状态机&#34;&gt;DHCP状态机
 &lt;/h1&gt;&lt;p&gt;下面附上DHCP客户机的状态机。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-status-machine.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-status-machine.jpg&#34;
 	
 	
 	

@@ -1644,7 +1644,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;p&gt;注：这里所说的ARP帧实际上是指ARP消息封装成的以太网帧。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;以太网帧的格式&#34;&gt;以太网帧的格式
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png&#34;
 	
 	
 	
@@ -1675,7 +1675,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;p&gt;有效载荷部分的最大长度，即1500字节，也被称为以太网的MTU（最大传输单元）。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;arp消息的格式&#34;&gt;ARP消息的格式
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png&#34;
 	
 	
 	
@@ -1700,7 +1700,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;p&gt;当所请求的系统接收到ARP请求，它填充自己的硬件地址，将两个源地址和两个目的地址互换，将Op字段设置为2，然后发送生成的应答。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;arp帧的格式-1&#34;&gt;ARP帧的格式
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png&#34;
 	
 	
 	
@@ -1714,7 +1714,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;h1 id=&#34;arp缓存&#34;&gt;ARP缓存
 &lt;/h1&gt;&lt;p&gt;ARP高效运行的关键是每个主机和路由器上的&lt;strong&gt;ARP缓存&lt;/strong&gt;。&lt;/p&gt;
 &lt;p&gt;在Linux下，我们可以使用arp命令查看本机的ARP缓存。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/arp-command.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/arp-command.png&#34;
 	
 	
 	
@@ -1742,7 +1742,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;arp请求&#34;&gt;ARP请求
 &lt;/h2&gt;&lt;p&gt;主机A发现自己不知道主机B的MAC地址，无法封装以太网帧，所以发出如下ARP请求帧：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-asking.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-asking.png&#34;
 	
 	
 	
@@ -1754,7 +1754,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;p&gt;由于是广播，所以子网内的所有主机的以太网接口都可以接收到该ARP请求帧，IP地址不是10.0.0.3的主机将主动丢弃该帧。&lt;/p&gt;
 &lt;h2 id=&#34;arp应答&#34;&gt;ARP应答
 &lt;/h2&gt;&lt;p&gt;而主机B接收到ARP请求后，发现自己的IP地址与请求中的IP地址一致，所以它做出反应：发送ARP应答帧：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-response.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-response.png&#34;
 	
 	
 	
@@ -1769,7 +1769,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;代理arp&#34;&gt;代理ARP
 &lt;/h1&gt;&lt;p&gt;代理ARP的原理就是当出现跨网段的ARP请求时，路由器将自己的MAC地址返回给发送ARP请求的发送者，实现MAC地址代理（善意的欺骗），最终使得主机能够通信。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/proxy-ARP.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/proxy-ARP.png&#34;
 	
 	
 	
@@ -1785,7 +1785,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;li&gt;更新自己的MAC地址。如果主机的MAC地址变了（如更换了网卡），而IP地址没变。则可以发送一个免费ARP，告诉其他主机：我换MAC地址了，你们注意下。收到免费ARP的其他主机，就可以在自己的ARP缓存里找IP地址与免费ARP里的IP地址一致的条目，然后把这个IP地址对应的MAC地址更新为免费ARP里指明的新MAC地址。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;如上述主机A检测自己的IP地址是否冲突，可发送免费ARP如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/free-ARP.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/free-ARP.png&#34;
 	
 	
 	
@@ -1802,7 +1802,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;h2 id=&#34;arp探测消息&#34;&gt;ARP探测消息
 &lt;/h2&gt;&lt;p&gt;ARP探测消息是一个特殊的ARP请求，特殊在其源IP地址字段被设置为0。ARP探测分组用于查看IP地址是否被其他主机占用。&lt;/p&gt;
 &lt;p&gt;还是以上述的主机A为例，ARP探测消息如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-detect.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-detect.png&#34;
 	
 	
 	
@@ -1821,7 +1821,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;p&gt;以上两种情况，主机A都会生成一个地址冲突消息，如果是DHCP分配的该IP地址，则发送DHCPDECLINE消息拒绝该IP地址。&lt;/p&gt;
 &lt;h2 id=&#34;arp通告消息&#34;&gt;ARP通告消息
 &lt;/h2&gt;&lt;p&gt;如果通过ARP探测消息发现，10.0.0.56没有被其他主机占用，即没有出现IP地址冲突，则主机A会间隔2秒向子网广播发送2个ARP通告消息，以表明它现在占用这个IP地址（10.0.0.56）。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/ARP-protocol/ARP-announcement.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-announcement.png&#34;
 	
 	
 	
@@ -1879,7 +1879,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;li&gt;参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/after-fork.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/after-fork.png&#34;
 	
 	
 	
@@ -1892,7 +1892,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;li&gt;如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况；&lt;/li&gt;
 &lt;li&gt;如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png&#34;
 	
 	
 	
@@ -1948,7 +1948,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;ul&gt;
 &lt;li&gt;如果type是“r”，则文件指针连接到cmdstring的标准输出；&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/r.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/r.png&#34;
 	
 	
 	
@@ -1959,7 +1959,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;ul&gt;
 &lt;li&gt;如果type是“w”，则文件指针连接到cmdstring的标准输入。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/w.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/w.png&#34;
 	
 	
 	
@@ -2109,7 +2109,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;li&gt;prot参数指定映射区的保护要求；&lt;/li&gt;
 &lt;li&gt;flag参数影响映射区的多种属性，不详细展开。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/mmap.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/mmap.png&#34;
 	
 	
 	
@@ -2120,7 +2120,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;h1 id=&#34;信号&#34;&gt;信号
 &lt;/h1&gt;&lt;p&gt;信号是软件中断。它只能用于通知进程某事件的发生，并不能传输数据。&lt;/p&gt;
 &lt;p&gt;通过kill -l命令可以看到目前Linux支持的全部信号，已经达到了62种（32号和33号没有）。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png&#34;
 	
 	
 	
@@ -2391,7 +2391,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;时序图&#34;&gt;时序图
 &lt;/h2&gt;&lt;p&gt;一图胜千言，下面是面向连接的TCP socket通信时序图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/princple.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/princple.png&#34;
 	
 	
 	
@@ -2405,7 +2405,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;为什么共享存储是最快的IPC方式？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用PIPE、FIFO、消息队列如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png&#34;
 	
 	
 	
@@ -2420,7 +2420,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;li&gt;客户端将信息从PIPE（FIFO/消息队列）复制到客户端临时缓冲区中；&lt;/li&gt;
 &lt;li&gt;从客户端临时缓冲区将信息复制到输出文件中。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png&#34;
 	
 	
 	
@@ -2453,7 +2453,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;/ul&gt;
 &lt;p&gt;一个单核CPU在某一时刻只能允许一个线程执行，但是现在的计算机总是有一大堆进/线程等待执行。这就需要某种规则来决定处理这些进/线程的顺序，这就是&lt;strong&gt;调度&lt;/strong&gt;要研究的问题。&lt;/p&gt;
 &lt;p&gt;回忆之前提到的进程状态：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/process-states.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/process-scheduling/process-states.png&#34;
 	
 	
 	
@@ -2574,7 +2574,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 &lt;blockquote&gt;
 &lt;p&gt;轮转调度算法对每个进程都一视同仁，就好比大家都排好队，一个一个来，每个人都运行一会儿再接着重新排队等待运行。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/process-scheduling/Round-Robin-Scheduling.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/process-scheduling/Round-Robin-Scheduling.png&#34;
 	
 	
 	
@@ -3450,7 +3450,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/cpp-object-model/cpp-object-model.png&#34;
+&lt;/div&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/cpp-object-model/cpp-object-model.png&#34;
 	
 	
 	
@@ -3492,7 +3492,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;CLOSED状态作为开始状态点和终止状态点，但它并不能算一个“官方”状态。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction-deeper/TCP-satus-machine.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction-deeper/TCP-satus-machine.png&#34;
 	
 	
 	
@@ -3542,7 +3542,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;指数回退&lt;/strong&gt;：首个SYN报文段发送后3秒发送第二个SYN报文段，第二个报文段发送后6秒后发送第三个SYN报文段，第三个报文段发送后12秒后发送第四个SYN报文段，以此类推，即每一次回退数值都是前一次的两倍。&lt;/p&gt;
 &lt;h2 id=&#34;同时打开过程&#34;&gt;同时打开过程
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction-deeper/opening-same-time.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction-deeper/opening-same-time.png&#34;
 	
 	
 	
@@ -3572,7 +3572,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;可以看到，同时打开过程需要交换四个报文段，比普通的三路握手增加了一个。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;同时关闭过程&#34;&gt;同时关闭过程
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction-deeper/closing-same-time.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction-deeper/closing-same-time.png&#34;
 	
 	
 	
@@ -3654,7 +3654,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;上述两队列之和不能超过backlog。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;tcp半关闭&#34;&gt;TCP半关闭
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction-deeper/half-closing.png&#34;
+&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction-deeper/half-closing.png&#34;
 	
 	
 	
@@ -3732,7 +3732,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/h1&gt;&lt;p&gt;TCP套接字通信由一个四元组确定一个端到端通信，即：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;（客户端IP地址，客户端端口号，服务端IP地址，服务端端口号）&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;整体的时序图如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/helloworld-on-network-programming/princeple-of-comm.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/helloworld-on-network-programming/princeple-of-comm.png&#34;
 	
 	
 	
@@ -4438,7 +4438,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h1 id=&#34;数据流通图&#34;&gt;数据流通图
-&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/helloworld-on-network-programming/Simplest_Socket.png&#34;
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/helloworld-on-network-programming/Simplest_Socket.png&#34;
 	
 	
 	
@@ -4470,7 +4470,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;h1 id=&#34;生产者-消费者模型&#34;&gt;生产者-消费者模型
 &lt;/h1&gt;&lt;p&gt;为了更好地讲清楚以下的线程同步方式，我决定介绍每种线程同步方式时，都搭配一个实际的应用案例。这个应用案例我决定选择生产者-消费者模型这一经典问题。&lt;/p&gt;
 &lt;p&gt;问题描述：有一群&lt;strong&gt;生产者进程&lt;/strong&gt;在生产产品，并将这些产品提供给&lt;strong&gt;消费者进程&lt;/strong&gt;进行消费，生产者进程和消费者进程可以&lt;strong&gt;并发执行&lt;/strong&gt;，在两者之间设置了一个具有&lt;strong&gt;n个缓冲区&lt;/strong&gt;的缓冲池，生产者进程需要将所生产的产品放到一个缓冲区中，消费者进程可以从缓冲区中取走产品消费。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/productor-consumer-model.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/productor-consumer-model.png&#34;
 	
 	
 	
@@ -4492,7 +4492,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;当生产者和消费者&lt;strong&gt;并发&lt;/strong&gt;执行的时候，这就会出现问题，因为上述三个操作不具备&lt;strong&gt;原子性&lt;/strong&gt;，即生产者和消费者的这三个操作可能会交叉执行，而不是一方执行完，另一方再执行。见下图，红色部分为生产者生产的过程，蓝色的为消费者消费的过程：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/execute-mix.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/execute-mix.png&#34;
 	
 	
 	
@@ -4566,7 +4566,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;该程序每次执行的结果并不相同，num值不为0：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/code-of-pro-con.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/code-of-pro-con.png&#34;
 	
 	
 	
@@ -4725,7 +4725,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;直接结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/mutex.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/mutex.png&#34;
 	
 	
 	
@@ -4900,7 +4900,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;使用读写锁程序执行时间如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png&#34;
 	
 	
 	
@@ -4909,7 +4909,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;换成互斥量程序执行时间如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png&#34;
 	
 	
 	
@@ -5100,7 +5100,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;程序执行结果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cond.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cond.png&#34;
 	
 	
 	
@@ -5527,7 +5527,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;执行结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/sem.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/sem.png&#34;
 	
 	
 	
@@ -5605,7 +5605,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;li&gt;接收方收到分组的顺序与发送方的发送顺序不同，即乱序问题如何解决？&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;为了解决这些问题，引入了&lt;strong&gt;滑动窗口机制&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/slide-window-1.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/slide-window-1.png&#34;
 	
 	
 	
@@ -5615,7 +5615,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &gt;&lt;/p&gt;
 &lt;p&gt;上图显示了一个发送方窗口，3号分组已被发送并确认，所以由发送方保存的它的副本可以被释放；7号分组在发送方已准备好，但还未被发送，因为它还没有进入窗口。&lt;/p&gt;
 &lt;p&gt;现在我们可以想象，发送方下一步就接收到分组4的ACK，所以整个窗口向右滑动一个分组，变成下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/slide-window-2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/slide-window-2.png&#34;
 	
 	
 	
@@ -5674,7 +5674,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;窗口通告：&lt;strong&gt;因为TCP提供的是&lt;/strong&gt;双工&lt;/strong&gt;服务，A给B发数据时的TCP报文段同时也包含了对B发给A的数据的ACK，同时每个报文段也包含一个&lt;strong&gt;窗口通告&lt;/strong&gt;实现相反方向上的流量控制。&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;乱序问题&lt;/strong&gt;：TCP绝不会以杂乱次序给上层应用程序发数据。因此，TCP接收端可能会被迫先保持大序列号的数据不交给应用程序，直到缺失的小序列号报文段一一到达，空洞被填满再往应用程序交付数据。&lt;/p&gt;
 &lt;h1 id=&#34;tcp头部结构&#34;&gt;TCP头部结构
-&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/tcp-introduction/TCP-header.png&#34;
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/tcp-introduction/TCP-header.png&#34;
 	
 	
 	
@@ -5829,7 +5829,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;li&gt;就绪态至运行态：由进程调度程序引起，调度程序选择该进程运行；&lt;/li&gt;
 &lt;li&gt;阻塞态至就绪态：等待的外部事件发生，由阻塞态转为就绪态，等待调度程序的调度。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/status-of-process.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/basic-of-process-and-thread/status-of-process.png&#34;
 	
 	
 	
@@ -5942,7 +5942,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;h2 id=&#34;线程内容&#34;&gt;线程内容
 &lt;/h2&gt;&lt;p&gt;同一进程内的所有线程共享该进程的虚拟地址空间，但每个线程拥有自己的栈。&lt;/p&gt;
 &lt;p&gt;进程的虚拟地址空间如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/virtual-memory-space.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/basic-of-process-and-thread/virtual-memory-space.jpg&#34;
 	
 	
 	
@@ -6082,7 +6082,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;比如百度在因特网上有很多可以访问的域名，如百度首页baidu.com、百度贴吧tieba.baidu.com、百度新闻news.baidu.com，百度的权威服务器负责提供这些域名的IP地址。百度可以自己建权威DNS服务器，也可以花钱让中国电信这样的ISP帮它维护权威DNS服务器。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;这三种类型的DNS服务器以下图的层次结构组织起来。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DNS-protocol/hier-structure.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/hier-structure.png&#34;
 	
 	
 	
@@ -6141,7 +6141,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;本地DNS服务器将gaia.cs.umass.edu的IP地址反馈给主机cse.nyu.edu。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DNS-protocol/DNS-server-interaction.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/DNS-server-interaction.png&#34;
 	
 	
 	
@@ -6155,7 +6155,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;dns消息格式&#34;&gt;DNS消息格式
 &lt;/h1&gt;&lt;p&gt;基本的DNS消息以固定的12字节头部开始，其后跟随4个可变长度的区段：问题（或查询）、回答、授权记录和额外信息。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DNS-protocol/DNS-message.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/DNS-message.png&#34;
 	
 	
 	
@@ -6209,7 +6209,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;租用期是可以延长的，即客户端可以续约。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;dhcp消息格式&#34;&gt;DHCP消息格式
-&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-message.png&#34;
+&lt;/h1&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-message.png&#34;
 	
 	
 	
@@ -6247,7 +6247,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h1 id=&#34;dhcp协议操作&#34;&gt;DHCP协议操作
 &lt;/h1&gt;&lt;p&gt;接下来我将通过一个实际场景描述DHCP协议的基本工作流程。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-procedure.jpeg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-procedure.jpeg&#34;
 	
 	
 	
@@ -6262,7 +6262,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcprequest&#34;&gt;DHCPREQUEST
 &lt;/h2&gt;&lt;p&gt;由于小明的笔记本电脑会记住之前在校园网中使用的IP地址（假定为172.16.1.34），所以在连接到新的网络（小明家的网络）时，它首先通过一个DHCPREQUEST消息尝试继续使用该地址。该DHCPREQUEST消息封装如下图所示。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPREQUEST.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPREQUEST.png&#34;
 	
 	
 	
@@ -6290,7 +6290,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpnak&#34;&gt;DHCPNAK
 &lt;/h2&gt;&lt;p&gt;附近的DHCP服务器会收到客户机的DHCPREQUEST消息，由于连接到了新网络，172.16.1.34不在当前网络中，所以当前的DHCP服务器无法给小明的笔记本分配其请求的IP地址（172.16.1.34）。因此服务器会发送一个DHCPNAK消息，拒绝客户机的请求。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPNAK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPNAK.png&#34;
 	
 	
 	
@@ -6311,7 +6311,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpdiscover&#34;&gt;DHCPDISCOVER
 &lt;/h2&gt;&lt;p&gt;对IP地址172.16.1.34的请求被拒绝，所以此后客户机不再使用该IP地址，而是通过一个DHCPDISCOVER消息重新寻找新的IP地址。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPDISCOVER.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPDISCOVER.png&#34;
 	
 	
 	
@@ -6331,7 +6331,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:13:02:20:b9:18，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。&lt;/p&gt;
 &lt;h2 id=&#34;dhcpoffer&#34;&gt;DHCPOFFER
 &lt;/h2&gt;&lt;p&gt;在接收一个DHCPDISCOVER消息后，DHCP服务器会响应一个IP地址、租约和其他配置信息的确认，它们包含在一个DHCPOFFER消息中。（在本例中，DHCP服务器同时也是路由器和DNS服务器）&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPOFFER.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPOFFER.png&#34;
 	
 	
 	
@@ -6357,7 +6357,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:04:5a:9f:9e:80，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。&lt;/p&gt;
 &lt;h2 id=&#34;dhcprequest-1&#34;&gt;DHCPREQUEST
 &lt;/h2&gt;&lt;p&gt;当客户机收到一个DHCPOFFER消息，并决定租用服务器提供的IP地址10.0.0.57，它会发送第二个DHCPREQUEST消息。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPREQUEST_2.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPREQUEST_2.png&#34;
 	
 	
 	
@@ -6379,7 +6379,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;dhcpack&#34;&gt;DHCPACK
 &lt;/h2&gt;&lt;p&gt;当选中的DHCP服务器接收到DHCPREQUEST消息并同意绑定，它会使用一个DHCPACK消息来响应。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCPACK.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCPACK.png&#34;
 	
 	
 	
@@ -6428,7 +6428,7 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
 &lt;p&gt;ACD是一个持续的过程，当小明的笔记本通告它正使用的IP地址后，它会继续检查收到的ARP请求或应答，查看自己的IP地址是否出现在这些ARP消息的源IP地址字段中，如果是，说明其他主机与自己在使用相同的地址，然后采取进一步措施，或放弃IP或保留IP并防御，当然也可能不理会冲突。&lt;/p&gt;
 &lt;h1 id=&#34;dhcp状态机&#34;&gt;DHCP状态机
 &lt;/h1&gt;&lt;p&gt;下面附上DHCP客户机的状态机。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/DHCP-protocol/DHCP-status-machine.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DHCP-protocol/DHCP-status-machine.jpg&#34;
 	
 	
 	

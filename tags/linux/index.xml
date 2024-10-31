@@ -287,7 +287,7 @@
 &lt;li&gt;参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/after-fork.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/after-fork.png&#34;
 	
 	
 	
@@ -300,7 +300,7 @@
 &lt;li&gt;如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况；&lt;/li&gt;
 &lt;li&gt;如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png&#34;
 	
 	
 	
@@ -356,7 +356,7 @@
 &lt;ul&gt;
 &lt;li&gt;如果type是“r”，则文件指针连接到cmdstring的标准输出；&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/r.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/r.png&#34;
 	
 	
 	
@@ -367,7 +367,7 @@
 &lt;ul&gt;
 &lt;li&gt;如果type是“w”，则文件指针连接到cmdstring的标准输入。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/w.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/w.png&#34;
 	
 	
 	
@@ -517,7 +517,7 @@
 &lt;li&gt;prot参数指定映射区的保护要求；&lt;/li&gt;
 &lt;li&gt;flag参数影响映射区的多种属性，不详细展开。&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/mmap.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/mmap.png&#34;
 	
 	
 	
@@ -528,7 +528,7 @@
 &lt;h1 id=&#34;信号&#34;&gt;信号
 &lt;/h1&gt;&lt;p&gt;信号是软件中断。它只能用于通知进程某事件的发生，并不能传输数据。&lt;/p&gt;
 &lt;p&gt;通过kill -l命令可以看到目前Linux支持的全部信号，已经达到了62种（32号和33号没有）。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png&#34;
 	
 	
 	
@@ -799,7 +799,7 @@
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;时序图&#34;&gt;时序图
 &lt;/h2&gt;&lt;p&gt;一图胜千言，下面是面向连接的TCP socket通信时序图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/princple.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/princple.png&#34;
 	
 	
 	
@@ -813,7 +813,7 @@
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;strong&gt;为什么共享存储是最快的IPC方式？&lt;/strong&gt;&lt;/p&gt;
 &lt;p&gt;使用PIPE、FIFO、消息队列如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png&#34;
 	
 	
 	
@@ -828,7 +828,7 @@
 &lt;li&gt;客户端将信息从PIPE（FIFO/消息队列）复制到客户端临时缓冲区中；&lt;/li&gt;
 &lt;li&gt;从客户端临时缓冲区将信息复制到输出文件中。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png&#34;
 	
 	
 	
@@ -867,7 +867,7 @@
 &lt;h1 id=&#34;生产者-消费者模型&#34;&gt;生产者-消费者模型
 &lt;/h1&gt;&lt;p&gt;为了更好地讲清楚以下的线程同步方式，我决定介绍每种线程同步方式时，都搭配一个实际的应用案例。这个应用案例我决定选择生产者-消费者模型这一经典问题。&lt;/p&gt;
 &lt;p&gt;问题描述：有一群&lt;strong&gt;生产者进程&lt;/strong&gt;在生产产品，并将这些产品提供给&lt;strong&gt;消费者进程&lt;/strong&gt;进行消费，生产者进程和消费者进程可以&lt;strong&gt;并发执行&lt;/strong&gt;，在两者之间设置了一个具有&lt;strong&gt;n个缓冲区&lt;/strong&gt;的缓冲池，生产者进程需要将所生产的产品放到一个缓冲区中，消费者进程可以从缓冲区中取走产品消费。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/productor-consumer-model.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/productor-consumer-model.png&#34;
 	
 	
 	
@@ -889,7 +889,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;当生产者和消费者&lt;strong&gt;并发&lt;/strong&gt;执行的时候，这就会出现问题，因为上述三个操作不具备&lt;strong&gt;原子性&lt;/strong&gt;，即生产者和消费者的这三个操作可能会交叉执行，而不是一方执行完，另一方再执行。见下图，红色部分为生产者生产的过程，蓝色的为消费者消费的过程：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/execute-mix.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/execute-mix.png&#34;
 	
 	
 	
@@ -963,7 +963,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;该程序每次执行的结果并不相同，num值不为0：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/code-of-pro-con.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/code-of-pro-con.png&#34;
 	
 	
 	
@@ -1122,7 +1122,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;直接结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/mutex.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/mutex.png&#34;
 	
 	
 	
@@ -1297,7 +1297,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;使用读写锁程序执行时间如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png&#34;
 	
 	
 	
@@ -1306,7 +1306,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;p&gt;换成互斥量程序执行时间如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png&#34;
 	
 	
 	
@@ -1497,7 +1497,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;程序执行结果：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cond.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cond.png&#34;
 	
 	
 	
@@ -1924,7 +1924,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;p&gt;执行结果如下：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/sem.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/sem.png&#34;
 	
 	
 	
@@ -2070,7 +2070,7 @@
 &lt;li&gt;就绪态至运行态：由进程调度程序引起，调度程序选择该进程运行；&lt;/li&gt;
 &lt;li&gt;阻塞态至就绪态：等待的外部事件发生，由阻塞态转为就绪态，等待调度程序的调度。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/status-of-process.png&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/basic-of-process-and-thread/status-of-process.png&#34;
 	
 	
 	
@@ -2183,7 +2183,7 @@
 &lt;h2 id=&#34;线程内容&#34;&gt;线程内容
 &lt;/h2&gt;&lt;p&gt;同一进程内的所有线程共享该进程的虚拟地址空间，但每个线程拥有自己的栈。&lt;/p&gt;
 &lt;p&gt;进程的虚拟地址空间如下图所示：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/basic-of-process-and-thread/virtual-memory-space.jpg&#34;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/basic-of-process-and-thread/virtual-memory-space.jpg&#34;
 	
 	
 	

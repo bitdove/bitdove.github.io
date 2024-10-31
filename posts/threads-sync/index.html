@@ -373,7 +373,7 @@
 <h1 id="生产者-消费者模型">生产者-消费者模型
 </h1><p>为了更好地讲清楚以下的线程同步方式，我决定介绍每种线程同步方式时，都搭配一个实际的应用案例。这个应用案例我决定选择生产者-消费者模型这一经典问题。</p>
 <p>问题描述：有一群<strong>生产者进程</strong>在生产产品，并将这些产品提供给<strong>消费者进程</strong>进行消费，生产者进程和消费者进程可以<strong>并发执行</strong>，在两者之间设置了一个具有<strong>n个缓冲区</strong>的缓冲池，生产者进程需要将所生产的产品放到一个缓冲区中，消费者进程可以从缓冲区中取走产品消费。</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/productor-consumer-model.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/productor-consumer-model.png"
 	
 	
 	
@@ -395,7 +395,7 @@
 </li>
 </ul>
 <p>当生产者和消费者<strong>并发</strong>执行的时候，这就会出现问题，因为上述三个操作不具备<strong>原子性</strong>，即生产者和消费者的这三个操作可能会交叉执行，而不是一方执行完，另一方再执行。见下图，红色部分为生产者生产的过程，蓝色的为消费者消费的过程：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/execute-mix.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/execute-mix.png"
 	
 	
 	
@@ -469,7 +469,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>该程序每次执行的结果并不相同，num值不为0：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/code-of-pro-con.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/code-of-pro-con.png"
 	
 	
 	
@@ -628,7 +628,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>直接结果如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/mutex.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/mutex.png"
 	
 	
 	
@@ -803,7 +803,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>使用读写锁程序执行时间如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cost-of-read-write-lock.png"
 	
 	
 	
@@ -812,7 +812,7 @@
 	
 ></p>
 <p>换成互斥量程序执行时间如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/Mutex%20Overhead.png"
 	
 	
 	
@@ -1003,7 +1003,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>程序执行结果：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/cond.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/cond.png"
 	
 	
 	
@@ -1430,7 +1430,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>执行结果如下：</p>
-<p><img src="https://raw.githubusercontent.com/MasonCodingHere/PicsBed_1/main/Threads-sync/sem.png"
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/Threads-sync/sem.png"
 	
 	
 	
