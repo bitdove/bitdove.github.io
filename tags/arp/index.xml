@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>ARP on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/arp/</link>
-        <description>Recent content in ARP on Mason&#39;s Blog</description>
+        <title>ARP on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/arp/</link>
+        <description>Recent content in ARP on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Thu, 09 May 2024 00:28:32 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/arp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Thu, 09 May 2024 00:28:32 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/arp/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ARP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/arp-protocol/</link>
+        <link>https://bitdove.github.io/posts/arp-protocol/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/arp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/arp-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是arp&#34;&gt;什么是ARP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;ARP是&lt;strong&gt;A&lt;/strong&gt;ddress &lt;strong&gt;R&lt;/strong&gt;esolution &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;地址解析协议&lt;/strong&gt;。&lt;/p&gt;

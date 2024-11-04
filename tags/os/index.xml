@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>OS on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/os/</link>
-        <description>Recent content in OS on Mason&#39;s Blog</description>
+        <title>OS on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/os/</link>
+        <description>Recent content in OS on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Sun, 13 Oct 2024 02:27:51 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Sun, 13 Oct 2024 02:27:51 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/os/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Linux Condition</title>
-        <link>https://MasonCodingHere.github.io/posts/linux-condition/</link>
+        <link>https://bitdove.github.io/posts/linux-condition/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/linux-condition/</guid>
+        <guid>https://bitdove.github.io/posts/linux-condition/</guid>
         <description>&lt;h2 id=&#34;互斥与同步&#34;&gt;互斥与同步
 &lt;/h2&gt;&lt;p&gt;在多线程编程中，有两大问题需要解决：&lt;strong&gt;互斥&lt;/strong&gt;和&lt;strong&gt;同步&lt;/strong&gt;。这两个问题经常放在一起说，但它们还是存在一些差别的。&lt;/p&gt;
 &lt;p&gt;互斥：由于线程间存在共享数据，当多线程并发地对共享数据进行操作（主要是写操作）时，如不加以管理，可能导致数据不一致问题。互斥就是一个共享数据在同一时刻只能被一个线程使用，这样就保证了共享数据的一致性。&lt;/p&gt;
@@ -250,10 +250,10 @@
         </item>
         <item>
         <title>Interprocess Communication</title>
-        <link>https://MasonCodingHere.github.io/posts/interprocess-communication/</link>
+        <link>https://bitdove.github.io/posts/interprocess-communication/</link>
         <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/interprocess-communication/</guid>
+        <guid>https://bitdove.github.io/posts/interprocess-communication/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。&lt;/p&gt;
 &lt;p&gt;进程间通信方式可以归纳为以下几类：&lt;/p&gt;
@@ -849,10 +849,10 @@
         </item>
         <item>
         <title>进程调度</title>
-        <link>https://MasonCodingHere.github.io/posts/process-scheduling/</link>
+        <link>https://bitdove.github.io/posts/process-scheduling/</link>
         <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/process-scheduling/</guid>
+        <guid>https://bitdove.github.io/posts/process-scheduling/</guid>
         <description>&lt;h1 id=&#34;调度的概念&#34;&gt;调度的概念
 &lt;/h1&gt;&lt;p&gt;首先，在《进程与线程基础》一文中，我们已经了解到：&lt;/p&gt;
 &lt;ul&gt;
@@ -1049,10 +1049,10 @@
         </item>
         <item>
         <title>Threads Sync</title>
-        <link>https://MasonCodingHere.github.io/posts/threads-sync/</link>
+        <link>https://bitdove.github.io/posts/threads-sync/</link>
         <pubDate>Wed, 12 May 2021 00:48:23 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/threads-sync/</guid>
+        <guid>https://bitdove.github.io/posts/threads-sync/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;由于每个进程有自己独立的虚拟地址空间，为了打破进程与进程之间的“柏林墙”而实现通信，多进程更多的是考虑进程之间如何通信的问题；&lt;/p&gt;
 &lt;p&gt;而同一进程内的多个线程共享同一地址空间，为了避免多个线程同时访问数据造成的混乱，多线程之间更多的是考虑线程之间的同步问题。&lt;/p&gt;
@@ -2146,10 +2146,10 @@
         </item>
         <item>
         <title>Basic of Process and Thread</title>
-        <link>https://MasonCodingHere.github.io/posts/basic-of-process-and-thread/</link>
+        <link>https://bitdove.github.io/posts/basic-of-process-and-thread/</link>
         <pubDate>Fri, 07 May 2021 00:56:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/basic-of-process-and-thread/</guid>
+        <guid>https://bitdove.github.io/posts/basic-of-process-and-thread/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。&lt;/p&gt;
 &lt;p&gt;操作系统的功能有两个：&lt;/p&gt;

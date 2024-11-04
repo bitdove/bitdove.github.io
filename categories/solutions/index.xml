@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Solutions on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/categories/solutions/</link>
-        <description>Recent content in Solutions on Mason&#39;s Blog</description>
+        <title>Solutions on Silent Spaces</title>
+        <link>https://bitdove.github.io/categories/solutions/</link>
+        <description>Recent content in Solutions on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Fri, 20 Sep 2024 15:18:02 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/categories/solutions/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Fri, 20 Sep 2024 15:18:02 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/categories/solutions/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Hugo &#43; GitHub Pages搭建个人博客</title>
-        <link>https://MasonCodingHere.github.io/posts/build-your-blog/</link>
+        <link>https://bitdove.github.io/posts/build-your-blog/</link>
         <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/build-your-blog/</guid>
+        <guid>https://bitdove.github.io/posts/build-your-blog/</guid>
         <description>&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;本文待完善。&lt;/p&gt;
 &lt;h1 id=&#34;整体思路&#34;&gt;整体思路
@@ -357,10 +357,10 @@
         </item>
         <item>
         <title>How to Build Proxy with XRay</title>
-        <link>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</link>
+        <link>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</guid>
+        <guid>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</guid>
         <description>&lt;h1 id=&#34;preface&#34;&gt;Preface
 &lt;/h1&gt;&lt;p&gt;As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&amp;rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.&lt;/p&gt;
 &lt;blockquote&gt;

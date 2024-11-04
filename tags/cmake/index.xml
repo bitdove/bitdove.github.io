@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>CMake on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/cmake/</link>
-        <description>Recent content in CMake on Mason&#39;s Blog</description>
+        <title>CMake on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/cmake/</link>
+        <description>Recent content in CMake on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Sun, 13 Oct 2024 02:26:15 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Sun, 13 Oct 2024 02:26:15 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/cmake/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Build Echo Project With Cmake</title>
-        <link>https://MasonCodingHere.github.io/posts/build-echo-project-with-cmake/</link>
+        <link>https://bitdove.github.io/posts/build-echo-project-with-cmake/</link>
         <pubDate>Sun, 13 Oct 2024 02:26:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/build-echo-project-with-cmake/</guid>
+        <guid>https://bitdove.github.io/posts/build-echo-project-with-cmake/</guid>
         <description>&lt;h3 id=&#34;linux下cmake构建echo服务器项目&#34;&gt;Linux下CMake构建echo服务器项目
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;昨天测试CSAPP第十一章网络编程中的echo服务器时，想到顺便学着用CMake构建一下项目。&lt;/p&gt;
@@ -178,10 +178,10 @@
         </item>
         <item>
         <title>Cmake Include Directories</title>
-        <link>https://MasonCodingHere.github.io/posts/cmake-include-directories/</link>
+        <link>https://bitdove.github.io/posts/cmake-include-directories/</link>
         <pubDate>Sun, 13 Oct 2024 02:23:23 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cmake-include-directories/</guid>
+        <guid>https://bitdove.github.io/posts/cmake-include-directories/</guid>
         <description>&lt;h4 id=&#34;命令格式&#34;&gt;命令格式
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;

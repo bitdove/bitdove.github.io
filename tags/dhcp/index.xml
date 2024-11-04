@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>DHCP on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/dhcp/</link>
-        <description>Recent content in DHCP on Mason&#39;s Blog</description>
+        <title>DHCP on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/dhcp/</link>
+        <description>Recent content in DHCP on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 05 May 2021 00:37:38 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/dhcp/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Wed, 05 May 2021 00:37:38 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/dhcp/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>DHCP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dhcp-protocol/</link>
+        <link>https://bitdove.github.io/posts/dhcp-protocol/</link>
         <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dhcp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dhcp-protocol/</guid>
         <description>&lt;h1 id=&#34;何为dhcp&#34;&gt;何为DHCP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DHCP是&lt;strong&gt;D&lt;/strong&gt;ynamic &lt;strong&gt;H&lt;/strong&gt;ost &lt;strong&gt;C&lt;/strong&gt;onfiguration &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;动态主机配置协议&lt;/strong&gt;。&lt;/p&gt;

@@ -1,114 +1,114 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Tags on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/</link>
-        <description>Recent content in Tags on Mason&#39;s Blog</description>
+        <title>Tags on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/</link>
+        <description>Recent content in Tags on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>C/C&#43;&#43;</title>
-        <link>https://MasonCodingHere.github.io/tags/c/c&#43;&#43;/</link>
+        <link>https://bitdove.github.io/tags/c/c&#43;&#43;/</link>
         <pubDate>Wed, 30 Oct 2024 23:48:55 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/c/c&#43;&#43;/</guid>
+        <guid>https://bitdove.github.io/tags/c/c&#43;&#43;/</guid>
         <description></description>
         </item>
         <item>
         <title>STL</title>
-        <link>https://MasonCodingHere.github.io/tags/stl/</link>
+        <link>https://bitdove.github.io/tags/stl/</link>
         <pubDate>Wed, 30 Oct 2024 23:34:54 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/stl/</guid>
+        <guid>https://bitdove.github.io/tags/stl/</guid>
         <description></description>
         </item>
         <item>
         <title>Linux</title>
-        <link>https://MasonCodingHere.github.io/tags/linux/</link>
+        <link>https://bitdove.github.io/tags/linux/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/linux/</guid>
+        <guid>https://bitdove.github.io/tags/linux/</guid>
         <description></description>
         </item>
         <item>
         <title>OS</title>
-        <link>https://MasonCodingHere.github.io/tags/os/</link>
+        <link>https://bitdove.github.io/tags/os/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/os/</guid>
+        <guid>https://bitdove.github.io/tags/os/</guid>
         <description></description>
         </item>
         <item>
         <title>CMake</title>
-        <link>https://MasonCodingHere.github.io/tags/cmake/</link>
+        <link>https://bitdove.github.io/tags/cmake/</link>
         <pubDate>Sun, 13 Oct 2024 02:26:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/cmake/</guid>
+        <guid>https://bitdove.github.io/tags/cmake/</guid>
         <description></description>
         </item>
         <item>
         <title>Hugo</title>
-        <link>https://MasonCodingHere.github.io/tags/hugo/</link>
+        <link>https://bitdove.github.io/tags/hugo/</link>
         <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/hugo/</guid>
+        <guid>https://bitdove.github.io/tags/hugo/</guid>
         <description></description>
         </item>
         <item>
         <title>VPS</title>
-        <link>https://MasonCodingHere.github.io/tags/vps/</link>
+        <link>https://bitdove.github.io/tags/vps/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/vps/</guid>
+        <guid>https://bitdove.github.io/tags/vps/</guid>
         <description></description>
         </item>
         <item>
         <title>XRay</title>
-        <link>https://MasonCodingHere.github.io/tags/xray/</link>
+        <link>https://bitdove.github.io/tags/xray/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/xray/</guid>
+        <guid>https://bitdove.github.io/tags/xray/</guid>
         <description></description>
         </item>
         <item>
         <title>ARP</title>
-        <link>https://MasonCodingHere.github.io/tags/arp/</link>
+        <link>https://bitdove.github.io/tags/arp/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/arp/</guid>
+        <guid>https://bitdove.github.io/tags/arp/</guid>
         <description></description>
         </item>
         <item>
         <title>TCP/IP</title>
-        <link>https://MasonCodingHere.github.io/tags/tcp/ip/</link>
+        <link>https://bitdove.github.io/tags/tcp/ip/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/tcp/ip/</guid>
+        <guid>https://bitdove.github.io/tags/tcp/ip/</guid>
         <description></description>
         </item>
         <item>
         <title>Socket</title>
-        <link>https://MasonCodingHere.github.io/tags/socket/</link>
+        <link>https://bitdove.github.io/tags/socket/</link>
         <pubDate>Fri, 14 May 2021 06:44:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/socket/</guid>
+        <guid>https://bitdove.github.io/tags/socket/</guid>
         <description></description>
         </item>
         <item>
         <title>DNS</title>
-        <link>https://MasonCodingHere.github.io/tags/dns/</link>
+        <link>https://bitdove.github.io/tags/dns/</link>
         <pubDate>Thu, 06 May 2021 00:44:05 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/dns/</guid>
+        <guid>https://bitdove.github.io/tags/dns/</guid>
         <description></description>
         </item>
         <item>
         <title>DHCP</title>
-        <link>https://MasonCodingHere.github.io/tags/dhcp/</link>
+        <link>https://bitdove.github.io/tags/dhcp/</link>
         <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/tags/dhcp/</guid>
+        <guid>https://bitdove.github.io/tags/dhcp/</guid>
         <description></description>
         </item>
         

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Diary Essays on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/categories/diary_essays/</link>
-        <description>Recent content in Diary Essays on Mason&#39;s Blog</description>
+        <title>Diary Essays on Silent Spaces</title>
+        <link>https://bitdove.github.io/categories/diary_essays/</link>
+        <description>Recent content in Diary Essays on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright><atom:link href="https://MasonCodingHere.github.io/categories/diary_essays/index.xml" rel="self" type="application/rss+xml" />
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright><atom:link href="https://bitdove.github.io/categories/diary_essays/index.xml" rel="self" type="application/rss+xml" />
     </channel>
 </rss>

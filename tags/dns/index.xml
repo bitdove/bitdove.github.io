@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>DNS on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/dns/</link>
-        <description>Recent content in DNS on Mason&#39;s Blog</description>
+        <title>DNS on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/dns/</link>
+        <description>Recent content in DNS on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Thu, 06 May 2021 00:44:05 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/dns/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Thu, 06 May 2021 00:44:05 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/dns/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>DNS Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dns-protocol/</link>
+        <link>https://bitdove.github.io/posts/dns-protocol/</link>
         <pubDate>Thu, 06 May 2021 00:44:05 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dns-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dns-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是dns&#34;&gt;什么是DNS？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DNS是&lt;strong&gt;D&lt;/strong&gt;omain &lt;strong&gt;N&lt;/strong&gt;ame &lt;strong&gt;S&lt;/strong&gt;ystem的首字母缩写，即&lt;strong&gt;域名系统&lt;/strong&gt;。&lt;/p&gt;

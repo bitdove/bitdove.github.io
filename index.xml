@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/</link>
-        <description>Recent content on Mason&#39;s Blog</description>
+        <title>Silent Spaces</title>
+        <link>https://bitdove.github.io/</link>
+        <description>Recent content on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cpp Constructor Destructor Calling Order</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-constructor-destructor-calling-order/</link>
+        <link>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</link>
         <pubDate>Wed, 30 Oct 2024 23:48:55 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-constructor-destructor-calling-order/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</guid>
         <description>&lt;h1 id=&#34;source-code&#34;&gt;Source Code
 &lt;/h1&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -217,10 +217,10 @@
         </item>
         <item>
         <title>Cpp Type Size Test</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-type-size-test/</link>
+        <link>https://bitdove.github.io/posts/cpp-type-size-test/</link>
         <pubDate>Wed, 30 Oct 2024 23:40:39 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-type-size-test/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-type-size-test/</guid>
         <description>&lt;h1 id=&#34;info-of-test-system&#34;&gt;Info of Test System
 &lt;/h1&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -334,10 +334,10 @@
         </item>
         <item>
         <title>Cpp STL Container</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-stl-container/</link>
+        <link>https://bitdove.github.io/posts/cpp-stl-container/</link>
         <pubDate>Wed, 30 Oct 2024 23:34:54 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-stl-container/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-stl-container/</guid>
         <description>&lt;h1 id=&#34;关联式容器&#34;&gt;关联式容器
 &lt;/h1&gt;&lt;h2 id=&#34;关联式容器概述&#34;&gt;关联式容器概述
 &lt;/h2&gt;&lt;p&gt;关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。&lt;/p&gt;
@@ -633,10 +633,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>Linux Condition</title>
-        <link>https://MasonCodingHere.github.io/posts/linux-condition/</link>
+        <link>https://bitdove.github.io/posts/linux-condition/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/linux-condition/</guid>
+        <guid>https://bitdove.github.io/posts/linux-condition/</guid>
         <description>&lt;h2 id=&#34;互斥与同步&#34;&gt;互斥与同步
 &lt;/h2&gt;&lt;p&gt;在多线程编程中，有两大问题需要解决：&lt;strong&gt;互斥&lt;/strong&gt;和&lt;strong&gt;同步&lt;/strong&gt;。这两个问题经常放在一起说，但它们还是存在一些差别的。&lt;/p&gt;
 &lt;p&gt;互斥：由于线程间存在共享数据，当多线程并发地对共享数据进行操作（主要是写操作）时，如不加以管理，可能导致数据不一致问题。互斥就是一个共享数据在同一时刻只能被一个线程使用，这样就保证了共享数据的一致性。&lt;/p&gt;
@@ -874,10 +874,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>C&#43;&#43; Static</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-static/</link>
+        <link>https://bitdove.github.io/posts/cpp-static/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:03 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-static/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-static/</guid>
         <description>&lt;h2 id=&#34;程序的内存布局&#34;&gt;程序的内存布局
 &lt;/h2&gt;&lt;p&gt;聊static关键字之前，先要复习一下一个进程的内存布局。&lt;/p&gt;
 &lt;table&gt;
@@ -951,10 +951,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>Build Echo Project With Cmake</title>
-        <link>https://MasonCodingHere.github.io/posts/build-echo-project-with-cmake/</link>
+        <link>https://bitdove.github.io/posts/build-echo-project-with-cmake/</link>
         <pubDate>Sun, 13 Oct 2024 02:26:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/build-echo-project-with-cmake/</guid>
+        <guid>https://bitdove.github.io/posts/build-echo-project-with-cmake/</guid>
         <description>&lt;h3 id=&#34;linux下cmake构建echo服务器项目&#34;&gt;Linux下CMake构建echo服务器项目
 &lt;/h3&gt;&lt;blockquote&gt;
 &lt;p&gt;昨天测试CSAPP第十一章网络编程中的echo服务器时，想到顺便学着用CMake构建一下项目。&lt;/p&gt;
@@ -1120,10 +1120,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>Cmake Include Directories</title>
-        <link>https://MasonCodingHere.github.io/posts/cmake-include-directories/</link>
+        <link>https://bitdove.github.io/posts/cmake-include-directories/</link>
         <pubDate>Sun, 13 Oct 2024 02:23:23 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cmake-include-directories/</guid>
+        <guid>https://bitdove.github.io/posts/cmake-include-directories/</guid>
         <description>&lt;h4 id=&#34;命令格式&#34;&gt;命令格式
 &lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -1298,10 +1298,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>Cpp Const</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-const/</link>
+        <link>https://bitdove.github.io/posts/cpp-const/</link>
         <pubDate>Sun, 13 Oct 2024 02:22:13 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-const/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-const/</guid>
         <description>&lt;h2 id=&#34;const关键字&#34;&gt;const关键字
 &lt;/h2&gt;&lt;blockquote&gt;
 &lt;p&gt;const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。&lt;/p&gt;
@@ -1583,10 +1583,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>C&#43;&#43; new那些事儿</title>
-        <link>https://MasonCodingHere.github.io/posts/things-about-new/</link>
+        <link>https://bitdove.github.io/posts/things-about-new/</link>
         <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/things-about-new/</guid>
+        <guid>https://bitdove.github.io/posts/things-about-new/</guid>
         <description>&lt;h1 id=&#34;new-expression&#34;&gt;new expression
 &lt;/h1&gt;&lt;p&gt;分配内存-调用构造函数-返回指针&lt;/p&gt;
 &lt;p&gt;The new operator is an operator which denotes a request for memory allocation on the Heap. If sufficient memory is available, new operator initializes the memory and returns the address of the newly allocated and initialized memory to the pointer variable. When you create an object of class using new keyword(normal new).&lt;/p&gt;
@@ -1619,10 +1619,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>Hugo &#43; GitHub Pages搭建个人博客</title>
-        <link>https://MasonCodingHere.github.io/posts/build-your-blog/</link>
+        <link>https://bitdove.github.io/posts/build-your-blog/</link>
         <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/build-your-blog/</guid>
+        <guid>https://bitdove.github.io/posts/build-your-blog/</guid>
         <description>&lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;p&gt;本文待完善。&lt;/p&gt;
 &lt;h1 id=&#34;整体思路&#34;&gt;整体思路
@@ -1967,10 +1967,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>How to Build Proxy with XRay</title>
-        <link>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</link>
+        <link>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</guid>
+        <guid>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</guid>
         <description>&lt;h1 id=&#34;preface&#34;&gt;Preface
 &lt;/h1&gt;&lt;p&gt;As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&amp;rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.&lt;/p&gt;
 &lt;blockquote&gt;
@@ -3058,10 +3058,10 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
         </item>
         <item>
         <title>About</title>
-        <link>https://MasonCodingHere.github.io/about/</link>
+        <link>https://bitdove.github.io/about/</link>
         <pubDate>Tue, 17 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/about/</guid>
+        <guid>https://bitdove.github.io/about/</guid>
         <description>&lt;p&gt;Hello, everyone.
 I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
 &lt;h2 id=&#34;gpg-public-key--fingerprint&#34;&gt;GPG Public Key &amp;amp; Fingerprint
@@ -3137,10 +3137,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>ARP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/arp-protocol/</link>
+        <link>https://bitdove.github.io/posts/arp-protocol/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/arp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/arp-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是arp&#34;&gt;什么是ARP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;ARP是&lt;strong&gt;A&lt;/strong&gt;ddress &lt;strong&gt;R&lt;/strong&gt;esolution &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;地址解析协议&lt;/strong&gt;。&lt;/p&gt;
@@ -3360,10 +3360,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>Interprocess Communication</title>
-        <link>https://MasonCodingHere.github.io/posts/interprocess-communication/</link>
+        <link>https://bitdove.github.io/posts/interprocess-communication/</link>
         <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/interprocess-communication/</guid>
+        <guid>https://bitdove.github.io/posts/interprocess-communication/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。&lt;/p&gt;
 &lt;p&gt;进程间通信方式可以归纳为以下几类：&lt;/p&gt;
@@ -3959,10 +3959,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>进程调度</title>
-        <link>https://MasonCodingHere.github.io/posts/process-scheduling/</link>
+        <link>https://bitdove.github.io/posts/process-scheduling/</link>
         <pubDate>Mon, 06 Jun 2022 01:14:52 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/process-scheduling/</guid>
+        <guid>https://bitdove.github.io/posts/process-scheduling/</guid>
         <description>&lt;h1 id=&#34;调度的概念&#34;&gt;调度的概念
 &lt;/h1&gt;&lt;p&gt;首先，在《进程与线程基础》一文中，我们已经了解到：&lt;/p&gt;
 &lt;ul&gt;
@@ -4159,10 +4159,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>C&#43;&#43;成员函数调用方式</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-member-function-calling/</link>
+        <link>https://bitdove.github.io/posts/cpp-member-function-calling/</link>
         <pubDate>Mon, 28 Jun 2021 20:24:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-member-function-calling/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-member-function-calling/</guid>
         <description>&lt;h2 id=&#34;引言&#34;&gt;引言
 &lt;/h2&gt;&lt;p&gt;在C++中，有三种成员函数,按照加入C++的先后顺序排列如下：&lt;/p&gt;
 &lt;ul&gt;
@@ -4384,10 +4384,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>美人&#43;鱼=美人鱼——谈C&#43;&#43;多继承</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-multiple-inheritance/</link>
+        <link>https://bitdove.github.io/posts/cpp-multiple-inheritance/</link>
         <pubDate>Tue, 22 Jun 2021 06:19:43 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-multiple-inheritance/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-multiple-inheritance/</guid>
         <description>&lt;h2 id=&#34;引言&#34;&gt;引言
 &lt;/h2&gt;&lt;p&gt;&lt;strong&gt;继承&lt;/strong&gt;是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的&lt;strong&gt;调用权&lt;/strong&gt;。
 根据子类继承父类的个数，继承分为单继承、多继承：&lt;/p&gt;
@@ -4852,10 +4852,10 @@ I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
         </item>
         <item>
         <title>内存角度看C&#43;&#43;对象模型</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-object-model-via-memory-sight/</link>
+        <link>https://bitdove.github.io/posts/cpp-object-model-via-memory-sight/</link>
         <pubDate>Mon, 21 Jun 2021 20:27:56 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-object-model-via-memory-sight/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-object-model-via-memory-sight/</guid>
         <description>&lt;h2 id=&#34;引言&#34;&gt;引言
 &lt;/h2&gt;&lt;p&gt;如《Effective C++》中所言，C++是一个语言联邦，它由以下四部分组成：&lt;/p&gt;
 &lt;ul&gt;
@@ -4991,10 +4991,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>Tcp Introduction Deeper</title>
-        <link>https://MasonCodingHere.github.io/posts/tcp-introduction-deeper/</link>
+        <link>https://bitdove.github.io/posts/tcp-introduction-deeper/</link>
         <pubDate>Mon, 17 May 2021 00:14:35 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/tcp-introduction-deeper/</guid>
+        <guid>https://bitdove.github.io/posts/tcp-introduction-deeper/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;在《TCP的三次握手与四次挥手》中，我们已经了解了一个TCP连接的建立与终止的规则及这个过程中发送的各个类型的报文段。这些决定TCP应该做什么的规则其实是由当前TCP连接所属的状态决定的。当前的状态会在各种触发条件下发生改变。常见的触发条件如：&lt;/p&gt;
 &lt;ul&gt;
@@ -5238,10 +5238,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>网络编程领域的HelloWorld程序</title>
-        <link>https://MasonCodingHere.github.io/posts/helloworld-on-network-programming/</link>
+        <link>https://bitdove.github.io/posts/helloworld-on-network-programming/</link>
         <pubDate>Fri, 14 May 2021 06:44:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/helloworld-on-network-programming/</guid>
+        <guid>https://bitdove.github.io/posts/helloworld-on-network-programming/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;Echo客户端/服务端程序应该是网络编程领域的入门首选，可以视为网络编程领域的HelloWorld程序。&lt;/p&gt;
 &lt;p&gt;为了深入学习网络编程，我写了这样一个程序，姑且叫它Simplest_Socket。这确实是最简单的socket通信程序。与一般的Echo服务器不同，Simplest_Socket会把客户端传来的英文字符串转换为大写再返回给客户端；而不像Echo服务器那样原样返回。&lt;/p&gt;
@@ -5970,10 +5970,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>Threads Sync</title>
-        <link>https://MasonCodingHere.github.io/posts/threads-sync/</link>
+        <link>https://bitdove.github.io/posts/threads-sync/</link>
         <pubDate>Wed, 12 May 2021 00:48:23 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/threads-sync/</guid>
+        <guid>https://bitdove.github.io/posts/threads-sync/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;由于每个进程有自己独立的虚拟地址空间，为了打破进程与进程之间的“柏林墙”而实现通信，多进程更多的是考虑进程之间如何通信的问题；&lt;/p&gt;
 &lt;p&gt;而同一进程内的多个线程共享同一地址空间，为了避免多个线程同时访问数据造成的混乱，多线程之间更多的是考虑线程之间的同步问题。&lt;/p&gt;
@@ -7067,10 +7067,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>TCP:传输控制协议</title>
-        <link>https://MasonCodingHere.github.io/posts/tcp-introduction/</link>
+        <link>https://bitdove.github.io/posts/tcp-introduction/</link>
         <pubDate>Mon, 10 May 2021 00:07:46 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/tcp-introduction/</guid>
+        <guid>https://bitdove.github.io/posts/tcp-introduction/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;所谓可靠传输，有以下四点要求：&lt;/p&gt;
 &lt;ul&gt;
@@ -7223,10 +7223,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>Basic of Process and Thread</title>
-        <link>https://MasonCodingHere.github.io/posts/basic-of-process-and-thread/</link>
+        <link>https://bitdove.github.io/posts/basic-of-process-and-thread/</link>
         <pubDate>Fri, 07 May 2021 00:56:15 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/basic-of-process-and-thread/</guid>
+        <guid>https://bitdove.github.io/posts/basic-of-process-and-thread/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;从今天开始，会陆续开更系列文章《一起学操作系统》，在这里说一下整个系列的写作思路。&lt;/p&gt;
 &lt;p&gt;操作系统的功能有两个：&lt;/p&gt;
@@ -7564,10 +7564,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>DNS Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dns-protocol/</link>
+        <link>https://bitdove.github.io/posts/dns-protocol/</link>
         <pubDate>Thu, 06 May 2021 00:44:05 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dns-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dns-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是dns&#34;&gt;什么是DNS？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DNS是&lt;strong&gt;D&lt;/strong&gt;omain &lt;strong&gt;N&lt;/strong&gt;ame &lt;strong&gt;S&lt;/strong&gt;ystem的首字母缩写，即&lt;strong&gt;域名系统&lt;/strong&gt;。&lt;/p&gt;
@@ -7701,10 +7701,10 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>DHCP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dhcp-protocol/</link>
+        <link>https://bitdove.github.io/posts/dhcp-protocol/</link>
         <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dhcp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dhcp-protocol/</guid>
         <description>&lt;h1 id=&#34;何为dhcp&#34;&gt;何为DHCP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DHCP是&lt;strong&gt;D&lt;/strong&gt;ynamic &lt;strong&gt;H&lt;/strong&gt;ost &lt;strong&gt;C&lt;/strong&gt;onfiguration &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;动态主机配置协议&lt;/strong&gt;。&lt;/p&gt;
@@ -7965,26 +7965,26 @@ C++类的成员可以归纳为以下两大类五小类：&lt;/p&gt;
         </item>
         <item>
         <title>Archives</title>
-        <link>https://MasonCodingHere.github.io/archives/</link>
+        <link>https://bitdove.github.io/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/archives/</guid>
+        <guid>https://bitdove.github.io/archives/</guid>
         <description></description>
         </item>
         <item>
         <title>Links</title>
-        <link>https://MasonCodingHere.github.io/links/</link>
+        <link>https://bitdove.github.io/links/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/links/</guid>
+        <guid>https://bitdove.github.io/links/</guid>
         <description></description>
         </item>
         <item>
         <title>Search</title>
-        <link>https://MasonCodingHere.github.io/search/</link>
+        <link>https://bitdove.github.io/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/search/</guid>
+        <guid>https://bitdove.github.io/search/</guid>
         <description></description>
         </item>
         

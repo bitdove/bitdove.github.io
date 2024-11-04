@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>TCP/IP on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/tcp/ip/</link>
-        <description>Recent content in TCP/IP on Mason&#39;s Blog</description>
+        <title>TCP/IP on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/tcp/ip/</link>
+        <description>Recent content in TCP/IP on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Thu, 09 May 2024 00:28:32 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/tcp/ip/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Thu, 09 May 2024 00:28:32 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/tcp/ip/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ARP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/arp-protocol/</link>
+        <link>https://bitdove.github.io/posts/arp-protocol/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/arp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/arp-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是arp&#34;&gt;什么是ARP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;ARP是&lt;strong&gt;A&lt;/strong&gt;ddress &lt;strong&gt;R&lt;/strong&gt;esolution &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;地址解析协议&lt;/strong&gt;。&lt;/p&gt;
@@ -232,10 +232,10 @@
         </item>
         <item>
         <title>Tcp Introduction Deeper</title>
-        <link>https://MasonCodingHere.github.io/posts/tcp-introduction-deeper/</link>
+        <link>https://bitdove.github.io/posts/tcp-introduction-deeper/</link>
         <pubDate>Mon, 17 May 2021 00:14:35 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/tcp-introduction-deeper/</guid>
+        <guid>https://bitdove.github.io/posts/tcp-introduction-deeper/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;在《TCP的三次握手与四次挥手》中，我们已经了解了一个TCP连接的建立与终止的规则及这个过程中发送的各个类型的报文段。这些决定TCP应该做什么的规则其实是由当前TCP连接所属的状态决定的。当前的状态会在各种触发条件下发生改变。常见的触发条件如：&lt;/p&gt;
 &lt;ul&gt;
@@ -479,10 +479,10 @@
         </item>
         <item>
         <title>TCP:传输控制协议</title>
-        <link>https://MasonCodingHere.github.io/posts/tcp-introduction/</link>
+        <link>https://bitdove.github.io/posts/tcp-introduction/</link>
         <pubDate>Mon, 10 May 2021 00:07:46 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/tcp-introduction/</guid>
+        <guid>https://bitdove.github.io/posts/tcp-introduction/</guid>
         <description>&lt;h1 id=&#34;引言&#34;&gt;引言
 &lt;/h1&gt;&lt;p&gt;所谓可靠传输，有以下四点要求：&lt;/p&gt;
 &lt;ul&gt;
@@ -635,10 +635,10 @@
         </item>
         <item>
         <title>DNS Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dns-protocol/</link>
+        <link>https://bitdove.github.io/posts/dns-protocol/</link>
         <pubDate>Thu, 06 May 2021 00:44:05 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dns-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dns-protocol/</guid>
         <description>&lt;h1 id=&#34;什么是dns&#34;&gt;什么是DNS？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DNS是&lt;strong&gt;D&lt;/strong&gt;omain &lt;strong&gt;N&lt;/strong&gt;ame &lt;strong&gt;S&lt;/strong&gt;ystem的首字母缩写，即&lt;strong&gt;域名系统&lt;/strong&gt;。&lt;/p&gt;
@@ -772,10 +772,10 @@
         </item>
         <item>
         <title>DHCP Protocol</title>
-        <link>https://MasonCodingHere.github.io/posts/dhcp-protocol/</link>
+        <link>https://bitdove.github.io/posts/dhcp-protocol/</link>
         <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/dhcp-protocol/</guid>
+        <guid>https://bitdove.github.io/posts/dhcp-protocol/</guid>
         <description>&lt;h1 id=&#34;何为dhcp&#34;&gt;何为DHCP？
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;DHCP是&lt;strong&gt;D&lt;/strong&gt;ynamic &lt;strong&gt;H&lt;/strong&gt;ost &lt;strong&gt;C&lt;/strong&gt;onfiguration &lt;strong&gt;P&lt;/strong&gt;rotocol的首字母缩写，即&lt;strong&gt;动态主机配置协议&lt;/strong&gt;。&lt;/p&gt;

@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>XRay on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/xray/</link>
-        <description>Recent content in XRay on Mason&#39;s Blog</description>
+        <title>XRay on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/xray/</link>
+        <description>Recent content in XRay on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/xray/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/tags/xray/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>How to Build Proxy with XRay</title>
-        <link>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</link>
+        <link>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</guid>
+        <guid>https://bitdove.github.io/posts/how-to-build-proxy-with-xray/</guid>
         <description>&lt;h1 id=&#34;preface&#34;&gt;Preface
 &lt;/h1&gt;&lt;p&gt;As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&amp;rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.&lt;/p&gt;
 &lt;blockquote&gt;

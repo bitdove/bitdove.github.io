@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>STL on Mason&#39;s Blog</title>
-        <link>https://MasonCodingHere.github.io/tags/stl/</link>
-        <description>Recent content in STL on Mason&#39;s Blog</description>
+        <title>STL on Silent Spaces</title>
+        <link>https://bitdove.github.io/tags/stl/</link>
+        <description>Recent content in STL on Silent Spaces</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>en</language>
-        <copyright>Mason</copyright>
-        <lastBuildDate>Wed, 30 Oct 2024 23:34:54 -0700</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/stl/index.xml" rel="self" type="application/rss+xml" /><item>
+        <language>en-us</language>
+        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <lastBuildDate>Wed, 30 Oct 2024 23:34:54 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/stl/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cpp STL Container</title>
-        <link>https://MasonCodingHere.github.io/posts/cpp-stl-container/</link>
+        <link>https://bitdove.github.io/posts/cpp-stl-container/</link>
         <pubDate>Wed, 30 Oct 2024 23:34:54 -0700</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/cpp-stl-container/</guid>
+        <guid>https://bitdove.github.io/posts/cpp-stl-container/</guid>
         <description>&lt;h1 id=&#34;关联式容器&#34;&gt;关联式容器
 &lt;/h1&gt;&lt;h2 id=&#34;关联式容器概述&#34;&gt;关联式容器概述
 &lt;/h2&gt;&lt;p&gt;关联式容器的每个元素都有一个key值一个value值。当元素被插入到关联式容器时，容器内部结构便依照key值大小，按照某种规则将该元素置于适当位置。&lt;/p&gt;
