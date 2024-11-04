@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="C++成员函数调用方式">
 <meta property='og:description' content="引言 在C++中，有三种成员函数,按照加入C++的先后顺序排列如下：\nnonstatic member functions virtual member functions static member functions 经过编译器的处理之后，这三种成员函数的调用方式是不相同的，下边我们一个一个看。 我们提供这样一个类Point3d，作例子：\n1 2 3 4 5 6 7 8 9 10 11 12 class Point3d { public: float magnitude() const; private: float _x; float _y; float _z; } float Point3d::magnitude() const{ return sqrt(_x * _x + _y * _y + _z * _z); } Nonstatic Member Functions C++有这样一个设计准则：非静态成员函数至少要和一般的非成员函数有相同的效率。也就是说，如下两个函数：\n1 2 float magnitude3d(const Point3d* _this){...} //非成员函数 float Point3d::magnitude3d() const {...} //成员函数 选择第二个函数不应该给程序带来性能上的损失，否则我还不如直接选第一个函数（不让它做类的成员函数）。\n那编译器是怎么保证这个原则的呢？答案是编译器内部会把成员函数转换为对等的非成员函数。 举个例子，下面是magnitude()的非成员函数版定义：\n1 2 3 4 5 float magnitude(const Point3d* _this){ return sqrt(_this-&gt;_x * _this-&gt;_x + _this-&gt;_y * _this-&gt;_y + _this-&gt;_z * _this-&gt;_z); } 乍一看，成员函数版应该效率更高，因为它直接取用_x,_y,_z这三个成员，而非成员函数版要通过指针间接取用。其实不然，因为成员函数版会被编译器内化为非成员函数版，转化步骤如下;\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/cpp-member-function-calling/'>
-<meta property='og:site_name' content='DoveSaying'>
+<meta property='og:site_name' content='bitdove&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:published_time' content='2021-06-28T20:24:15-07:00'/><meta property='article:modified_time' content='2021-06-28T20:24:15-07:00'/>
 <meta name="twitter:title" content="C++成员函数调用方式">
 <meta name="twitter:description" content="引言 在C++中，有三种成员函数,按照加入C++的先后顺序排列如下：\nnonstatic member functions virtual member functions static member functions 经过编译器的处理之后，这三种成员函数的调用方式是不相同的，下边我们一个一个看。 我们提供这样一个类Point3d，作例子：\n1 2 3 4 5 6 7 8 9 10 11 12 class Point3d { public: float magnitude() const; private: float _x; float _y; float _z; } float Point3d::magnitude() const{ return sqrt(_x * _x + _y * _y + _z * _z); } Nonstatic Member Functions C++有这样一个设计准则：非静态成员函数至少要和一般的非成员函数有相同的效率。也就是说，如下两个函数：\n1 2 float magnitude3d(const Point3d* _this){...} //非成员函数 float Point3d::magnitude3d() const {...} //成员函数 选择第二个函数不应该给程序带来性能上的损失，否则我还不如直接选第一个函数（不让它做类的成员函数）。\n那编译器是怎么保证这个原则的呢？答案是编译器内部会把成员函数转换为对等的非成员函数。 举个例子，下面是magnitude()的非成员函数版定义：\n1 2 3 4 5 float magnitude(const Point3d* _this){ return sqrt(_this-&gt;_x * _this-&gt;_x + _this-&gt;_y * _this-&gt;_y + _this-&gt;_z * _this-&gt;_z); } 乍一看，成员函数版应该效率更高，因为它直接取用_x,_y,_z这三个成员，而非成员函数版要通过指针间接取用。其实不然，因为成员函数版会被编译器内化为非成员函数版，转化步骤如下;\n">
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">DoveSaying</a></h1>
+            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -667,7 +667,7 @@
     <section class="copyright">
         &copy; 
         
-            2020 - 
+            2018 - 
         
         2024 bitdove. All Rights Reserved.
     </section>

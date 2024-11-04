@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="内存角度看C++对象模型">
 <meta property='og:description' content="引言 如《Effective C++》中所言，C++是一个语言联邦，它由以下四部分组成：\nC：可以理解为兼容C的那部分，即面向过程的； Object-Oriendted C++：即C++面向对象的部分，封装、继承、多态； Template C++：即泛型编程； STL：标准模版库，主要包含容器、迭代器、算法等。 面向过程：如C语言，数据和**处理数据的操作(即函数)**是分开的，也就是说语言本身并没有支持数据和函数之间的关联性。\n本文我们要谈的就是C++面向对象的部分内容。\n封装：于C++而言，封装实际上指的就是class，通过class把数据和函数封装在一起，对外只提供类的接口，而把实现细节隐藏起来，同时还可以通过访问权限制定数据和函数的安全等级，从而提高了安全性和隐私性。 继承：继承可以理解为代码复用，是为了提高代码的复用性和可扩展性。子类继承父类，在保留“家族传统”的同时，还允许子类有自己的“小个性”。对于父类中的数据成员，子类完整的继承下来，所谓“完整”是指这种继承是要占用内存的；而对于父类的成员函数，子类继承的只是函数的调用权。 多态：多态可以理解为接口复用，也就是通过不同的方式调用“相同的接口”将产生不同的操作。多态分为静态多态和动态多态，静态多态通过重载实现，动态多态通过虚函数实现。 多态中，关于“相同的接口”中的“相同”，不同形式的多态有一些程度上的区分。一个函数由返回类型、函数名、函数形参、函数体四部分组成。\n静态多态：通过重载实现，“相同”指的是函数名相同，函数形参必须不同，返回类型相同不相同都可以，既然要实现不同功能，函数体当然也是不同的； 动态多态：通过子类重写父类的虚函数实现，“相同”指的是除了函数体外其他完全相同，返回类型、函数名、函数形参都相同，只有函数体不同（为实现不同功能）。 静态多态是在编译期就确定下来的，编译器编译的时候会把这些函数加上各自的形参信息，这样实际上还是不同的函数，从而实现静态多态。重载的函数都在同一个类里面。\n动态多态是在运行期才能确定下来。\nC++对象基本模型 所谓C++对象模型，可以理解为对于各种支持的底层实现机制，这里我们简单关注C++对象在内存中的布局。 C++类的成员可以归纳为以下两大类五小类：\n成员函数 静态成员函数(static member functions) 非静态成员函数(non-static member functions) 虚成员函数(virtual member functions) 数据成员 静态数据成员(static data members) 非静态数据成员(non-static data members) 那么，我们可以定义这样一个类Base，在不考虑继承的情况下，它囊括了类的所有可能的成员。\n1 2 3 4 5 6 7 8 9 class Base{ public: static int fun_1(); //static member function int fun_2(); //non-static member function virtual int fun_3(){} //virtual member function private: static int data_1; //static data member int data_2; //non-static data member }; 对于这样一个类Base，实例化后，它的对象占多少字节呢？先给出答案：\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/cpp-object-model-via-memory-sight/'>
-<meta property='og:site_name' content='DoveSaying'>
+<meta property='og:site_name' content='bitdove&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:published_time' content='2021-06-21T20:27:56-07:00'/><meta property='article:modified_time' content='2021-06-21T20:27:56-07:00'/>
 <meta name="twitter:title" content="内存角度看C++对象模型">
 <meta name="twitter:description" content="引言 如《Effective C++》中所言，C++是一个语言联邦，它由以下四部分组成：\nC：可以理解为兼容C的那部分，即面向过程的； Object-Oriendted C++：即C++面向对象的部分，封装、继承、多态； Template C++：即泛型编程； STL：标准模版库，主要包含容器、迭代器、算法等。 面向过程：如C语言，数据和**处理数据的操作(即函数)**是分开的，也就是说语言本身并没有支持数据和函数之间的关联性。\n本文我们要谈的就是C++面向对象的部分内容。\n封装：于C++而言，封装实际上指的就是class，通过class把数据和函数封装在一起，对外只提供类的接口，而把实现细节隐藏起来，同时还可以通过访问权限制定数据和函数的安全等级，从而提高了安全性和隐私性。 继承：继承可以理解为代码复用，是为了提高代码的复用性和可扩展性。子类继承父类，在保留“家族传统”的同时，还允许子类有自己的“小个性”。对于父类中的数据成员，子类完整的继承下来，所谓“完整”是指这种继承是要占用内存的；而对于父类的成员函数，子类继承的只是函数的调用权。 多态：多态可以理解为接口复用，也就是通过不同的方式调用“相同的接口”将产生不同的操作。多态分为静态多态和动态多态，静态多态通过重载实现，动态多态通过虚函数实现。 多态中，关于“相同的接口”中的“相同”，不同形式的多态有一些程度上的区分。一个函数由返回类型、函数名、函数形参、函数体四部分组成。\n静态多态：通过重载实现，“相同”指的是函数名相同，函数形参必须不同，返回类型相同不相同都可以，既然要实现不同功能，函数体当然也是不同的； 动态多态：通过子类重写父类的虚函数实现，“相同”指的是除了函数体外其他完全相同，返回类型、函数名、函数形参都相同，只有函数体不同（为实现不同功能）。 静态多态是在编译期就确定下来的，编译器编译的时候会把这些函数加上各自的形参信息，这样实际上还是不同的函数，从而实现静态多态。重载的函数都在同一个类里面。\n动态多态是在运行期才能确定下来。\nC++对象基本模型 所谓C++对象模型，可以理解为对于各种支持的底层实现机制，这里我们简单关注C++对象在内存中的布局。 C++类的成员可以归纳为以下两大类五小类：\n成员函数 静态成员函数(static member functions) 非静态成员函数(non-static member functions) 虚成员函数(virtual member functions) 数据成员 静态数据成员(static data members) 非静态数据成员(non-static data members) 那么，我们可以定义这样一个类Base，在不考虑继承的情况下，它囊括了类的所有可能的成员。\n1 2 3 4 5 6 7 8 9 class Base{ public: static int fun_1(); //static member function int fun_2(); //non-static member function virtual int fun_3(){} //virtual member function private: static int data_1; //static data member int data_2; //non-static data member }; 对于这样一个类Base，实例化后，它的对象占多少字节呢？先给出答案：\n">
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">DoveSaying</a></h1>
+            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -581,7 +581,7 @@ C++类的成员可以归纳为以下两大类五小类：</p>
     <section class="copyright">
         &copy; 
         
-            2020 - 
+            2018 - 
         
         2024 bitdove. All Rights Reserved.
     </section>

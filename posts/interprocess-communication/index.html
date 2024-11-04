@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Interprocess Communication">
 <meta property='og:description' content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n管道：PIPE、FIFO； 系统IPC：消息队列、共享存储； 信号（Signal） 套接字：socket。 管道 PIPE PIPE是UNIX系统最古老的IPC方式，也叫未命名管道，PIPE有以下两种局限性：\nPIPE是半双工的，即数据只能在一个方向上流动。 PIPE只能在具有公共祖先的两个进程之间使用。通常，一个进程创建一个管道，然后进程调用fork之后，这个管道就可以在父进程和子进程之间使用了。 PIPE通过调用pipe函数来创建：\n1 2 3 #include &lt;unistd.h&gt; int pipe(int fd[2]); //返回值：成功则返回0；出错则返回-1。 参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。 通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：\nfork之后做什么取决于我们想要的数据流的方向：\n如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况； 如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。 PIPE的一端被关闭后，下列两条规则起作用：\n对写端关闭的PIPE，在所有数据都被读取（read）后，read返回0，表示文件结束； 对读端关闭的PIPE，write时将产生SIGPIPE信号，如果忽略该信号或者捕捉该信号并从其处理程序返回，则write返回-1，errno设置为EPIPE。 以上图从父进程到子进程的管道为例：\n如果父进程已经关闭了fd[1]，那么在子进程读取完PIPE内所有数据后，read会返回0，表示文件结束； 如果子进程已经关闭了fd[0]，父进程还在write时，会产生SIGPIPE信号。 因为上述创建数据通道的流程（首先要调用pipe创建PIPE，然后调用fork创建子进程，最后还要根据通道方向关闭父/子进程的读/写端）过于繁杂，所以标准I/O库提供了两个函数：popen和pclose，这两个函数实现的操作是：\npopen：创建一个PIPE，fork一个子进程，关闭未使用的管道端，执行一个shell命令； pclose：关闭由popen所建立的管道及文件指针； 1 2 3 4 5 #include &lt;stdio.h&gt; FILE *popen(const char *cmdstring, const char *type); //返回值：若成功，返回文件指针；若出错，返回NULL int pclose(FILE *fp); //返回值：若成功，返回cmdstring的终止状态；若出错，返回-1 函数popen先执行fork，然后调用exec执行cmdstring，并且返回一个标准I/O文件指针。\ncmdstring由Bourne shell以下列方式执行：\n1 sh -c cmdstring 如果type是“r”，则文件指针连接到cmdstring的标准输出； 如果type是“w”，则文件指针连接到cmdstring的标准输入。 FIFO FIFO也叫命名管道。相比于PIPE，FIFO的最大优势在于：它在两个不相关的进程间也能交换数据。\nFIFO是一种文件类型。FIFO的路径名存在于文件系统中。创建FIFO类似于创建文件：\n1 2 3 4 #include &lt;sys/stat.h&gt; int mkfifo(const char *path, mode_t mode); int mkfifoat(int fd, const char *path, mode_t mode); //两个函数返回值：成功返回0；出错返回-1 若path为绝对路径，则fd参数被忽略，mkfifoat和mkfifo类似； 若path为相对路径，则fd参数是一个打开目录的有效文件描述符，路径名和目录有关； 若path为相对路径，且fd参数有一个特殊值AF_FDCWD，则路径名以当前目录开始，mkfifoat和mkfifo类似。 mode参数用于指定新建的FIFO文件的访问权限；\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/interprocess-communication/'>
-<meta property='og:site_name' content='DoveSaying'>
+<meta property='og:site_name' content='bitdove&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Linux' /><meta property='article:tag' content='OS' /><meta property='article:published_time' content='2022-06-07T01:18:12-07:00'/><meta property='article:modified_time' content='2022-06-07T01:18:12-07:00'/>
 <meta name="twitter:title" content="Interprocess Communication">
 <meta name="twitter:description" content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n管道：PIPE、FIFO； 系统IPC：消息队列、共享存储； 信号（Signal） 套接字：socket。 管道 PIPE PIPE是UNIX系统最古老的IPC方式，也叫未命名管道，PIPE有以下两种局限性：\nPIPE是半双工的，即数据只能在一个方向上流动。 PIPE只能在具有公共祖先的两个进程之间使用。通常，一个进程创建一个管道，然后进程调用fork之后，这个管道就可以在父进程和子进程之间使用了。 PIPE通过调用pipe函数来创建：\n1 2 3 #include &lt;unistd.h&gt; int pipe(int fd[2]); //返回值：成功则返回0；出错则返回-1。 参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。 通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：\nfork之后做什么取决于我们想要的数据流的方向：\n如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况； 如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。 PIPE的一端被关闭后，下列两条规则起作用：\n对写端关闭的PIPE，在所有数据都被读取（read）后，read返回0，表示文件结束； 对读端关闭的PIPE，write时将产生SIGPIPE信号，如果忽略该信号或者捕捉该信号并从其处理程序返回，则write返回-1，errno设置为EPIPE。 以上图从父进程到子进程的管道为例：\n如果父进程已经关闭了fd[1]，那么在子进程读取完PIPE内所有数据后，read会返回0，表示文件结束； 如果子进程已经关闭了fd[0]，父进程还在write时，会产生SIGPIPE信号。 因为上述创建数据通道的流程（首先要调用pipe创建PIPE，然后调用fork创建子进程，最后还要根据通道方向关闭父/子进程的读/写端）过于繁杂，所以标准I/O库提供了两个函数：popen和pclose，这两个函数实现的操作是：\npopen：创建一个PIPE，fork一个子进程，关闭未使用的管道端，执行一个shell命令； pclose：关闭由popen所建立的管道及文件指针； 1 2 3 4 5 #include &lt;stdio.h&gt; FILE *popen(const char *cmdstring, const char *type); //返回值：若成功，返回文件指针；若出错，返回NULL int pclose(FILE *fp); //返回值：若成功，返回cmdstring的终止状态；若出错，返回-1 函数popen先执行fork，然后调用exec执行cmdstring，并且返回一个标准I/O文件指针。\ncmdstring由Bourne shell以下列方式执行：\n1 sh -c cmdstring 如果type是“r”，则文件指针连接到cmdstring的标准输出； 如果type是“w”，则文件指针连接到cmdstring的标准输入。 FIFO FIFO也叫命名管道。相比于PIPE，FIFO的最大优势在于：它在两个不相关的进程间也能交换数据。\nFIFO是一种文件类型。FIFO的路径名存在于文件系统中。创建FIFO类似于创建文件：\n1 2 3 4 #include &lt;sys/stat.h&gt; int mkfifo(const char *path, mode_t mode); int mkfifoat(int fd, const char *path, mode_t mode); //两个函数返回值：成功返回0；出错返回-1 若path为绝对路径，则fd参数被忽略，mkfifoat和mkfifo类似； 若path为相对路径，则fd参数是一个打开目录的有效文件描述符，路径名和目录有关； 若path为相对路径，且fd参数有一个特殊值AF_FDCWD，则路径名以当前目录开始，mkfifoat和mkfifo类似。 mode参数用于指定新建的FIFO文件的访问权限；\n">
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">DoveSaying</a></h1>
+            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -1063,7 +1063,7 @@
     <section class="copyright">
         &copy; 
         
-            2020 - 
+            2018 - 
         
         2024 bitdove. All Rights Reserved.
     </section>

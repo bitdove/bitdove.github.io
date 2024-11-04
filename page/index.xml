@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Pages on DoveSaying</title>
+        <title>Pages on bitdove&#39;s Blog</title>
         <link>https://bitdove.github.io/page/</link>
-        <description>Recent content in Pages on DoveSaying</description>
+        <description>Recent content in Pages on bitdove&#39;s Blog</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
@@ -14,7 +14,7 @@
         
         <guid>https://bitdove.github.io/about/</guid>
         <description>&lt;p&gt;Hello, everyone.
-I&amp;rsquo;m Mason. Welcome to my blog.&lt;/p&gt;
+I&amp;rsquo;m bitdove on GitHub. Welcome to my blog.&lt;/p&gt;
 &lt;h2 id=&#34;gpg-public-key--fingerprint&#34;&gt;GPG Public Key &amp;amp; Fingerprint
 &lt;/h2&gt;&lt;ul&gt;
 &lt;li&gt;
