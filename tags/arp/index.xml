@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>ARP on Silent Spaces</title>
+        <title>ARP on DoveSaying</title>
         <link>https://bitdove.github.io/tags/arp/</link>
-        <description>Recent content in ARP on Silent Spaces</description>
+        <description>Recent content in ARP on DoveSaying</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <copyright>bitdove. All Rights Reserved.</copyright>
         <lastBuildDate>Thu, 09 May 2024 00:28:32 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/arp/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>ARP Protocol</title>
         <link>https://bitdove.github.io/posts/arp-protocol/</link>

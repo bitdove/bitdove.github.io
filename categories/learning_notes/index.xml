@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Learning Notes on Silent Spaces</title>
+        <title>Learning Notes on DoveSaying</title>
         <link>https://bitdove.github.io/categories/learning_notes/</link>
-        <description>Recent content in Learning Notes on Silent Spaces</description>
+        <description>Recent content in Learning Notes on DoveSaying</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
-        <copyright>Content on this site is licensed under CC BY-NC-SA 4.0.</copyright>
+        <copyright>bitdove. All Rights Reserved.</copyright>
         <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/categories/learning_notes/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Cpp Constructor Destructor Calling Order</title>
         <link>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</link>
