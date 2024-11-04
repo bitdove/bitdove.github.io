@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。\n技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。\n在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。\n假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是代理的原理，也是一系列翻墙技术得以实现的基础。\n购买VPS 我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。\n有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。\n注册并登陆Vultr，点击右上角的Deploy按钮按以下步骤部署一台VPS。\n选择VPS类型和位置 类型选Shared CPU即可。\n位置看自己需求，这里以美国Los Angeles为例。\n选择系统镜像 选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。\n选择Plan 根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。\n其他设置 去掉Auto Backups，费钱。\n去掉IPv6，不需要。\n这里可以把SSH key上传一下，把本地电脑~/.ssh/的公钥传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。\n在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。\n下单 这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。\n部署过程或许需要几分钟，耐心等待一下。\n部署完成 Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以100.200.300.400来表示。\n检查IP是否被墙 在站长工具-Ping检测输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。\n如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。\n配置VPS SSH登陆VPS 要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。\n1 ssh root@100.200.300.400 SSH登陆Linux服务器是基本操作，不细说了。\n更新 更新一下：\n1 2 apt update apt upgrade 启用ufw防火墙 登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。\n1 ufw --version 没有安装的自己安装一下。\n">
-<title>私人代理——搭建专属于你的梯子</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
+<title>How to Build Proxy with XRay</title>
 
-<link rel='canonical' href='https://MasonCodingHere.github.io/posts/build-your-own-ladder/'>
+<link rel='canonical' href='https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="私人代理——搭建专属于你的梯子">
-<meta property='og:description' content="前言 大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。\n技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。\n在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。\n假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是代理的原理，也是一系列翻墙技术得以实现的基础。\n购买VPS 我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。\n有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。\n注册并登陆Vultr，点击右上角的Deploy按钮按以下步骤部署一台VPS。\n选择VPS类型和位置 类型选Shared CPU即可。\n位置看自己需求，这里以美国Los Angeles为例。\n选择系统镜像 选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。\n选择Plan 根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。\n其他设置 去掉Auto Backups，费钱。\n去掉IPv6，不需要。\n这里可以把SSH key上传一下，把本地电脑~/.ssh/的公钥传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。\n在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。\n下单 这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。\n部署过程或许需要几分钟，耐心等待一下。\n部署完成 Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以100.200.300.400来表示。\n检查IP是否被墙 在站长工具-Ping检测输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。\n如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。\n配置VPS SSH登陆VPS 要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。\n1 ssh root@100.200.300.400 SSH登陆Linux服务器是基本操作，不细说了。\n更新 更新一下：\n1 2 apt update apt upgrade 启用ufw防火墙 登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。\n1 ufw --version 没有安装的自己安装一下。\n">
-<meta property='og:url' content='https://MasonCodingHere.github.io/posts/build-your-own-ladder/'>
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="How to Build Proxy with XRay">
+<meta property='og:description' content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
+<meta property='og:url' content='https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/'>
 <meta property='og:site_name' content='Mason&#39;s Blog'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='VPS' /><meta property='article:tag' content='XRay' /><meta property='article:published_time' content='2024-09-18T16:26:03&#43;08:00'/><meta property='article:modified_time' content='2024-09-18T16:26:03&#43;08:00'/>
-<meta name="twitter:title" content="私人代理——搭建专属于你的梯子">
-<meta name="twitter:description" content="前言 大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。\n技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。\n在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。\n假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是代理的原理，也是一系列翻墙技术得以实现的基础。\n购买VPS 我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。\n有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。\n注册并登陆Vultr，点击右上角的Deploy按钮按以下步骤部署一台VPS。\n选择VPS类型和位置 类型选Shared CPU即可。\n位置看自己需求，这里以美国Los Angeles为例。\n选择系统镜像 选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。\n选择Plan 根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。\n其他设置 去掉Auto Backups，费钱。\n去掉IPv6，不需要。\n这里可以把SSH key上传一下，把本地电脑~/.ssh/的公钥传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。\n在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。\n下单 这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。\n部署过程或许需要几分钟，耐心等待一下。\n部署完成 Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以100.200.300.400来表示。\n检查IP是否被墙 在站长工具-Ping检测输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。\n如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。\n配置VPS SSH登陆VPS 要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。\n1 ssh root@100.200.300.400 SSH登陆Linux服务器是基本操作，不细说了。\n更新 更新一下：\n1 2 apt update apt upgrade 启用ufw防火墙 登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。\n1 ufw --version 没有安装的自己安装一下。\n">
+<meta name="twitter:title" content="How to Build Proxy with XRay">
+<meta name="twitter:description" content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -245,26 +245,26 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#购买vps">购买VPS</a>
+    <li><a href="#preface">Preface</a></li>
+    <li><a href="#buy-a-vps">Buy a VPS</a>
       <ol>
-        <li><a href="#选择vps类型和位置">选择VPS类型和位置</a></li>
-        <li><a href="#选择系统镜像">选择系统镜像</a></li>
-        <li><a href="#选择plan">选择Plan</a></li>
-        <li><a href="#其他设置">其他设置</a></li>
-        <li><a href="#下单">下单</a></li>
-        <li><a href="#部署完成">部署完成</a></li>
-        <li><a href="#检查ip是否被墙">检查IP是否被墙</a></li>
+        <li><a href="#choose-vps-type-and-location">Choose VPS Type and Location</a></li>
+        <li><a href="#select-system-image">Select System Image</a></li>
+        <li><a href="#choose-a-plan">Choose a Plan</a></li>
+        <li><a href="#other-configs">Other Configs</a></li>
+        <li><a href="#place-an-order">Place an order</a></li>
+        <li><a href="#deployment-completed">Deployment Completed</a></li>
+        <li><a href="#check-if-the-ip-is-blocked">Check if the IP is blocked</a></li>
       </ol>
     </li>
-    <li><a href="#配置vps">配置VPS</a>
+    <li><a href="#configuring-the-vps">Configuring the VPS</a>
       <ol>
-        <li><a href="#ssh登陆vps">SSH登陆VPS</a></li>
-        <li><a href="#更新">更新</a></li>
-        <li><a href="#启用ufw防火墙">启用ufw防火墙</a></li>
-        <li><a href="#更改ssh默认端口">更改SSH默认端口</a></li>
-        <li><a href="#设置仅密钥登陆">设置仅密钥登陆</a></li>
-        <li><a href="#新建普通用户">新建普通用户</a></li>
+        <li><a href="#ssh-login-to-vps">SSH login to VPS</a></li>
+        <li><a href="#update">Update</a></li>
+        <li><a href="#enable-ufw-firewall">Enable ufw firewall</a></li>
+        <li><a href="#change-ssh-default-port">Change SSH default port</a></li>
+        <li><a href="#set-up-key-only-login">Set up key-only login</a></li>
+        <li><a href="#create-a-new-common-user">Create a new common user</a></li>
         <li><a href="#禁止root登录">禁止root登录</a></li>
         <li><a href="#安装fail2ban">安装Fail2Ban</a></li>
       </ol>
@@ -304,7 +304,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/build-your-own-ladder/">私人代理——搭建专属于你的梯子</a>
+            <a href="/posts/how-to-build-proxy-with-xray/">How to Build Proxy with XRay</a>
         </h2>
     
         
@@ -341,7 +341,7 @@
 
 
                 <time class="article-time--reading">
-                    5 minute read
+                    10 minute read
                 </time>
             </div>
         
@@ -356,21 +356,21 @@
     <section class="article-content">
     
     
-    <h1 id="前言">前言
-</h1><p>大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。</p>
+    <h1 id="preface">Preface
+</h1><p>As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.</p>
 <blockquote>
-<p>技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。</p>
+<p>Technically speaking, VPN ≠ circumventing the Great Firewall. However, in mainland China, VPN has become synonymous with circumventing the Great Firewall, so I won’t go into details here.</p>
 </blockquote>
-<p>在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。</p>
-<p>假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是<strong>代理</strong>的原理，也是一系列翻墙技术得以实现的基础。</p>
-<h1 id="购买vps">购买VPS
-</h1><p>我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。</p>
-<p>有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。</p>
-<p>注册并登陆<a class="link" href="https://www.vultr.com/"  target="_blank" rel="noopener"
-    >Vultr</a>，点击右上角的Deploy按钮按以下步骤部署一台VPS。</p>
-<h2 id="选择vps类型和位置">选择VPS类型和位置
-</h2><p>类型选Shared CPU即可。</p>
-<p>位置看自己需求，这里以美国Los Angeles为例。</p>
+<p>On the Internet, IP addresses are our &ldquo;identity cards&rdquo;. These banned overseas websites also have their own IP addresses, but unfortunately they are blocked by GFW, so we cannot access them directly. There are still some IP addresses that are not blocked and we can access them. A series of wall-climbing technologies are built on this basis.</p>
+<p>Assume there is an IP address A, which is not blocked by GFW, and as a member of the Internet, A can access those blocked websites. We can send the request to access Google to A, and A will help us access it and then send the result to us. This is the principle of <strong>Proxy</strong>, and it is also the basis for a series of wall-circumvention technologies to be realized.</p>
+<h1 id="buy-a-vps">Buy a VPS
+</h1><p>First of all, we need an IP address that is not blocked. Purchasing an overseas VPS can meet this requirement. A VPS is actually a cloud server located overseas.</p>
+<p>There are many VPS providers, such as BandWagon, Vultr, CloudCone, etc. This article takes Vultr as an example, and other manufacturers are similar.</p>
+<p>Register and log in to <a class="link" href="https://www.vultr.com/"  target="_blank" rel="noopener"
+    >Vultr</a>, click the Deploy button in the upper right corner and follow the steps below to deploy a VPS.</p>
+<h2 id="choose-vps-type-and-location">Choose VPS Type and Location
+</h2><p>Select Shared CPU as the type.</p>
+<p>The location depends on your needs. Here we take Los Angeles, USA as an example.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/select_type_and_location.png"
 	
 	
@@ -381,8 +381,8 @@
 	
 	
 ></p>
-<h2 id="选择系统镜像">选择系统镜像
-</h2><p>选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。</p>
+<h2 id="select-system-image">Select System Image
+</h2><p>Choose an operating system. For a server, you should naturally choose Linux. Debian is recommended as it is more stable.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_image.png"
 	
 	
@@ -393,8 +393,8 @@
 	
 	
 ></p>
-<h2 id="选择plan">选择Plan
-</h2><p>根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。</p>
+<h2 id="choose-a-plan">Choose a Plan
+</h2><p>Choose a configuration based on your needs. The higher the configuration, the more expensive it is. Here we choose the cheapest plan of 5$/month.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_plan.png"
 	
 	
@@ -405,9 +405,9 @@
 	
 	
 ></p>
-<h2 id="其他设置">其他设置
-</h2><p>去掉Auto Backups，费钱。</p>
-<p>去掉IPv6，不需要。</p>
+<h2 id="other-configs">Other Configs
+</h2><p>Remove Auto Backups, it costs money.</p>
+<p>Remove IPv6, it is not needed.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/additional_feature.png"
 	
 	
@@ -418,8 +418,8 @@
 	
 	
 ></p>
-<p>这里可以把SSH key上传一下，把本地电脑<code>~/.ssh/</code>的<strong>公钥</strong>传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。</p>
-<p>在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。</p>
+<p>Here you can upload the SSH key and transfer the <strong>public key</strong> of your local computer <code>~/.ssh/</code> to Vultr. In this way, you can log in directly with the key after the deployment is completed without entering a password, which is much more convenient.</p>
+<p>Set the host name in Server Hostname. You can give it a name of your own. This article takes Test as an example.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/server_setting.png"
 	
 	
@@ -430,10 +430,10 @@
 	
 	
 ></p>
-<h2 id="下单">下单
-</h2><p>这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。</p>
+<h2 id="place-an-order">Place an order
+</h2><p>Now it’s ready. Confirm the quantity and price, and click Deploy Now to start deployment.</p>
 <blockquote>
-<p>部署过程或许需要几分钟，耐心等待一下。</p>
+<p>The deployment process may take several minutes, so be patient.</p>
 </blockquote>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/order.png"
 	
@@ -445,8 +445,8 @@
 	
 	
 ></p>
-<h2 id="部署完成">部署完成
-</h2><p>Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以<code>100.200.300.400</code>来表示。</p>
+<h2 id="deployment-completed">Deployment Completed
+</h2><p>When the Status changes to Running, the deployment is complete. The coded part is the public IP address of this VPS, which is represented by <code>100.200.300.400</code> below.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/deploy.png"
 	
 	
@@ -457,10 +457,10 @@
 	
 	
 ></p>
-<h2 id="检查ip是否被墙">检查IP是否被墙
-</h2><p>在<a class="link" href="https://ping.chinaz.com/"  target="_blank" rel="noopener"
-    >站长工具-Ping检测</a>输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。</p>
-<p>如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。</p>
+<h2 id="check-if-the-ip-is-blocked">Check if the IP is blocked
+</h2><p>Enter your IP address in <a class="link" href="https://ping.chinaz.com/"  target="_blank" rel="noopener"
+    >Webmaster Tools - Ping Detection</a> and click Ping Detection. If most of the information is green, it means that your IP address is not blocked and you can use it with confidence.。</p>
+<p>If it is all red, it means that this IP address has been blocked and cannot be used. According to the policy of your VPS manufacturer, find a way to change the IP until it is available.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/pingcheck.png"
 	
 	
@@ -471,9 +471,9 @@
 	
 	
 ></p>
-<h1 id="配置vps">配置VPS
-</h1><h2 id="ssh登陆vps">SSH登陆VPS
-</h2><p>要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。</p>
+<h1 id="configuring-the-vps">Configuring the VPS
+</h1><h2 id="ssh-login-to-vps">SSH login to VPS
+</h2><p>To configure your VPS, first log in to your VPS via SSH. Open your terminal tool and enter the following command to log in to your VPS.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -483,10 +483,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>SSH登陆Linux服务器是基本操作，不细说了。</p>
+<p>SSH logging into a Linux server is a basic operation and will not be explained in detail.</p>
 </blockquote>
-<h2 id="更新">更新
-</h2><p>更新一下：</p>
+<h2 id="update">Update
+</h2><p>Update your package index and then upgrade all installed packages to their latest versions, ensuring your system is up to date with the latest features and security patches.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -497,8 +497,8 @@
 </span></span><span class="line"><span class="cl">apt upgrade
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="启用ufw防火墙">启用ufw防火墙
-</h2><p>登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。</p>
+</div><h2 id="enable-ufw-firewall">Enable ufw firewall
+</h2><p>The first thing to do after logging in is to enable the ufw firewall. First, confirm whether ufw has been installed. Execute the following command. If the ufw version number is returned, it means it has been installed.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -508,9 +508,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>没有安装的自己安装一下。</p>
+<p>If ufw is not installed, install it yourself.</p>
 </blockquote>
-<p>执行下述命令设置ufw。</p>
+<p>Run the following command to configure ufw.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -526,20 +526,20 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#设置ufw默认值</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Setting ufw defaults</span>
 </span></span><span class="line"><span class="cl">sudo ufw default deny incoming
 </span></span><span class="line"><span class="cl">sudo ufw default allow outgoing
-</span></span><span class="line"><span class="cl"><span class="c1">#允许SSH连接</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow SSH connections</span>
 </span></span><span class="line"><span class="cl">sudo ufw allow ssh
-</span></span><span class="line"><span class="cl"><span class="c1">#允许http连接</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow HTTP connections</span>
 </span></span><span class="line"><span class="cl">sudo ufw allow http
-</span></span><span class="line"><span class="cl"><span class="c1">#允许https连接</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Allow HTTPS connections</span>
 </span></span><span class="line"><span class="cl">sudo ufw allow https
-</span></span><span class="line"><span class="cl"><span class="c1">#开机启动</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Startup</span>
 </span></span><span class="line"><span class="cl">sudo ufw <span class="nb">enable</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>ufw其他常用命令：</p>
+</div><p>Other common ufw commands：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -551,18 +551,18 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#查看ufw状态</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check ufw status</span>
 </span></span><span class="line"><span class="cl">sudo ufw status
-</span></span><span class="line"><span class="cl"><span class="c1">#ufw状态带行号输出，删除某一行</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># ufw status output with line number, and delete a line</span>
 </span></span><span class="line"><span class="cl">sudo ufw status numbered
 </span></span><span class="line"><span class="cl">sudo ufw delete <span class="m">5</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#重载ufw配置</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Reload ufw configuration</span>
 </span></span><span class="line"><span class="cl">sudo ufw reload
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="更改ssh默认端口">更改SSH默认端口
+</div><h2 id="change-ssh-default-port">Change SSH default port
 </h2><ol>
-<li>打开nano或vim等编辑器打开文件<code>/etc/ssh/sshd_config</code></li>
+<li>Open an editor such as nano or vim and open the file <code>/etc/ssh/sshd_config</code></li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -573,7 +573,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
-<li>在打开文件中找到<code>Port</code>这一项，去掉注释符<code>#</code>，并将22修改为新的端口号（1025-65535），本文以9753为例。</li>
+<li>Find the item <code>Port</code> in the opened file, remove the comment symbol <code>#</code>, and change 22 to the new port number (1025-65535). This article takes 9753 as an example.</li>
 </ol>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/changeport.png"
 	
@@ -586,7 +586,7 @@
 	
 ></p>
 <ol start="3">
-<li>重启ssh服务，使变更生效。</li>
+<li>Restart the ssh service for the changes to take effect.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -597,7 +597,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
-<li>防火墙开放新端口号</li>
+<li>Open new port number on firewall</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -608,7 +608,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="5">
-<li>防火墙中删除原来的22端口，下图删除了<code>22/tcp</code>，同样的方法把<code>22/tcp(v6)</code>也删除掉。</li>
+<li>Delete the original port 22 in the firewall. The figure below deletes <code>22/tcp</code>. Use the same method to delete <code>22/tcp(v6)</code>.</li>
 </ol>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/delete_port22.png"
 	
@@ -622,11 +622,11 @@
 ></p>
 <ol start="6">
 <li>
-<p>测试新端口号登陆</p>
+<p>Test the new port number login</p>
 <blockquote>
-<p>注意：为了保证你不会失联，请不要关闭当前的ssh登录窗口！而是另外开一个窗口来测试！</p>
+<p>Note: To ensure that you do not lose connection, please do not close the current ssh login window! Instead, open another window to test!</p>
 </blockquote>
-<p>在新的终端窗口，用新的端口号登陆VPS。</p>
+<p>In a new terminal window, log in to the VPS using the new port number.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -637,9 +637,9 @@
 </div>
 </div></li>
 </ol>
-<h2 id="设置仅密钥登陆">设置仅密钥登陆
+<h2 id="set-up-key-only-login">Set up key-only login
 </h2><ol>
-<li>把公钥上传到VPS。</li>
+<li>Upload the public key to the VPS.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -653,18 +653,18 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 在家目录下新建.ssh文件夹</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a new .ssh folder in your home directory</span>
 </span></span><span class="line"><span class="cl">mkdir ~/.ssh
-</span></span><span class="line"><span class="cl"><span class="c1"># 修改.ssh文件夹权限</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Modify the .ssh folder permissions</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
-</span></span><span class="line"><span class="cl"><span class="c1"># 上传公钥。将引号内的内容替换为公钥值</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Upload the public key. Replace the content in quotation marks with the public key value</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Your public key content&#34;</span> &gt;&gt; ~/.ssh/authorized_keys
-</span></span><span class="line"><span class="cl"><span class="c1"># 修改authorized_keys文件权限</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Modify the permissions of the authorized_keys file</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
-<li>禁止密码登录</li>
+<li>Disable password login</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -674,7 +674,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>找到<code>PasswordAuthentication</code>这一项，解注释并改为<code>no</code>，然后保存并退出。</p>
+</div><p>Find the item <code>PasswordAuthentication</code>, uncomment it and change it to <code>no</code>, then save and exit.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/banpasswdlogin.png"
 	
 	
@@ -685,7 +685,7 @@
 	
 	
 ></p>
-<p>有些系统只改这一个没用，还要改下面这个。如果系统没有这个文件就忽略这一步。</p>
+<p>For some systems, it is useless to change only this one, and you also need to change the following one. If the system does not have this file, ignore this step.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -694,9 +694,9 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config.d/50-cloud-init.conf
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>同样，将<code>PasswordAuthentication</code>这一项，解注释并改为<code>no</code>，然后保存并退出。</p>
+</div><p>Similarly, uncomment the PasswordAuthentication option and change it to no, then save and exit.</p>
 <ol start="3">
-<li>重启ssh服务，使变更生效。</li>
+<li>Restart the ssh service for the changes to take effect.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -707,9 +707,9 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
-<li>测试密钥登陆。</li>
+<li>Test key login.</li>
 </ol>
-<p>打开一个新的终端，用以下命令登陆VPS。</p>
+<p>Open a new terminal and log into the VPS using the following command.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -719,11 +719,11 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>将<code>path/to/yourprivatekeyname</code>修改为VPS使用的公钥的对应的私钥路径。通常在<code>~/.ssh/</code>下。</p>
+<p>Change <code>path/to/yourprivatekeyname</code> to the path of the private key corresponding to the public key used by the VPS. Usually it is under <code>~/.ssh/</code>.</p>
 </blockquote>
-<h2 id="新建普通用户">新建普通用户
+<h2 id="create-a-new-common-user">Create a new common user
 </h2><ol>
-<li>执行以下命令，新建一个用户。根据提示完成即可。</li>
+<li>Execute the following command to create a new user. Follow the prompts to complete the process.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -734,10 +734,10 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>给新用户起个名字，本文以<code>leo</code>为例。</p>
+<p>Give the new user a name. This article uses <code>leo</code> as an example.</p>
 </blockquote>
 <ol start="2">
-<li>将新用户<code>leo</code>加入<code>sudo</code>。</li>
+<li>Add new user <code>leo</code> to <code>sudo</code>.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -758,7 +758,7 @@
 	
 ></p>
 <ol start="3">
-<li>把公钥给新用户。</li>
+<li>Give the public key to the new user.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

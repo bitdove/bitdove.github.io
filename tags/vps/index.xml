@@ -8,26 +8,26 @@
         <language>en</language>
         <copyright>Mason</copyright>
         <lastBuildDate>Wed, 18 Sep 2024 16:26:03 +0800</lastBuildDate><atom:link href="https://MasonCodingHere.github.io/tags/vps/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>私人代理——搭建专属于你的梯子</title>
-        <link>https://MasonCodingHere.github.io/posts/build-your-own-ladder/</link>
+        <title>How to Build Proxy with XRay</title>
+        <link>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</link>
         <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
         
-        <guid>https://MasonCodingHere.github.io/posts/build-your-own-ladder/</guid>
-        <description>&lt;h1 id=&#34;前言&#34;&gt;前言
-&lt;/h1&gt;&lt;p&gt;大家都知道，像Google、Twitter这类的海外网站在中国大陆是无法直接访问的。大家还知道，连上VPN就可以访问这些网站了。至于其中的细节，大多数人就不知道了，确实也没必要知道。但是有一点我们要明白，VPN能够起到效果的重要原因是GFW没有封锁一切海外网站。正是由于这个原因，我们才能有空子可钻。&lt;/p&gt;
+        <guid>https://MasonCodingHere.github.io/posts/how-to-build-proxy-with-xray/</guid>
+        <description>&lt;h1 id=&#34;preface&#34;&gt;Preface
+&lt;/h1&gt;&lt;p&gt;As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&amp;rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;技术上讲，VPN≠翻墙。不过在大陆VPN已经成为翻墙的代名词，这里就不咬文嚼字了。&lt;/p&gt;
+&lt;p&gt;Technically speaking, VPN ≠ circumventing the Great Firewall. However, in mainland China, VPN has become synonymous with circumventing the Great Firewall, so I won’t go into details here.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;在互联网中，IP地址是我们的“身份证”。这些被禁的海外网站也有自己的IP地址，可惜被墙了，所以我们无法直接访问。还存在一些IP地址，没有被墙，我们可以访问。一系列的翻墙技术正是建立在这个基础上。&lt;/p&gt;
-&lt;p&gt;假设有这样一个IP地址A，A没有被GFW墙掉，并且A作为互联网的一员，可以访问那些被墙的网站。我们可以把要访问Google的请求发给A，由A帮我们访问，再把结果发给我们，这就是&lt;strong&gt;代理&lt;/strong&gt;的原理，也是一系列翻墙技术得以实现的基础。&lt;/p&gt;
-&lt;h1 id=&#34;购买vps&#34;&gt;购买VPS
-&lt;/h1&gt;&lt;p&gt;我们需要一个没有被墙的IP地址，购买一台海外VPS可以满足这个需求。VPS其实就是一台位于海外的云服务器。&lt;/p&gt;
-&lt;p&gt;有很多VPS厂商，比如BandWagon、Vultr、CloudCone等等，本文以Vultr为例，其他的厂商也大同小异。&lt;/p&gt;
-&lt;p&gt;注册并登陆&lt;a class=&#34;link&#34; href=&#34;https://www.vultr.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Vultr&lt;/a&gt;，点击右上角的Deploy按钮按以下步骤部署一台VPS。&lt;/p&gt;
-&lt;h2 id=&#34;选择vps类型和位置&#34;&gt;选择VPS类型和位置
-&lt;/h2&gt;&lt;p&gt;类型选Shared CPU即可。&lt;/p&gt;
-&lt;p&gt;位置看自己需求，这里以美国Los Angeles为例。&lt;/p&gt;
+&lt;p&gt;On the Internet, IP addresses are our &amp;ldquo;identity cards&amp;rdquo;. These banned overseas websites also have their own IP addresses, but unfortunately they are blocked by GFW, so we cannot access them directly. There are still some IP addresses that are not blocked and we can access them. A series of wall-climbing technologies are built on this basis.&lt;/p&gt;
+&lt;p&gt;Assume there is an IP address A, which is not blocked by GFW, and as a member of the Internet, A can access those blocked websites. We can send the request to access Google to A, and A will help us access it and then send the result to us. This is the principle of &lt;strong&gt;Proxy&lt;/strong&gt;, and it is also the basis for a series of wall-circumvention technologies to be realized.&lt;/p&gt;
+&lt;h1 id=&#34;buy-a-vps&#34;&gt;Buy a VPS
+&lt;/h1&gt;&lt;p&gt;First of all, we need an IP address that is not blocked. Purchasing an overseas VPS can meet this requirement. A VPS is actually a cloud server located overseas.&lt;/p&gt;
+&lt;p&gt;There are many VPS providers, such as BandWagon, Vultr, CloudCone, etc. This article takes Vultr as an example, and other manufacturers are similar.&lt;/p&gt;
+&lt;p&gt;Register and log in to &lt;a class=&#34;link&#34; href=&#34;https://www.vultr.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Vultr&lt;/a&gt;, click the Deploy button in the upper right corner and follow the steps below to deploy a VPS.&lt;/p&gt;
+&lt;h2 id=&#34;choose-vps-type-and-location&#34;&gt;Choose VPS Type and Location
+&lt;/h2&gt;&lt;p&gt;Select Shared CPU as the type.&lt;/p&gt;
+&lt;p&gt;The location depends on your needs. Here we take Los Angeles, USA as an example.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/select_type_and_location.png&#34;
 	
 	
@@ -38,8 +38,8 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择系统镜像&#34;&gt;选择系统镜像
-&lt;/h2&gt;&lt;p&gt;选一个操作系统，服务器嘛，自然是要选Linux，推荐选择Debian，比较稳定。&lt;/p&gt;
+&lt;h2 id=&#34;select-system-image&#34;&gt;Select System Image
+&lt;/h2&gt;&lt;p&gt;Choose an operating system. For a server, you should naturally choose Linux. Debian is recommended as it is more stable.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_image.png&#34;
 	
 	
@@ -50,8 +50,8 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;选择plan&#34;&gt;选择Plan
-&lt;/h2&gt;&lt;p&gt;根据需求，选择一个配置，配置越高越贵。这里选择最便宜的5$/month的Plan。&lt;/p&gt;
+&lt;h2 id=&#34;choose-a-plan&#34;&gt;Choose a Plan
+&lt;/h2&gt;&lt;p&gt;Choose a configuration based on your needs. The higher the configuration, the more expensive it is. Here we choose the cheapest plan of 5$/month.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_plan.png&#34;
 	
 	
@@ -62,9 +62,9 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;其他设置&#34;&gt;其他设置
-&lt;/h2&gt;&lt;p&gt;去掉Auto Backups，费钱。&lt;/p&gt;
-&lt;p&gt;去掉IPv6，不需要。&lt;/p&gt;
+&lt;h2 id=&#34;other-configs&#34;&gt;Other Configs
+&lt;/h2&gt;&lt;p&gt;Remove Auto Backups, it costs money.&lt;/p&gt;
+&lt;p&gt;Remove IPv6, it is not needed.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/additional_feature.png&#34;
 	
 	
@@ -75,8 +75,8 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;这里可以把SSH key上传一下，把本地电脑&lt;code&gt;~/.ssh/&lt;/code&gt;的&lt;strong&gt;公钥&lt;/strong&gt;传到Vultr，这样等部署完可以直接密钥登陆，不用输密码，方便很多。&lt;/p&gt;
-&lt;p&gt;在Server Hostname设置一下主机名，自己起个名即可，本文以Test为例。&lt;/p&gt;
+&lt;p&gt;Here you can upload the SSH key and transfer the &lt;strong&gt;public key&lt;/strong&gt; of your local computer &lt;code&gt;~/.ssh/&lt;/code&gt; to Vultr. In this way, you can log in directly with the key after the deployment is completed without entering a password, which is much more convenient.&lt;/p&gt;
+&lt;p&gt;Set the host name in Server Hostname. You can give it a name of your own. This article takes Test as an example.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/server_setting.png&#34;
 	
 	
@@ -87,10 +87,10 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;下单&#34;&gt;下单
-&lt;/h2&gt;&lt;p&gt;这样就配好了，确认一下数量和价格，点击Deploy Now就开始部署了。&lt;/p&gt;
+&lt;h2 id=&#34;place-an-order&#34;&gt;Place an order
+&lt;/h2&gt;&lt;p&gt;Now it’s ready. Confirm the quantity and price, and click Deploy Now to start deployment.&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;部署过程或许需要几分钟，耐心等待一下。&lt;/p&gt;
+&lt;p&gt;The deployment process may take several minutes, so be patient.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/order.png&#34;
 	
@@ -102,8 +102,8 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;部署完成&#34;&gt;部署完成
-&lt;/h2&gt;&lt;p&gt;Status变成Running就部署完成了，打码处为这台VPS的公网IP地址，下文以&lt;code&gt;100.200.300.400&lt;/code&gt;来表示。&lt;/p&gt;
+&lt;h2 id=&#34;deployment-completed&#34;&gt;Deployment Completed
+&lt;/h2&gt;&lt;p&gt;When the Status changes to Running, the deployment is complete. The coded part is the public IP address of this VPS, which is represented by &lt;code&gt;100.200.300.400&lt;/code&gt; below.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/deploy.png&#34;
 	
 	
@@ -114,10 +114,10 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h2 id=&#34;检查ip是否被墙&#34;&gt;检查IP是否被墙
-&lt;/h2&gt;&lt;p&gt;在&lt;a class=&#34;link&#34; href=&#34;https://ping.chinaz.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;站长工具-Ping检测&lt;/a&gt;输入你的IP地址，点击Ping检测，如果大部分是绿的，说明IP没被墙，可以放心使用。&lt;/p&gt;
-&lt;p&gt;如果全是红色，说明此IP地址已被墙，无法使用，根据你的VPS厂商政策，想办法更换IP，直至可用。&lt;/p&gt;
+&lt;h2 id=&#34;check-if-the-ip-is-blocked&#34;&gt;Check if the IP is blocked
+&lt;/h2&gt;&lt;p&gt;Enter your IP address in &lt;a class=&#34;link&#34; href=&#34;https://ping.chinaz.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Webmaster Tools - Ping Detection&lt;/a&gt; and click Ping Detection. If most of the information is green, it means that your IP address is not blocked and you can use it with confidence.。&lt;/p&gt;
+&lt;p&gt;If it is all red, it means that this IP address has been blocked and cannot be used. According to the policy of your VPS manufacturer, find a way to change the IP until it is available.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/pingcheck.png&#34;
 	
 	
@@ -128,9 +128,9 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;h1 id=&#34;配置vps&#34;&gt;配置VPS
-&lt;/h1&gt;&lt;h2 id=&#34;ssh登陆vps&#34;&gt;SSH登陆VPS
-&lt;/h2&gt;&lt;p&gt;要配置VPS，首先通过SSH登陆VPS。打开你的终端工具，输入以下命令登陆VPS。&lt;/p&gt;
+&lt;h1 id=&#34;configuring-the-vps&#34;&gt;Configuring the VPS
+&lt;/h1&gt;&lt;h2 id=&#34;ssh-login-to-vps&#34;&gt;SSH login to VPS
+&lt;/h2&gt;&lt;p&gt;To configure your VPS, first log in to your VPS via SSH. Open your terminal tool and enter the following command to log in to your VPS.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -140,10 +140,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;SSH登陆Linux服务器是基本操作，不细说了。&lt;/p&gt;
+&lt;p&gt;SSH logging into a Linux server is a basic operation and will not be explained in detail.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;更新&#34;&gt;更新
-&lt;/h2&gt;&lt;p&gt;更新一下：&lt;/p&gt;
+&lt;h2 id=&#34;update&#34;&gt;Update
+&lt;/h2&gt;&lt;p&gt;Update your package index and then upgrade all installed packages to their latest versions, ensuring your system is up to date with the latest features and security patches.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -154,8 +154,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;apt upgrade
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;启用ufw防火墙&#34;&gt;启用ufw防火墙
-&lt;/h2&gt;&lt;p&gt;登陆后第一件事，就是启用ufw防火墙。首先确认ufw是否已经安装，执行下述命令，若返回ufw版本号，，则说明已经安装。&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;enable-ufw-firewall&#34;&gt;Enable ufw firewall
+&lt;/h2&gt;&lt;p&gt;The first thing to do after logging in is to enable the ufw firewall. First, confirm whether ufw has been installed. Execute the following command. If the ufw version number is returned, it means it has been installed.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -165,9 +165,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;没有安装的自己安装一下。&lt;/p&gt;
+&lt;p&gt;If ufw is not installed, install it yourself.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;执行下述命令设置ufw。&lt;/p&gt;
+&lt;p&gt;Run the following command to configure ufw.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
@@ -183,20 +183,20 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;11
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#设置ufw默认值&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Setting ufw defaults&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw default deny incoming
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw default allow outgoing
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#允许SSH连接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Allow SSH connections&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw allow ssh
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#允许http连接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Allow HTTP connections&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw allow http
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#允许https连接&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Allow HTTPS connections&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw allow https
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#开机启动&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Startup&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw &lt;span class=&#34;nb&#34;&gt;enable&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;ufw其他常用命令：&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;Other common ufw commands：&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -208,18 +208,18 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;7
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#查看ufw状态&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Check ufw status&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw status
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#ufw状态带行号输出，删除某一行&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# ufw status output with line number, and delete a line&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw status numbered
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw delete &lt;span class=&#34;m&#34;&gt;5&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#重载ufw配置&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Reload ufw configuration&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo ufw reload
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;更改ssh默认端口&#34;&gt;更改SSH默认端口
+&lt;/div&gt;&lt;h2 id=&#34;change-ssh-default-port&#34;&gt;Change SSH default port
 &lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;打开nano或vim等编辑器打开文件&lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;Open an editor such as nano or vim and open the file &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -230,7 +230,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;在打开文件中找到&lt;code&gt;Port&lt;/code&gt;这一项，去掉注释符&lt;code&gt;#&lt;/code&gt;，并将22修改为新的端口号（1025-65535），本文以9753为例。&lt;/li&gt;
+&lt;li&gt;Find the item &lt;code&gt;Port&lt;/code&gt; in the opened file, remove the comment symbol &lt;code&gt;#&lt;/code&gt;, and change 22 to the new port number (1025-65535). This article takes 9753 as an example.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/changeport.png&#34;
 	
@@ -243,7 +243,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;重启ssh服务，使变更生效。&lt;/li&gt;
+&lt;li&gt;Restart the ssh service for the changes to take effect.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -254,7 +254,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;防火墙开放新端口号&lt;/li&gt;
+&lt;li&gt;Open new port number on firewall&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -265,7 +265,7 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ol start=&#34;5&#34;&gt;
-&lt;li&gt;防火墙中删除原来的22端口，下图删除了&lt;code&gt;22/tcp&lt;/code&gt;，同样的方法把&lt;code&gt;22/tcp(v6)&lt;/code&gt;也删除掉。&lt;/li&gt;
+&lt;li&gt;Delete the original port 22 in the firewall. The figure below deletes &lt;code&gt;22/tcp&lt;/code&gt;. Use the same method to delete &lt;code&gt;22/tcp(v6)&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/delete_port22.png&#34;
 	
@@ -279,11 +279,11 @@
 &gt;&lt;/p&gt;
 &lt;ol start=&#34;6&#34;&gt;
 &lt;li&gt;
-&lt;p&gt;测试新端口号登陆&lt;/p&gt;
+&lt;p&gt;Test the new port number login&lt;/p&gt;
 &lt;blockquote&gt;
-&lt;p&gt;注意：为了保证你不会失联，请不要关闭当前的ssh登录窗口！而是另外开一个窗口来测试！&lt;/p&gt;
+&lt;p&gt;Note: To ensure that you do not lose connection, please do not close the current ssh login window! Instead, open another window to test!&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;在新的终端窗口，用新的端口号登陆VPS。&lt;/p&gt;
+&lt;p&gt;In a new terminal window, log in to the VPS using the new port number.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -294,9 +294,9 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;设置仅密钥登陆&#34;&gt;设置仅密钥登陆
+&lt;h2 id=&#34;set-up-key-only-login&#34;&gt;Set up key-only login
 &lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;把公钥上传到VPS。&lt;/li&gt;
+&lt;li&gt;Upload the public key to the VPS.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -310,18 +310,18 @@
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;8
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
 &lt;td class=&#34;lntd&#34;&gt;
-&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 在家目录下新建.ssh文件夹&lt;/span&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Create a new .ssh folder in your home directory&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;mkdir ~/.ssh
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 修改.ssh文件夹权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Modify the .ssh folder permissions&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod &lt;span class=&#34;m&#34;&gt;700&lt;/span&gt; ~/.ssh
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 上传公钥。将引号内的内容替换为公钥值&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Upload the public key. Replace the content in quotation marks with the public key value&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;echo&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;Your public key content&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; ~/.ssh/authorized_keys
-&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# 修改authorized_keys文件权限&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Modify the permissions of the authorized_keys file&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;chmod &lt;span class=&#34;m&#34;&gt;600&lt;/span&gt; ~/.ssh/authorized_keys
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;禁止密码登录&lt;/li&gt;
+&lt;li&gt;Disable password login&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -331,7 +331,7 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /etc/ssh/sshd_config
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;找到&lt;code&gt;PasswordAuthentication&lt;/code&gt;这一项，解注释并改为&lt;code&gt;no&lt;/code&gt;，然后保存并退出。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;Find the item &lt;code&gt;PasswordAuthentication&lt;/code&gt;, uncomment it and change it to &lt;code&gt;no&lt;/code&gt;, then save and exit.&lt;/p&gt;
 &lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/banpasswdlogin.png&#34;
 	
 	
@@ -342,7 +342,7 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;p&gt;有些系统只改这一个没用，还要改下面这个。如果系统没有这个文件就忽略这一步。&lt;/p&gt;
+&lt;p&gt;For some systems, it is useless to change only this one, and you also need to change the following one. If the system does not have this file, ignore this step.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -351,9 +351,9 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;vim /etc/ssh/sshd_config.d/50-cloud-init.conf
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;p&gt;同样，将&lt;code&gt;PasswordAuthentication&lt;/code&gt;这一项，解注释并改为&lt;code&gt;no&lt;/code&gt;，然后保存并退出。&lt;/p&gt;
+&lt;/div&gt;&lt;p&gt;Similarly, uncomment the PasswordAuthentication option and change it to no, then save and exit.&lt;/p&gt;
 &lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;重启ssh服务，使变更生效。&lt;/li&gt;
+&lt;li&gt;Restart the ssh service for the changes to take effect.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -364,9 +364,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;ol start=&#34;4&#34;&gt;
-&lt;li&gt;测试密钥登陆。&lt;/li&gt;
+&lt;li&gt;Test key login.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;打开一个新的终端，用以下命令登陆VPS。&lt;/p&gt;
+&lt;p&gt;Open a new terminal and log into the VPS using the following command.&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -376,11 +376,11 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;将&lt;code&gt;path/to/yourprivatekeyname&lt;/code&gt;修改为VPS使用的公钥的对应的私钥路径。通常在&lt;code&gt;~/.ssh/&lt;/code&gt;下。&lt;/p&gt;
+&lt;p&gt;Change &lt;code&gt;path/to/yourprivatekeyname&lt;/code&gt; to the path of the private key corresponding to the public key used by the VPS. Usually it is under &lt;code&gt;~/.ssh/&lt;/code&gt;.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;新建普通用户&#34;&gt;新建普通用户
+&lt;h2 id=&#34;create-a-new-common-user&#34;&gt;Create a new common user
 &lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;执行以下命令，新建一个用户。根据提示完成即可。&lt;/li&gt;
+&lt;li&gt;Execute the following command to create a new user. Follow the prompts to complete the process.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -391,10 +391,10 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;blockquote&gt;
-&lt;p&gt;给新用户起个名字，本文以&lt;code&gt;leo&lt;/code&gt;为例。&lt;/p&gt;
+&lt;p&gt;Give the new user a name. This article uses &lt;code&gt;leo&lt;/code&gt; as an example.&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;ol start=&#34;2&#34;&gt;
-&lt;li&gt;将新用户&lt;code&gt;leo&lt;/code&gt;加入&lt;code&gt;sudo&lt;/code&gt;。&lt;/li&gt;
+&lt;li&gt;Add new user &lt;code&gt;leo&lt;/code&gt; to &lt;code&gt;sudo&lt;/code&gt;.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -415,7 +415,7 @@
 	
 &gt;&lt;/p&gt;
 &lt;ol start=&#34;3&#34;&gt;
-&lt;li&gt;把公钥给新用户。&lt;/li&gt;
+&lt;li&gt;Give the public key to the new user.&lt;/li&gt;
 &lt;/ol&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
