@@ -265,17 +265,17 @@
         <li><a href="#change-ssh-default-port">Change SSH default port</a></li>
         <li><a href="#set-up-key-only-login">Set up key-only login</a></li>
         <li><a href="#create-a-new-common-user">Create a new common user</a></li>
-        <li><a href="#禁止root登录">禁止root登录</a></li>
-        <li><a href="#安装fail2ban">安装Fail2Ban</a></li>
+        <li><a href="#disable-root-login">Disable root login</a></li>
+        <li><a href="#install-fail2ban">Install Fail2Ban</a></li>
       </ol>
     </li>
-    <li><a href="#xray安装与配置">XRay安装与配置</a>
+    <li><a href="#xray-installation-and-configuration">XRay installation and configuration</a>
       <ol>
         <li><a href="#install-xray">Install Xray</a></li>
         <li><a href="#config-xray">Config Xray</a></li>
       </ol>
     </li>
-    <li><a href="#warp解锁chatgpt">Warp解锁ChatGPT</a></li>
+    <li><a href="#warp-unlock-chatgpt-client">Warp Unlock ChatGPT Client</a></li>
     <li><a href="#references">References</a></li>
   </ol>
 </nav>
@@ -341,7 +341,7 @@
 
 
                 <time class="article-time--reading">
-                    10 minute read
+                    14 minute read
                 </time>
             </div>
         
@@ -774,21 +774,21 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 切换至新用户leo</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Switch to new user leo</span>
 </span></span><span class="line"><span class="cl">su leo
-</span></span><span class="line"><span class="cl"><span class="c1"># 在新用户leo家目录下创建.ssh文件夹</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a .ssh folder in the home directory of the new user leo</span>
 </span></span><span class="line"><span class="cl">mkdir ~/.ssh
-</span></span><span class="line"><span class="cl"><span class="c1"># 修改.ssh文件夹权限</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Modify the .ssh folder permissions</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
-</span></span><span class="line"><span class="cl"><span class="c1"># 上传公钥。将引号内的内容替换为公钥值</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Upload the public key. Replace the content in quotation marks with the public key value</span>
 </span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;公钥内容&#34;</span> &gt;&gt; ~/.ssh/authorized_keys
-</span></span><span class="line"><span class="cl"><span class="c1"># 修改authorized_keys文件权限</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Modify the permissions of the authorized_keys file</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样新用户就可以用密钥登陆了。</p>
-<h2 id="禁止root登录">禁止root登录
-</h2><p>打开<code>/etc/ssh/sshd_config</code>，找到<code>PermitRootLogin</code>这一项，解注释并将<code>yes</code>改为<code>no</code>。</p>
+</div><p>This way new users can log in using the key.</p>
+<h2 id="disable-root-login">Disable root login
+</h2><p>Open <code>/etc/ssh/sshd_config</code>, find the item <code>PermitRootLogin</code>, uncomment it and change <code>yes</code> to <code>no</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -797,7 +797,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>重启sshd服务，使变更生效。</p>
+</div><p>Restart the sshd service for the changes to take effect.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -806,8 +806,8 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service sshd restart
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>这样，root用户就无法登陆了，以后用<code>leo</code>用户管理VPS。</p>
-<h2 id="安装fail2ban">安装Fail2Ban
+</div><p>In this way, the root user will not be able to log in, and the <code>leo</code> user will be used to manage the VPS in the future.</p>
+<h2 id="install-fail2ban">Install Fail2Ban
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -829,12 +829,12 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 安装Fail2Ban</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install Fail2Ban</span>
 </span></span><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt install fail2ban
-</span></span><span class="line"><span class="cl"><span class="c1"># 建配置文件</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Create a configuration file</span>
 </span></span><span class="line"><span class="cl">sudo nano /etc/fail2ban/jail.local
-</span></span><span class="line"><span class="cl"><span class="c1"># 将以下内容粘贴在打开文件中</span>
-</span></span><span class="line"><span class="cl">******粘贴内容开始******
+</span></span><span class="line"><span class="cl"><span class="c1"># Paste the following into the open file</span>
+</span></span><span class="line"><span class="cl">******Begin of pasting content******
 </span></span><span class="line"><span class="cl"><span class="o">[</span>sshd<span class="o">]</span>
 </span></span><span class="line"><span class="cl"><span class="nv">enabled</span> <span class="o">=</span> <span class="nb">true</span>
 </span></span><span class="line"><span class="cl"><span class="nv">port</span> <span class="o">=</span> <span class="m">9753</span>
@@ -843,15 +843,15 @@
 </span></span><span class="line"><span class="cl"><span class="nv">maxretry</span> <span class="o">=</span> <span class="m">5</span>
 </span></span><span class="line"><span class="cl"><span class="nv">bantime</span> <span class="o">=</span> <span class="m">7200</span>
 </span></span><span class="line"><span class="cl"><span class="nv">findtime</span> <span class="o">=</span> <span class="m">600</span>
-</span></span><span class="line"><span class="cl">******粘贴内容结束******
-</span></span><span class="line"><span class="cl"><span class="c1"># 启动Fail2Ban</span>
+</span></span><span class="line"><span class="cl">******End of pasting content******
+</span></span><span class="line"><span class="cl"><span class="c1"># Start Fail2Ban</span>
 </span></span><span class="line"><span class="cl">sudo systemctl start fail2ban
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>上述配置的意思是：600秒内5次尝试登陆ssh的IP地址会被判7200秒有期徒刑。</p>
+<p>The above configuration means that an IP address that attempts to log in to ssh five times within 600 seconds will be sentenced to 7200 seconds in prison.</p>
 </blockquote>
-<p><code>Fail2Ban</code>常用命令:</p>
+<p><code>Fail2Ban</code> common commands:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -868,28 +868,28 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 重启Fail2Ban</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Restart Fail2Ban</span>
 </span></span><span class="line"><span class="cl">sudo systemctl restart fail2ban
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看fail2ban服务状态</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check fail2ban status</span>
 </span></span><span class="line"><span class="cl">sudo systemctl status fail2ban
-</span></span><span class="line"><span class="cl"><span class="c1"># 将Fail2Ban设为开机启动</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Set Fail2Ban to start at boot</span>
 </span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> fail2ban
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看状态</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check fail2ban-client status</span>
 </span></span><span class="line"><span class="cl">sudo fail2ban-client status
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看sshd jail的详细状态</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check sshd jail status</span>
 </span></span><span class="line"><span class="cl">sudo fail2ban-client status sshd
-</span></span><span class="line"><span class="cl"><span class="c1"># 解禁指定IP</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Unban the specified IP</span>
 </span></span><span class="line"><span class="cl">sudo fail2ban-client <span class="nb">set</span> sshd unbanip 192.0.0.1
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>至此，VPS安全配置已经完成。接下开是真正的搭梯子环节。</p>
-<h1 id="xray安装与配置">XRay安装与配置
-</h1><p>不推荐用任何一键脚本，谁知道里边有没有藏什么东西。官方文档足够详细，安装配置足够简单。此部分详细内容可查阅<a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
-    >官方文档</a>。</p>
+</div><p>At this point, the VPS security configuration has been completed. The next step is to actually build a proxy.</p>
+<h1 id="xray-installation-and-configuration">XRay installation and configuration
+</h1><p>It is not recommended to use any third-party one-click scripts. Who knows if there is anything hidden in them? The official documentation is detailed enough and the installation and configuration are simple enough. For details of this part, please refer to <a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
+    >Official Documentation</a>。</p>
 <h2 id="install-xray">Install Xray
-</h2><p>GitHub仓库<a class="link" href="https://github.com/XTLS/Xray-install"  target="_blank" rel="noopener"
-    >Xray-install</a>是<a class="link" href="https://github.com/XTLS"  target="_blank" rel="noopener"
-    >Xray官方</a>提供的安装方式，在仓库<code>README</code>页可以找到官方安装脚本：</p>
+</h2><p>The GitHub repository <a class="link" href="https://github.com/XTLS/Xray-install"  target="_blank" rel="noopener"
+    >Xray-install</a> is the installation method provided by <a class="link" href="https://github.com/XTLS"  target="_blank" rel="noopener"
+    >Xray official</a>. The official installation script can be found on the repository&rsquo;s <code>README</code> page:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -899,13 +899,13 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
-<p>后期更新新版本也是这个命令。</p>
+<p>This command is also used to update the new version later.</p>
 </blockquote>
-<p>一键安装，足够简单吧。</p>
+<p>One-click installation, simple enough.</p>
 <h2 id="config-xray">Config Xray
 </h2><ol>
 <li>
-<p>生成一个合法的 <code>UUID</code> 并保存备用（<code>UUID</code>可以简单粗暴的理解为像指纹一样几乎不会重复的 ID）。</p>
+<p>Generate a valid <code>UUID</code> and save it for future use (<code>UUID</code> can be roughly understood as an ID that is almost never repeated, like a fingerprint).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -924,10 +924,10 @@
 	
 	
 ></p>
-<p>这个<code>uuid</code>要留存，后边配置会用到。</p>
+<p>This <code>uuid</code> should be retained and will be used in the subsequent configuration.</p>
 </li>
 <li>
-<p>修改Xray配置文件。</p>
+<p>Modify the Xray configuration file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -936,7 +936,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>将以下内容粘贴进去。只需修改<code>port</code>和<code>id</code>两项。本文<code>port</code>以<code>12345</code>为例，<code>id</code>以上一步生成的为例。</p>
+</div><p>Paste the following content. You only need to modify <code>port</code> and <code>id</code>. In this article, <code>port</code> takes <code>12345</code> as an example, and <code>id</code> takes the one generated in the previous step as an example.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -982,27 +982,27 @@
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">原始版本，VMess+Kcp，访问不了ChatGPT客户端</span>
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">The</span> <span class="err">original</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">cannot</span> <span class="err">access</span> <span class="err">the</span> <span class="err">ChatGPT</span> <span class="err">client</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;warning&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// 这是 Linux 的路径
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// This is the path for Linux
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/error.log&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">},</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// 服务器监听端口
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// 主传入协议
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nt">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">          <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuid，客户端与服务器必须相同
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuid，The client and server must be the same
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">&#34;alterId&#34;</span><span class="p">:</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">]</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//此处的 kcp 也可写成 mkcp，两种写法是起同样的效果
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;kcpSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="nt">&#34;uplinkCapacity&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">          <span class="nt">&#34;downlinkCapacity&#34;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
@@ -1018,7 +1018,7 @@
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// 主传出协议
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
@@ -1027,7 +1027,7 @@
 </div>
 </div></li>
 <li>
-<p>开放在配置文件中指定的端口号。</p>
+<p>Open the port number specified in the configuration file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1050,7 +1050,7 @@
 ></p>
 </li>
 <li>
-<p>启动Xray</p>
+<p>Start Xray</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1061,15 +1061,15 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># 启动XRay</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start XRay</span>
 </span></span><span class="line"><span class="cl">sudo systemctl start xray
-</span></span><span class="line"><span class="cl"><span class="c1"># 将XRay设为开机启动</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Set XRay to start at boot</span>
 </span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> xray
-</span></span><span class="line"><span class="cl"><span class="c1"># 查看XRay运行状态</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check XRay status</span>
 </span></span><span class="line"><span class="cl">sudo systemctl status xray
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>看到下图这样绿色的<code>active(running)</code>就说明XRay已成功启动，这样服务端就配置好了。</p>
+</div><p>When you see the green <code>active(running)</code> as shown in the figure below, it means that XRay has been successfully started and the server is configured.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/startxray.png"
 	
 	
@@ -1082,8 +1082,8 @@
 ></p>
 </li>
 <li>
-<p>开启BBR加速。</p>
-<p>给 Debian 10 添加官方 <code>backports</code> 源，获取更新的软件库。</p>
+<p>Enable BBR acceleration.</p>
+<p>Add the official <code>backports</code> repository for Debian 10 to get updated software repositories.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1092,7 +1092,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/apt/sources.list
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>然后把下面这一条加在最后，并保存退出。</p>
+</div><p>Then add the following line at the end, save and exit.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1101,7 +1101,7 @@
 <pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">deb http://archive.debian.org/debian buster-backports main
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>刷新软件库并查询 Debian 官方的最新版内核并安装。请务必安装你的 VPS 对应的版本（本文以比较常见的【amd64】为例）。</p>
+</div><p>Refresh the software repository and query the latest version of the official Debian kernel and install it. Please be sure to install the version corresponding to your VPS (this article takes the more common [amd64] as an example).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1110,7 +1110,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt -t buster-backports install linux-image-amd64
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>修改 <code>kernel</code> 参数配置文件 <code>sysctl.conf</code> 并指定开启 <code>BBR</code></p>
+</div><p>Modify the kernel parameter configuration file sysctl.conf and enable BBR.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1119,7 +1119,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/sysctl.conf
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>把下面的内容添加进去</p>
+</div><p>Add the following content</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1130,7 +1130,7 @@
 </span></span><span class="line"><span class="cl">net.ipv4.tcp_congestion_control=bbr
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>重启 VPS、使内核更新和<code>BBR</code>设置都生效。</p>
+</div><p>Reboot the VPS to take effect of the kernel update and the <code>BBR</code> configuration.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1139,7 +1139,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo reboot
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>确认<code>BBR</code>开启。</p>
+</div><p>Make sure BBR is enabled.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1148,8 +1148,8 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep bbr
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此时应该返回<code>tcp_bbr</code>这样的结果。</p>
-<p>如果你想确认 <code>fq</code> 算法是否正确开启，可以使用下面的命令：</p>
+</div><p>At this point, a result like <code>tcp_bbr</code> should be returned.</p>
+<p>If you want to confirm that the <code>fq</code> algorithm is enabled correctly, you can use the following command:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1158,22 +1158,22 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep fq
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>此时应该返回<code>sch_fq</code>这样的结果。</p>
+</div><p>At this point, a result like <code>sch_fq</code> should be returned.</p>
 </li>
 <li>
-<p>配置客户端。</p>
-<p>服务端配置结束，接下来就是在你的客户端进行配置。根据客户端用的代理工具不同，配置方法也不太一样。但全都是根据服务端的配置进行。主要是把<code>IP:Port</code>和<code>uuid</code>配置为与服务端一致。</p>
+<p>Configure the client.</p>
+<p>After the server configuration is finished, the next step is to configure your client. The configuration method varies depending on the proxy tool used by the client. But they are all based on the server configuration. The main thing is to configure <code>IP:Port</code> and <code>uuid</code> to be consistent with the server.</p>
 <blockquote>
-<p>客户端配置就不细讲了。</p>
+<p>I won’t go into detail about the client configuration.</p>
 </blockquote>
-<p>这样，就已经可以科学上网了。只是无法使用ChatGPT客户端，因为ChatGPT对这些VPS厂商的IP进行了封锁。</p>
+<p>In this way, you can access the Internet scientifically. You just cannot use the ChatGPT client because ChatGPT blocks the IPs of these VPS manufacturers.</p>
 </li>
 </ol>
-<h1 id="warp解锁chatgpt">Warp解锁ChatGPT
+<h1 id="warp-unlock-chatgpt-client">Warp Unlock ChatGPT Client
 </h1><blockquote>
-<p>ChatGPT封锁了VPS厂商的IP地址，而Cloudflare的Warp可以提供供我们使用的IP地址，所以我们用Warp提供的IP地址去访问ChatGPT。但是，Warp提供的IPv4地址已经被滥用，也无法访问ChatGPT客户端了，所以我们用Warp IPv6。目标是访问寻常网站时用VPS的公网IPv4地址，访问ChatGPT时用Warp的IPv6地址。</p>
+<p>ChatGPT blocks the IP addresses of VPS vendors, but Cloudflare&rsquo;s Warp can provide us with IP addresses, so we use the IP addresses provided by Warp to access ChatGPT. However, the IPv4 addresses provided by Warp have been abused and cannot access the ChatGPT client, so we use Warp IPv6. The goal is to use the public IPv4 address of the VPS when accessing ordinary websites, and use the IPv6 address of Warp when accessing ChatGPT.</p>
 </blockquote>
-<p>执行下面这个脚本安装WGCF。</p>
+<p>Execute the following script to install WGCF.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1182,7 +1182,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh <span class="o">&amp;&amp;</span> bash menu.sh
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>根据需要选择语言，本文选中文了。</p>
+</div><p>Select the language as needed. This article selects Chinese.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose.png"
 	
 	
@@ -1193,7 +1193,7 @@
 	
 	
 ></p>
-<p>因为我们这台VPS是IPv4 only的机器，没有IPv6地址，我们仅需要Warp提供IPv6地址，所以选择2. 为IPv4 only添加Warp IPv6网络接口。</p>
+<p>Because our VPS is an IPv4 only machine and does not have an IPv6 address, we only need Warp to provide an IPv6 address, so choose 2. Add a Warp IPv6 network interface for IPv4 only.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/add.png"
 	
 	
@@ -1204,7 +1204,7 @@
 	
 	
 ></p>
-<p>工作模式选1.全局（默认）即可。</p>
+<p>Select 1. Global (default) as the working mode.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/workmode.png"
 	
 	
@@ -1215,7 +1215,7 @@
 	
 	
 ></p>
-<p>选择账户类型。这里根据自己的需要选择，我自己有WARP的团队版，即Zero Trust，所以选择3. Teams。</p>
+<p>Select the account type. Choose according to your needs. I have the team version of WARP, which is Zero Trust, so I choose 3. Teams.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/loginaccount.png"
 	
 	
@@ -1226,7 +1226,7 @@
 	
 	
 ></p>
-<p>接下来就是登陆选择的账户。Teams账户选择2.通过组织名和邮箱验证码来登陆是比较方便的。</p>
+<p>The next step is to log in to the selected account. Teams account selection 2. It is more convenient to log in by organization name and email verification code.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/logincf.png"
 	
 	
@@ -1237,7 +1237,7 @@
 	
 	
 ></p>
-<p>优先级别选择3.使用VPS初始设置（默认）即可。</p>
+<p>Select 3 for priority level. Use the VPS initial settings (default).</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose46priority.png"
 	
 	
@@ -1248,7 +1248,7 @@
 	
 	
 ></p>
-<p>这样WGCF会开始安装，等待安装完成，运行下面的命令，可以看到有一个叫<code>warp</code>的网卡。</p>
+<p>WGCF will start installing. Wait for the installation to complete and run the following command. You can see that there is a network card called <code>warp</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1267,8 +1267,8 @@
 	
 	
 ></p>
-<p>这样VPS就有IPv6地址了。</p>
-<p>修改XRay的配置文件</p>
+<p>This way the VPS has an IPv6 address.</p>
+<p>Modify the XRay configuration file</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1277,7 +1277,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>用下面的内容覆盖。将<code>IPv4</code>地址替换为你的VPS公网IPv4地址，将<code>IPv6</code>地址替换为warp网卡的地址。<code>uuid</code>和<code>port</code>也要替换为自己的。其他的不用更改。</p>
+</div><p>Overwrite with the following content. Replace the <code>IPv4</code> address with your VPS public IPv4 address, and replace the <code>IPv6</code> address with the address of the warp network card. Also replace <code>uuid</code> and <code>port</code> with your own. Leave the rest unchanged.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -1347,27 +1347,27 @@
 </span><span class="lnt">65
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">Warp接管IPv</span><span class="mi">6</span><span class="err">流量版本，VMess+Kcp，解锁ChatGPT客户端</span>
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">Warp</span> <span class="err">takes</span> <span class="err">over</span> <span class="err">IPv</span><span class="mi">6</span> <span class="err">traffic</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">unlocks</span> <span class="err">ChatGPT</span> <span class="err">client</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;warning&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// 这是 Linux 的路径
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// This is the path for Linux
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/error.log&#34;</span>
 </span></span><span class="line"><span class="cl">  <span class="p">},</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// 服务器监听端口
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// 主传入协议
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nt">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">          <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuID，客户端与服务器必须相同
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuID，The client and server must be the same
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">&#34;alterId&#34;</span><span class="p">:</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">]</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//此处的 kcp 也可写成 mkcp，两种写法是起同样的效果
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;kcpSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">          <span class="nt">&#34;uplinkCapacity&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">          <span class="nt">&#34;downlinkCapacity&#34;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
@@ -1383,11 +1383,11 @@
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// 主传出协议
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv4&#34;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;100.200.300.400&#34;</span> <span class="c1">//VPS公网IPv4地址
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;100.200.300.400&#34;</span> <span class="c1">// VPS public IPv4 address
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;warp&#34;</span><span class="p">,</span>
@@ -1395,7 +1395,7 @@
 </span></span><span class="line"><span class="cl">      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv6&#34;</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;2606:4700:110:88b8:5141:4387:4a3:20d1&#34;</span> <span class="c1">//warp网卡IPv6地址
+</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;2606:4700:110:88b8:5141:4387:4a3:20d1&#34;</span> <span class="c1">// warp network card IPv6 address
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
 </span></span><span class="line"><span class="cl">  <span class="nt">&#34;routing&#34;</span><span class="p">:</span> <span class="p">{</span>
@@ -1414,7 +1414,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>重启XRay，并确认Xray已成功运行。</p>
+</div><p>Restart XRay and confirm that Xray has run successfully.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1425,12 +1425,12 @@
 </span></span><span class="line"><span class="cl">sudo systemctl status xray
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>在客户端连接该节点，可以发现ChatGPT客户端已经可以正常使用。</p>
+</div><p>Connect to the node on the client and you will find that the ChatGPT client can be used normally.</p>
 <h1 id="references">References
 </h1><blockquote>
 <ol>
 <li><a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
-    >Project X官方文档</a></li>
+    >Project X official documentation</a></li>
 <li><a class="link" href="https://blog.laoda.de/archives/how-to-secure-a-linux-server"  target="_blank" rel="noopener"
     >保护好你的小鸡！保姆级服务器安全教程！</a></li>
 <li><a class="link" href="https://cn.v2ex.com/t/942922"  target="_blank" rel="noopener"
