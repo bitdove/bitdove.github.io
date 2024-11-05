@@ -7,7 +7,29 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
-        <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Tue, 05 Nov 2024 02:15:01 -0800</lastBuildDate><atom:link href="https://bitdove.github.io/post/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Ready to Restart Life</title>
+        <link>https://bitdove.github.io/posts/ready-to-restart-life/</link>
+        <pubDate>Tue, 05 Nov 2024 02:15:01 -0800</pubDate>
+        
+        <guid>https://bitdove.github.io/posts/ready-to-restart-life/</guid>
+        <description>&lt;p&gt;I have wasted so many times of my life, and now I decided to restart my life. Here are some plan.&lt;/p&gt;
+&lt;h1 id=&#34;work&#34;&gt;Work
+&lt;/h1&gt;&lt;p&gt;I still want to be a programmer or engineer.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;C/C++&lt;/li&gt;
+&lt;li&gt;Go&lt;/li&gt;
+&lt;li&gt;Python&lt;/li&gt;
+&lt;li&gt;Linux&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;life&#34;&gt;Life
+&lt;/h1&gt;&lt;p&gt;I wish I can increase my weight for additional 5-6 kg, and more muscle.&lt;/p&gt;
+&lt;h1 id=&#34;habits&#34;&gt;Habits
+&lt;/h1&gt;&lt;p&gt;I have a dream that I could master 4 languages, English, Chinese, Japanese, and Korean.&lt;/p&gt;
+&lt;p&gt;English and Chinese have learned a lot. I think it is the time to start Japanese.&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>Cpp Constructor Destructor Calling Order</title>
         <link>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</link>
         <pubDate>Wed, 30 Oct 2024 23:48:55 -0700</pubDate>
