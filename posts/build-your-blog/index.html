@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="前言 本文待完善。\n整体思路 使用Hugo作为博客框架，在本地编写Markdown文件，构成博客站点源码库。将源码库上传至GitHub仓库Hugoblog，并设置GitHub Action，由GitHub Action运行hugo命令生成博客HTML文件并上传至bitdove.github.io，最终由GitHub Pages完成部署。\n所以需要两个GitHub仓库。\nHugoblog：用于存储站点源码。 bitdove.github.io：用于存储生成的HTML文件。 Hugo安装与配置 参考Hugo官方文档，根据操作系统选择安装方式。本文以macOS为例。\n前提 Hugo依赖Git和Go，所以要先安装这两个。\n不展开讲了。\n安装hugo 本文采用Homebrew的安装方式\n1 brew install hugo 安装结束，执行以下命令，看到版本号说明安装成功。\n1 hugo version 新建站点 在你希望的位置执行下面的命令，新建一个Hugo站点。\n1 hugo new site HugoBlog 这样会出现一个名为HugoBlog的文件夹，这就是博客源码。\n选择主题 在官方主题库选择一个主题，当然也可以去GitHub找官方主题库里没有的主题。本文选择Stack主题。\n本文选择Git Submodule的方式安装。\n1 2 3 cd Hugoblog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack 这样theme文件夹下就会出现该主题。我想让我的博客跟Stack主题提供的Demo站点一样，所以做了一下事情。\n把Hugoblog/themes/Hugo-theme-stack/exampleSite/content/下的内容复制到Hugoblog/content/。 删除Hugoblog/hugo.toml，把Hugoblog/themes/Hugo-theme-stack/Hugo.yaml复制到Hugoblog/。 这样执行以下命令，在本地预览，发现已经跟Demo一致。\n1 hugo server -D 配置博客 各种个性化配置，包括该博客名称、换头像、改链接、去除自己不需要的多语言支持等等，在hugo.yaml中配置。\n">
+<title>Hugo &#43; GitHub Pages搭建个人博客</title>
+
+<link rel='canonical' href='https://bitdove.github.io/posts/build-your-blog/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Hugo + GitHub Pages搭建个人博客">
+<meta property='og:description' content="前言 本文待完善。\n整体思路 使用Hugo作为博客框架，在本地编写Markdown文件，构成博客站点源码库。将源码库上传至GitHub仓库Hugoblog，并设置GitHub Action，由GitHub Action运行hugo命令生成博客HTML文件并上传至bitdove.github.io，最终由GitHub Pages完成部署。\n所以需要两个GitHub仓库。\nHugoblog：用于存储站点源码。 bitdove.github.io：用于存储生成的HTML文件。 Hugo安装与配置 参考Hugo官方文档，根据操作系统选择安装方式。本文以macOS为例。\n前提 Hugo依赖Git和Go，所以要先安装这两个。\n不展开讲了。\n安装hugo 本文采用Homebrew的安装方式\n1 brew install hugo 安装结束，执行以下命令，看到版本号说明安装成功。\n1 hugo version 新建站点 在你希望的位置执行下面的命令，新建一个Hugo站点。\n1 hugo new site HugoBlog 这样会出现一个名为HugoBlog的文件夹，这就是博客源码。\n选择主题 在官方主题库选择一个主题，当然也可以去GitHub找官方主题库里没有的主题。本文选择Stack主题。\n本文选择Git Submodule的方式安装。\n1 2 3 cd Hugoblog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack 这样theme文件夹下就会出现该主题。我想让我的博客跟Stack主题提供的Demo站点一样，所以做了一下事情。\n把Hugoblog/themes/Hugo-theme-stack/exampleSite/content/下的内容复制到Hugoblog/content/。 删除Hugoblog/hugo.toml，把Hugoblog/themes/Hugo-theme-stack/Hugo.yaml复制到Hugoblog/。 这样执行以下命令，在本地预览，发现已经跟Demo一致。\n1 hugo server -D 配置博客 各种个性化配置，包括该博客名称、换头像、改链接、去除自己不需要的多语言支持等等，在hugo.yaml中配置。\n">
+<meta property='og:url' content='https://bitdove.github.io/posts/build-your-blog/'>
+<meta property='og:site_name' content='bitdove&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Hugo' /><meta property='article:published_time' content='2024-09-20T15:18:02&#43;08:00'/><meta property='article:modified_time' content='2024-09-20T15:18:02&#43;08:00'/>
+<meta name="twitter:title" content="Hugo + GitHub Pages搭建个人博客">
+<meta name="twitter:description" content="前言 本文待完善。\n整体思路 使用Hugo作为博客框架，在本地编写Markdown文件，构成博客站点源码库。将源码库上传至GitHub仓库Hugoblog，并设置GitHub Action，由GitHub Action运行hugo命令生成博客HTML文件并上传至bitdove.github.io，最终由GitHub Pages完成部署。\n所以需要两个GitHub仓库。\nHugoblog：用于存储站点源码。 bitdove.github.io：用于存储生成的HTML文件。 Hugo安装与配置 参考Hugo官方文档，根据操作系统选择安装方式。本文以macOS为例。\n前提 Hugo依赖Git和Go，所以要先安装这两个。\n不展开讲了。\n安装hugo 本文采用Homebrew的安装方式\n1 brew install hugo 安装结束，执行以下命令，看到版本号说明安装成功。\n1 hugo version 新建站点 在你希望的位置执行下面的命令，新建一个Hugo站点。\n1 hugo new site HugoBlog 这样会出现一个名为HugoBlog的文件夹，这就是博客源码。\n选择主题 在官方主题库选择一个主题，当然也可以去GitHub找官方主题库里没有的主题。本文选择Stack主题。\n本文选择Git Submodule的方式安装。\n1 2 3 cd Hugoblog git init git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack 这样theme文件夹下就会出现该主题。我想让我的博客跟Stack主题提供的Demo站点一样，所以做了一下事情。\n把Hugoblog/themes/Hugo-theme-stack/exampleSite/content/下的内容复制到Hugoblog/content/。 删除Hugoblog/hugo.toml，把Hugoblog/themes/Hugo-theme-stack/Hugo.yaml复制到Hugoblog/。 这样执行以下命令，在本地预览，发现已经跟Demo一致。\n1 hugo server -D 配置博客 各种个性化配置，包括该博客名称、换头像、改链接、去除自己不需要的多语言支持等等，在hugo.yaml中配置。\n">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/bitdove'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#前言">前言</a></li>
+    <li><a href="#整体思路">整体思路</a></li>
+    <li><a href="#hugo安装与配置">Hugo安装与配置</a>
+      <ol>
+        <li><a href="#前提">前提</a></li>
+        <li><a href="#安装hugo">安装hugo</a></li>
+        <li><a href="#新建站点">新建站点</a></li>
+        <li><a href="#选择主题">选择主题</a></li>
+        <li><a href="#配置博客">配置博客</a></li>
+      </ol>
+    </li>
+    <li><a href="#github-actions">GitHub Actions</a>
+      <ol>
+        <li><a href="#push-to-github">Push to GitHub</a></li>
+        <li><a href="#deploy-key">Deploy Key</a></li>
+        <li><a href="#github-actions-1">GitHub Actions</a></li>
+      </ol>
+    </li>
+    <li><a href="#github图床">GitHub图床</a></li>
+    <li><a href="#references">References</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/solutions/" style="background-color: #2a9d8f; color: #fff;">
+                Solutions
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/build-your-blog/">Hugo &#43; GitHub Pages搭建个人博客</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2024/09/20</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    3 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="前言">前言
+</h1><p>本文待完善。</p>
+<h1 id="整体思路">整体思路
+</h1><p>使用<code>Hugo</code>作为博客框架，在本地编写<code>Markdown</code>文件，构成博客站点源码库。将源码库上传至GitHub仓库<code>Hugoblog</code>，并设置GitHub Action，由GitHub Action运行<code>hugo</code>命令生成博客HTML文件并上传至<code>bitdove.github.io</code>，最终由GitHub Pages完成部署。</p>
+<p>所以需要两个GitHub仓库。</p>
+<ol>
+<li><code>Hugoblog</code>：用于存储站点源码。</li>
+<li><code>bitdove.github.io</code>：用于存储生成的HTML文件。</li>
+</ol>
+<h1 id="hugo安装与配置">Hugo安装与配置
+</h1><p>参考<a class="link" href="https://gohugo.io/categories/installation/"  target="_blank" rel="noopener"
+    >Hugo官方文档</a>，根据操作系统选择安装方式。本文以macOS为例。</p>
+<h2 id="前提">前提
+</h2><p>Hugo依赖<a class="link" href="https://git-scm.com/"  target="_blank" rel="noopener"
+    >Git</a>和<a class="link" href="https://go.dev/"  target="_blank" rel="noopener"
+    >Go</a>，所以要先安装这两个。</p>
+<blockquote>
+<p>不展开讲了。</p>
+</blockquote>
+<h2 id="安装hugo">安装hugo
+</h2><p>本文采用Homebrew的安装方式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install hugo
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>安装结束，执行以下命令，看到版本号说明安装成功。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo version
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="新建站点">新建站点
+</h2><p>在你希望的位置执行下面的命令，新建一个Hugo站点。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo new site HugoBlog
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样会出现一个名为<code>HugoBlog</code>的文件夹，这就是博客源码。</p>
+<h2 id="选择主题">选择主题
+</h2><p>在<a class="link" href="https://themes.gohugo.io/"  target="_blank" rel="noopener"
+    >官方主题库</a>选择一个主题，当然也可以去GitHub找官方主题库里没有的主题。本文选择<a class="link" href="https://stack.jimmycai.com/"  target="_blank" rel="noopener"
+    >Stack主题</a>。</p>
+<p>本文选择Git Submodule的方式安装。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Hugoblog
+</span></span><span class="line"><span class="cl">git init
+</span></span><span class="line"><span class="cl">git submodule add https://github.com/CaiJimmy/hugo-theme-stack/ themes/hugo-theme-stack
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>这样<code>theme</code>文件夹下就会出现该主题。我想让我的博客跟Stack主题提供的<a class="link" href="https://demo.stack.jimmycai.com/"  target="_blank" rel="noopener"
+    >Demo站点</a>一样，所以做了一下事情。</p>
+<ol>
+<li>把<code>Hugoblog/themes/Hugo-theme-stack/exampleSite/content/</code>下的内容复制到<code>Hugoblog/content/</code>。</li>
+<li>删除<code>Hugoblog/hugo.toml</code>，把<code>Hugoblog/themes/Hugo-theme-stack/Hugo.yaml</code>复制到<code>Hugoblog/</code>。</li>
+</ol>
+<p>这样执行以下命令，在本地预览，发现已经跟Demo一致。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">hugo server -D
+</span></span></code></pre></td></tr></table>
+</div>
+</div><h2 id="配置博客">配置博客
+</h2><p>各种个性化配置，包括该博客名称、换头像、改链接、去除自己不需要的多语言支持等等，在<code>hugo.yaml</code>中配置。</p>
+<p>删除默认博文、删除默认分类和标签、修改博文默认模版等等。</p>
+<blockquote>
+<p>不展开说了。</p>
+</blockquote>
+<h1 id="github-actions">GitHub Actions
+</h1><h2 id="push-to-github">Push to GitHub
+</h2><p>接下来就是把整个文件夹推到GitHub，在GitHub新建一个仓库Hugoblog。把本地的<code>Hugoblog</code>文件夹推到这个仓库。不细说了。</p>
+<p>之后，因为我们以后写文章、更新博客，都是要推这个文件夹，所以写一个脚本更方便，在<code>Hugoblog</code>下新建一个名为<code>deploy.sh</code>的脚本文件，把以下内容复制粘贴过去。这样以后写完md文件，直接执行<code>./deploy.sh</code>就完成部署了。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-shell" data-lang="shell"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check if the directory /public exists</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -d <span class="s2">&#34;./public&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># If it exists, delete the directory</span>
+</span></span><span class="line"><span class="cl">  rm -rf ./public
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;./public directory has been deleted.&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># If it doesn&#39;t exist, print a message</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;./public directory does not exist.&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Check if a commit message was provided as an argument</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="o">[</span> -z <span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># If no commit message is provided, use the current date and time</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&#34;Update at </span><span class="k">$(</span>date<span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">else</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Use the provided commit message</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">COMMIT_MSG</span><span class="o">=</span><span class="s2">&#34;</span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Add all changes</span>
+</span></span><span class="line"><span class="cl">git add .
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Commit changes with the provided message</span>
+</span></span><span class="line"><span class="cl">git commit -m <span class="s2">&#34;</span><span class="nv">$COMMIT_MSG</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Push changes to the &#39;main&#39; branch</span>
+</span></span><span class="line"><span class="cl">git push origin main
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Print a success message</span>
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Changes have been pushed to GitHub successfully!&#34;</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div><blockquote>
+<p>因为我们想这个库只保存源码，所以生成的静态HTML文件我们不要，所以在上传之前先检测有无<code>/public</code>文件夹，有的话删掉再上传。</p>
+</blockquote>
+<h2 id="deploy-key">Deploy Key
+</h2><p>在本地用sshkeygen生成一对key</p>
+<p>公钥给bitdove.github.io的Deploy key</p>
+<p>私钥给Hugoblog的Actions的secrets。</p>
+<p>Hugoblog的Workflow permissions改为Read and write permissions</p>
+<h2 id="github-actions-1">GitHub Actions
+</h2><p>给Hugoblog添加Actions</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy Hugo to GitHub Pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main </span><span class="w"> </span><span class="c"># Trigger deployment when changes are pushed to the main branch</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">deploy</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout the repository</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">submodules</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Set up Hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-hugo@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">hugo-version</span><span class="p">:</span><span class="w"> </span><span class="s1">&#39;0.134.2&#39;</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">extended</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Build the website</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="l">hugo</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Deploy to GitHub Pages</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">peaceiris/actions-gh-pages@v3</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">with</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">deploy_key</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.DEPLOY_KEY }}</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_dir</span><span class="p">:</span><span class="w"> </span><span class="l">./public </span><span class="w"> </span><span class="c"># This is the directory where Hugo generates static files</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">external_repository</span><span class="p">:</span><span class="w"> </span><span class="l">bitdove/bitdove.github.io</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">publish_branch</span><span class="p">:</span><span class="w"> </span><span class="l">main</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="github图床">GitHub图床
+</h1><p>每个repo有1G的大小限制，如果把图片也传到博客仓库，很快就会满。</p>
+<p>在GitHub新建一个图床库<code>PicsBed_1</code></p>
+<p>生成一个Token，选public_repo</p>
+<p>安装PicGo，设置Token。</p>
+<p>为PicsBed_1添加Actions如下</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-yml" data-lang="yml"><span class="line"><span class="cl"><span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Update README with Directory Structure</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">on</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">push</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">branches</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="l">main</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w"></span><span class="nt">jobs</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">  </span><span class="nt">update-readme</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">runs-on</span><span class="p">:</span><span class="w"> </span><span class="l">ubuntu-latest</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">    </span><span class="nt">steps</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Checkout repository</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">uses</span><span class="p">:</span><span class="w"> </span><span class="l">actions/checkout@v2</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Generate directory structure</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          echo &#34;# Directory Structure&#34; &gt; structure.txt
+</span></span></span><span class="line"><span class="cl"><span class="sd">          echo &#34;\`\`\`&#34; &gt;&gt; structure.txt
+</span></span></span><span class="line"><span class="cl"><span class="sd">          tree -I &#34;.git|node_modules|structure.txt&#34; &gt;&gt; structure.txt
+</span></span></span><span class="line"><span class="cl"><span class="sd">          echo &#34;\`\`\`&#34; &gt;&gt; structure.txt</span><span class="w">          
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Update README</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          cat structure.txt &gt; README.md</span><span class="w">          
+</span></span></span><span class="line"><span class="cl"><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">      </span>- <span class="nt">name</span><span class="p">:</span><span class="w"> </span><span class="l">Commit changes</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">run</span><span class="p">:</span><span class="w"> </span><span class="p">|</span><span class="sd">
+</span></span></span><span class="line"><span class="cl"><span class="sd">          git config --local user.name &#34;GitHub Action&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          git config --local user.email &#34;action@github.com&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          git add README.md
+</span></span></span><span class="line"><span class="cl"><span class="sd">          git commit -m &#34;Update directory structure in README&#34;
+</span></span></span><span class="line"><span class="cl"><span class="sd">          git push</span><span class="w">          
+</span></span></span><span class="line"><span class="cl"><span class="w">        </span><span class="nt">env</span><span class="p">:</span><span class="w">
+</span></span></span><span class="line"><span class="cl"><span class="w">          </span><span class="nt">GITHUB_TOKEN</span><span class="p">:</span><span class="w"> </span><span class="l">${{ secrets.GITHUB_TOKEN }}</span><span class="w">
+</span></span></span></code></pre></td></tr></table>
+</div>
+</div><h1 id="references">References
+</h1><blockquote>
+<ol>
+<li><a class="link" href="https://gohugo.io/documentation/"  target="_blank" rel="noopener"
+    >Hugo官方文档</a></li>
+<li><a class="link" href="https://stack.jimmycai.com/"  target="_blank" rel="noopener"
+    >Stack主题官方网站</a></li>
+<li><a class="link" href="https://github.com/CaiJimmy/hugo-theme-stack"  target="_blank" rel="noopener"
+    >Stack主题官方GitHub仓库</a></li>
+<li><a class="link" href="https://molunerfinn.com/PicGo/"  target="_blank" rel="noopener"
+    >图片上传工具PicGo官网</a></li>
+<li><a class="link" href="https://github.com/Molunerfinn/PicGo"  target="_blank" rel="noopener"
+    >图片上传工具PicGo官方GitHub仓库</a></li>
+</ol>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/hugo/">Hugo</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/how-to-build-proxy-with-xray/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">How to Build Proxy with XRay</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2024 bitdove. All Rights Reserved.
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>

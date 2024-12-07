@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en-us" dir="ltr">
+    <head><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="什么是DNS？ DNS是Domain Name System的首字母缩写，即域名系统。\n网络上的主机有两种标识方法：\n域名：如www.baidu.com。优点是人们喜欢，容易记；缺点是机器不喜欢，路由器无法处理。 IP地址：如39.156.69.79。优点是机器喜欢，容易处理；缺点是人们不喜欢，不好记。 为了折中人类和机器不同的偏好，我们需要一种能从域名转换到IP地址的服务，这就是DNS的主要任务。\nDNS协议采用客户端/服务器模型，DNS协议位于五层网络模型中的应用层，在进行域名解析时其传输层采用UDP协议，其知名端口号为53。\nDNS协议由两部分组成：\n域名解析，用于执行对DNS特定名称查询的查询/响应协议； 区域传输：用于交换数据库记录的协议。 对于域名解析，由于数据量小，DNS协议采用UDP协议，知名端口号为53；\n对于区域传输，由于数据量大，DNS协议采用TCP协议，知名端口号为53。\nDNS服务器层次结构 DNS使用了大量的DNS服务器，它们以层次方式组织并且分布在全世界范围内。不存在一台DNS服务器拥有因特网上所有域名的映射。\n大致说来，有3种类型的DNS服务器：\n根DNS服务器：根DNS服务器提供顶级域名DNS服务器的IP地址； 顶级域名DNS服务器：顶级域名DNS服务器提供权威DNS服务器的IP地址； 权威DNS服务器：权威DNS服务器提供该组织的可访问域名的IP地址。 比如百度在因特网上有很多可以访问的域名，如百度首页baidu.com、百度贴吧tieba.baidu.com、百度新闻news.baidu.com，百度的权威服务器负责提供这些域名的IP地址。百度可以自己建权威DNS服务器，也可以花钱让中国电信这样的ISP帮它维护权威DNS服务器。\n这三种类型的DNS服务器以下图的层次结构组织起来。\n还有一种DNS服务器，叫本地DNS服务器，不在上述的DNS服务器层次结构中。本地DNS服务器就是用DHCP获得的配置信息中的DNS服务器。本地DNS服务器通常离我们的主机比较近，通常不超过几个路由器的距离。\n当主机发岀DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将该请求转发到DNS服务器层次构中，后边将详细讨论。\nDNS缓存 为了改善时延性并减少在因特网上到处传输的DNS报文数，DNS广泛使用了缓存技术。\n在一个请求链中，当某DNS服务器接收一个DNS回答 (例如，包含某域名到IP地址的映射)时，它能将映射缓存在本地存储器中。这样下次如果有对同样域名的DNS查询到达该DNS服务器时，它可以从自己的缓存中找出该域名对应的IP地址，直接返回给请求者，而不用再去问其他DNS服务器。\n由于域名与IP的映射不是永久的，所以DNS缓存有一个生存时间（TTL）。\nDNS资源记录类型 虽然DNS通常用来将域名转换为对应的IP地址，但是它也有其他功能，区分这些功能的方法就是使用不同的资源记录类型。这里我们只关注以下四种资源记录类型：\nA：提供域名到IPv4地址的映射； AAAA：提供域名到IPv6地址的映射； NS：用来指定该域名由哪个DNS服务器来进行解析； CNAME：允许多个域名映射到同一IP地址。 对于CNAME，我记得，当时用GitHub建个人博客时用到过，默认的地址xgx127.github.io用CNAME映射到我买的域名xushark.com，然后用A记录把xushark.com映射到我的云服务器的IP地址。\nDNS工作流程 下面以一个简单例子来描述DNS的工作流程。本例中我们假设没有DNS缓存。\n假设主机cse.nyu.edu想知道主机gaia.cs.umass.edu的IP地址。\n主机cse.nyu.edu首先向它的本地DNS服务器dns. nyu. edu发送一个DNS查询报文。 DNS查询报文内封装有要查询的域名gaia.cs.umass.edu；\n由于假定无缓存，本地DNS服务器将查询报文转发到根DNS服务器；\n根DNS服务器注意到其edu前缀，向本地DNS服务器返回负责edu的顶级域名DNS服务器的IP地址列表；\n本地DNS服务器则再次向这些顶级域名DNS服务器之一发送查询报文；\n顶级域名DNS服务器（edu）注意到umass.edu前缀，并返回权威DNS服务器的IP地址进行响应，该权威DNS服务器是负责马\n萨诸塞大学的dns.umass.edu；\n本地DNS服务器向dns.umass.edu发送查询报文；\n权威DNS服务器（dns.umass.edu）用gaia. cs. umass. edu的IP地址进行响应；\n本地DNS服务器将gaia.cs.umass.edu的IP地址反馈给主机cse.nyu.edu。\n理论上讲，任何DNS查询既可以是迭代的也可以是递归的；\n实践上，通常遵循上图的模式，请求主机到本地DNS服务器的查询是递归的，其余的查询是迭代的。\nDNS消息格式 基本的DNS消息以固定的12字节头部开始，其后跟随4个可变长度的区段：问题（或查询）、回答、授权记录和额外信息。\n事务ID：由客户端设置，由服务器返回。客户端用它来匹配响应与查询； QR：0表示查询消息，1表示响应消息； OpCode：0表示标准查询（查询和响应），4表示通知，5表示更新，其他值弃用； AA：表示授权回答（与缓存回答相对）； TC：表示“可截断的”。使用UDP时，它表示当应答的总长度超过512字节时，只返回前512个字节； RD：表示“期望递归”。在查询中设置，在响应中返回。它告诉服务器执行递归查询； RA：表示“递归可用”。如果服务器支持递归查询，则在响应中设置该字段； Z：目前Z字段必须为0，为将来而保留； AD：若包含的信息是已授权的，则AD置1； CD：若禁用安全检查，则CD置1； RCODE：返回码字段，常见值如0（NoError）、3（NXDomain）； QDCOUNT、ANCOUNT、NSCOUNT、ARCOUNT：说明了组成DNS消息的问题、回答、授权和额外信息区段中的条目数目。对于查询消息，QDCOUNT通常为1，其他三个为0；对于应答消息，ANCOUNT至少为1； ">
+<title>DNS Protocol</title>
+
+<link rel='canonical' href='https://bitdove.github.io/posts/dns-protocol/'>
+
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="DNS Protocol">
+<meta property='og:description' content="什么是DNS？ DNS是Domain Name System的首字母缩写，即域名系统。\n网络上的主机有两种标识方法：\n域名：如www.baidu.com。优点是人们喜欢，容易记；缺点是机器不喜欢，路由器无法处理。 IP地址：如39.156.69.79。优点是机器喜欢，容易处理；缺点是人们不喜欢，不好记。 为了折中人类和机器不同的偏好，我们需要一种能从域名转换到IP地址的服务，这就是DNS的主要任务。\nDNS协议采用客户端/服务器模型，DNS协议位于五层网络模型中的应用层，在进行域名解析时其传输层采用UDP协议，其知名端口号为53。\nDNS协议由两部分组成：\n域名解析，用于执行对DNS特定名称查询的查询/响应协议； 区域传输：用于交换数据库记录的协议。 对于域名解析，由于数据量小，DNS协议采用UDP协议，知名端口号为53；\n对于区域传输，由于数据量大，DNS协议采用TCP协议，知名端口号为53。\nDNS服务器层次结构 DNS使用了大量的DNS服务器，它们以层次方式组织并且分布在全世界范围内。不存在一台DNS服务器拥有因特网上所有域名的映射。\n大致说来，有3种类型的DNS服务器：\n根DNS服务器：根DNS服务器提供顶级域名DNS服务器的IP地址； 顶级域名DNS服务器：顶级域名DNS服务器提供权威DNS服务器的IP地址； 权威DNS服务器：权威DNS服务器提供该组织的可访问域名的IP地址。 比如百度在因特网上有很多可以访问的域名，如百度首页baidu.com、百度贴吧tieba.baidu.com、百度新闻news.baidu.com，百度的权威服务器负责提供这些域名的IP地址。百度可以自己建权威DNS服务器，也可以花钱让中国电信这样的ISP帮它维护权威DNS服务器。\n这三种类型的DNS服务器以下图的层次结构组织起来。\n还有一种DNS服务器，叫本地DNS服务器，不在上述的DNS服务器层次结构中。本地DNS服务器就是用DHCP获得的配置信息中的DNS服务器。本地DNS服务器通常离我们的主机比较近，通常不超过几个路由器的距离。\n当主机发岀DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将该请求转发到DNS服务器层次构中，后边将详细讨论。\nDNS缓存 为了改善时延性并减少在因特网上到处传输的DNS报文数，DNS广泛使用了缓存技术。\n在一个请求链中，当某DNS服务器接收一个DNS回答 (例如，包含某域名到IP地址的映射)时，它能将映射缓存在本地存储器中。这样下次如果有对同样域名的DNS查询到达该DNS服务器时，它可以从自己的缓存中找出该域名对应的IP地址，直接返回给请求者，而不用再去问其他DNS服务器。\n由于域名与IP的映射不是永久的，所以DNS缓存有一个生存时间（TTL）。\nDNS资源记录类型 虽然DNS通常用来将域名转换为对应的IP地址，但是它也有其他功能，区分这些功能的方法就是使用不同的资源记录类型。这里我们只关注以下四种资源记录类型：\nA：提供域名到IPv4地址的映射； AAAA：提供域名到IPv6地址的映射； NS：用来指定该域名由哪个DNS服务器来进行解析； CNAME：允许多个域名映射到同一IP地址。 对于CNAME，我记得，当时用GitHub建个人博客时用到过，默认的地址xgx127.github.io用CNAME映射到我买的域名xushark.com，然后用A记录把xushark.com映射到我的云服务器的IP地址。\nDNS工作流程 下面以一个简单例子来描述DNS的工作流程。本例中我们假设没有DNS缓存。\n假设主机cse.nyu.edu想知道主机gaia.cs.umass.edu的IP地址。\n主机cse.nyu.edu首先向它的本地DNS服务器dns. nyu. edu发送一个DNS查询报文。 DNS查询报文内封装有要查询的域名gaia.cs.umass.edu；\n由于假定无缓存，本地DNS服务器将查询报文转发到根DNS服务器；\n根DNS服务器注意到其edu前缀，向本地DNS服务器返回负责edu的顶级域名DNS服务器的IP地址列表；\n本地DNS服务器则再次向这些顶级域名DNS服务器之一发送查询报文；\n顶级域名DNS服务器（edu）注意到umass.edu前缀，并返回权威DNS服务器的IP地址进行响应，该权威DNS服务器是负责马\n萨诸塞大学的dns.umass.edu；\n本地DNS服务器向dns.umass.edu发送查询报文；\n权威DNS服务器（dns.umass.edu）用gaia. cs. umass. edu的IP地址进行响应；\n本地DNS服务器将gaia.cs.umass.edu的IP地址反馈给主机cse.nyu.edu。\n理论上讲，任何DNS查询既可以是迭代的也可以是递归的；\n实践上，通常遵循上图的模式，请求主机到本地DNS服务器的查询是递归的，其余的查询是迭代的。\nDNS消息格式 基本的DNS消息以固定的12字节头部开始，其后跟随4个可变长度的区段：问题（或查询）、回答、授权记录和额外信息。\n事务ID：由客户端设置，由服务器返回。客户端用它来匹配响应与查询； QR：0表示查询消息，1表示响应消息； OpCode：0表示标准查询（查询和响应），4表示通知，5表示更新，其他值弃用； AA：表示授权回答（与缓存回答相对）； TC：表示“可截断的”。使用UDP时，它表示当应答的总长度超过512字节时，只返回前512个字节； RD：表示“期望递归”。在查询中设置，在响应中返回。它告诉服务器执行递归查询； RA：表示“递归可用”。如果服务器支持递归查询，则在响应中设置该字段； Z：目前Z字段必须为0，为将来而保留； AD：若包含的信息是已授权的，则AD置1； CD：若禁用安全检查，则CD置1； RCODE：返回码字段，常见值如0（NoError）、3（NXDomain）； QDCOUNT、ANCOUNT、NSCOUNT、ARCOUNT：说明了组成DNS消息的问题、回答、授权和额外信息区段中的条目数目。对于查询消息，QDCOUNT通常为1，其他三个为0；对于应答消息，ANCOUNT至少为1； ">
+<meta property='og:url' content='https://bitdove.github.io/posts/dns-protocol/'>
+<meta property='og:site_name' content='bitdove&#39;s Blog'>
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='DNS' /><meta property='article:tag' content='TCP/IP' /><meta property='article:published_time' content='2021-05-06T00:44:05-07:00'/><meta property='article:modified_time' content='2021-05-06T00:44:05-07:00'/>
+<meta name="twitter:title" content="DNS Protocol">
+<meta name="twitter:description" content="什么是DNS？ DNS是Domain Name System的首字母缩写，即域名系统。\n网络上的主机有两种标识方法：\n域名：如www.baidu.com。优点是人们喜欢，容易记；缺点是机器不喜欢，路由器无法处理。 IP地址：如39.156.69.79。优点是机器喜欢，容易处理；缺点是人们不喜欢，不好记。 为了折中人类和机器不同的偏好，我们需要一种能从域名转换到IP地址的服务，这就是DNS的主要任务。\nDNS协议采用客户端/服务器模型，DNS协议位于五层网络模型中的应用层，在进行域名解析时其传输层采用UDP协议，其知名端口号为53。\nDNS协议由两部分组成：\n域名解析，用于执行对DNS特定名称查询的查询/响应协议； 区域传输：用于交换数据库记录的协议。 对于域名解析，由于数据量小，DNS协议采用UDP协议，知名端口号为53；\n对于区域传输，由于数据量大，DNS协议采用TCP协议，知名端口号为53。\nDNS服务器层次结构 DNS使用了大量的DNS服务器，它们以层次方式组织并且分布在全世界范围内。不存在一台DNS服务器拥有因特网上所有域名的映射。\n大致说来，有3种类型的DNS服务器：\n根DNS服务器：根DNS服务器提供顶级域名DNS服务器的IP地址； 顶级域名DNS服务器：顶级域名DNS服务器提供权威DNS服务器的IP地址； 权威DNS服务器：权威DNS服务器提供该组织的可访问域名的IP地址。 比如百度在因特网上有很多可以访问的域名，如百度首页baidu.com、百度贴吧tieba.baidu.com、百度新闻news.baidu.com，百度的权威服务器负责提供这些域名的IP地址。百度可以自己建权威DNS服务器，也可以花钱让中国电信这样的ISP帮它维护权威DNS服务器。\n这三种类型的DNS服务器以下图的层次结构组织起来。\n还有一种DNS服务器，叫本地DNS服务器，不在上述的DNS服务器层次结构中。本地DNS服务器就是用DHCP获得的配置信息中的DNS服务器。本地DNS服务器通常离我们的主机比较近，通常不超过几个路由器的距离。\n当主机发岀DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将该请求转发到DNS服务器层次构中，后边将详细讨论。\nDNS缓存 为了改善时延性并减少在因特网上到处传输的DNS报文数，DNS广泛使用了缓存技术。\n在一个请求链中，当某DNS服务器接收一个DNS回答 (例如，包含某域名到IP地址的映射)时，它能将映射缓存在本地存储器中。这样下次如果有对同样域名的DNS查询到达该DNS服务器时，它可以从自己的缓存中找出该域名对应的IP地址，直接返回给请求者，而不用再去问其他DNS服务器。\n由于域名与IP的映射不是永久的，所以DNS缓存有一个生存时间（TTL）。\nDNS资源记录类型 虽然DNS通常用来将域名转换为对应的IP地址，但是它也有其他功能，区分这些功能的方法就是使用不同的资源记录类型。这里我们只关注以下四种资源记录类型：\nA：提供域名到IPv4地址的映射； AAAA：提供域名到IPv6地址的映射； NS：用来指定该域名由哪个DNS服务器来进行解析； CNAME：允许多个域名映射到同一IP地址。 对于CNAME，我记得，当时用GitHub建个人博客时用到过，默认的地址xgx127.github.io用CNAME映射到我买的域名xushark.com，然后用A记录把xushark.com映射到我的云服务器的IP地址。\nDNS工作流程 下面以一个简单例子来描述DNS的工作流程。本例中我们假设没有DNS缓存。\n假设主机cse.nyu.edu想知道主机gaia.cs.umass.edu的IP地址。\n主机cse.nyu.edu首先向它的本地DNS服务器dns. nyu. edu发送一个DNS查询报文。 DNS查询报文内封装有要查询的域名gaia.cs.umass.edu；\n由于假定无缓存，本地DNS服务器将查询报文转发到根DNS服务器；\n根DNS服务器注意到其edu前缀，向本地DNS服务器返回负责edu的顶级域名DNS服务器的IP地址列表；\n本地DNS服务器则再次向这些顶级域名DNS服务器之一发送查询报文；\n顶级域名DNS服务器（edu）注意到umass.edu前缀，并返回权威DNS服务器的IP地址进行响应，该权威DNS服务器是负责马\n萨诸塞大学的dns.umass.edu；\n本地DNS服务器向dns.umass.edu发送查询报文；\n权威DNS服务器（dns.umass.edu）用gaia. cs. umass. edu的IP地址进行响应；\n本地DNS服务器将gaia.cs.umass.edu的IP地址反馈给主机cse.nyu.edu。\n理论上讲，任何DNS查询既可以是迭代的也可以是递归的；\n实践上，通常遵循上图的模式，请求主机到本地DNS服务器的查询是递归的，其余的查询是迭代的。\nDNS消息格式 基本的DNS消息以固定的12字节头部开始，其后跟随4个可变长度的区段：问题（或查询）、回答、授权记录和额外信息。\n事务ID：由客户端设置，由服务器返回。客户端用它来匹配响应与查询； QR：0表示查询消息，1表示响应消息； OpCode：0表示标准查询（查询和响应），4表示通知，5表示更新，其他值弃用； AA：表示授权回答（与缓存回答相对）； TC：表示“可截断的”。使用UDP时，它表示当应答的总长度超过512字节时，只返回前512个字节； RD：表示“期望递归”。在查询中设置，在响应中返回。它告诉服务器执行递归查询； RA：表示“递归可用”。如果服务器支持递归查询，则在响应中设置该字段； Z：目前Z字段必须为0，为将来而保留； AD：若包含的信息是已授权的，则AD置1； CD：若禁用安全检查，则CD置1； RCODE：返回码字段，常见值如0（NoError）、3（NXDomain）； QDCOUNT、ANCOUNT、NSCOUNT、ARCOUNT：说明了组成DNS消息的问题、回答、授权和额外信息区段中的条目数目。对于查询消息，QDCOUNT通常为1，其他三个为0；对于应答消息，ANCOUNT至少为1； ">
+    <link rel="shortcut icon" href="/favicon.ico" />
+
+    </head>
+    <body class="
+    article-page
+    ">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "dark");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+        <span class="hamburger-box">
+            <span class="hamburger-inner"></span>
+        </span>
+    </button>
+
+    <header>
+        
+            
+            <figure class="site-avatar">
+                <a href="/">
+                
+                    
+                    
+                    
+                        
+                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
+                            height="300" class="site-logo" loading="lazy" alt="Avatar">
+                    
+                
+                </a>
+                
+            </figure>
+            
+        
+        
+        <div class="site-meta">
+            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
+            <h2 class="site-description"></h2>
+        </div>
+    </header><ol class="menu-social">
+            
+                <li>
+                    <a 
+                        href='https://github.com/bitdove'
+                        target="_blank"
+                        title="GitHub"
+                        rel="me"
+                    >
+                        
+                        
+                            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                        
+                    </a>
+                </li>
+            
+        </ol><ol class="menu" id="main-menu">
+        
+        
+        
+        <li >
+            <a href='/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <polyline points="5 12 3 12 12 3 21 12 19 12" />
+  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+</svg>
+
+
+
+                
+                <span>Home</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/about/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="7" r="4" />
+  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+</svg>
+
+
+
+                
+                <span>About</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/archives/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <rect x="3" y="4" width="18" height="4" rx="2" />
+  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
+  <line x1="10" y1="12" x2="14" y2="12" />
+</svg>
+
+
+
+                
+                <span>Archives</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/search/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="10" cy="10" r="7" />
+  <line x1="21" y1="21" x2="15" y2="15" />
+</svg>
+
+
+
+                
+                <span>Search</span>
+            </a>
+        </li>
+        
+        
+        <li >
+            <a href='/links/' >
+                
+                
+                
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
+  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+</svg>
+
+
+
+                
+                <span>Links</span>
+            </a>
+        </li>
+        
+        <li class="menu-bottom-section">
+            <ol class="menu">
+
+                
+                    <li id="dark-mode-toggle">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="8" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="16" cy="12" r="2" />
+  <rect x="2" y="6" width="20" height="12" rx="6" />
+</svg>
+
+
+
+                        <span>Dark Mode</span>
+                    </li>
+                
+            </ol>
+        </li>
+    </ol>
+</aside>
+
+    <aside class="sidebar right-sidebar sticky">
+        
+            
+                
+    <section class="widget archives">
+        <div class="widget-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <line x1="5" y1="9" x2="19" y2="9" />
+  <line x1="5" y1="15" x2="19" y2="15" />
+  <line x1="11" y1="4" x2="7" y2="20" />
+  <line x1="17" y1="4" x2="13" y2="20" />
+</svg>
+
+
+
+        </div>
+        <h2 class="widget-title section-title">Table of contents</h2>
+        
+        <div class="widget--toc">
+            <nav id="TableOfContents">
+  <ol>
+    <li><a href="#什么是dns">什么是DNS？</a></li>
+    <li><a href="#dns服务器层次结构">DNS服务器层次结构</a></li>
+    <li><a href="#dns缓存">DNS缓存</a></li>
+    <li><a href="#dns资源记录类型">DNS资源记录类型</a></li>
+    <li><a href="#dns工作流程">DNS工作流程</a></li>
+    <li><a href="#dns消息格式">DNS消息格式</a></li>
+  </ol>
+</nav>
+        </div>
+    </section>
+
+            
+        
+    </aside>
+
+
+            <main class="main full-width">
+    <article class="main-article">
+    <header class="article-header">
+
+    <div class="article-details">
+    
+    <header class="article-category">
+        
+            <a href="/categories/learning_notes/" style="background-color: #2a9d8f; color: #fff;">
+                Learning Notes
+            </a>
+        
+    </header>
+    
+
+    <div class="article-title-wrapper">
+        <h2 class="article-title">
+            <a href="/posts/dns-protocol/">DNS Protocol</a>
+        </h2>
+    
+        
+    </div>
+
+    
+    
+    
+    
+    <footer class="article-time">
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
+  <circle cx="18" cy="18" r="4" />
+  <path d="M15 3v4" />
+  <path d="M7 3v4" />
+  <path d="M3 11h16" />
+  <path d="M18 16.496v1.504l1 1" />
+</svg>
+                <time class="article-time--published">2021/05/06</time>
+            </div>
+        
+
+        
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+                <time class="article-time--reading">
+                    1 minute read
+                </time>
+            </div>
+        
+    </footer>
+    
+
+    
+</div>
+
+</header>
+
+    <section class="article-content">
+    
+    
+    <h1 id="什么是dns">什么是DNS？
+</h1><blockquote>
+<p>DNS是<strong>D</strong>omain <strong>N</strong>ame <strong>S</strong>ystem的首字母缩写，即<strong>域名系统</strong>。</p>
+</blockquote>
+<p>网络上的主机有两种标识方法：</p>
+<ul>
+<li>域名：如www.baidu.com。优点是人们喜欢，容易记；缺点是机器不喜欢，路由器无法处理。</li>
+<li>IP地址：如39.156.69.79。优点是机器喜欢，容易处理；缺点是人们不喜欢，不好记。</li>
+</ul>
+<p>为了折中人类和机器不同的偏好，我们需要一种能<strong>从域名转换到IP地址</strong>的服务，这就是DNS的主要任务。</p>
+<p>DNS协议采用客户端/服务器模型，DNS协议位于五层网络模型中的应用层，在进行域名解析时其传输层采用UDP协议，其知名端口号为53。</p>
+<blockquote>
+<p>DNS协议由两部分组成：</p>
+<ul>
+<li>域名解析，用于执行对DNS特定名称查询的查询/响应协议；</li>
+<li>区域传输：用于交换数据库记录的协议。</li>
+</ul>
+<p>对于域名解析，由于数据量小，DNS协议采用UDP协议，知名端口号为53；</p>
+<p>对于区域传输，由于数据量大，DNS协议采用TCP协议，知名端口号为53。</p>
+</blockquote>
+<h1 id="dns服务器层次结构">DNS服务器层次结构
+</h1><p>DNS使用了大量的DNS服务器，它们以<strong>层次方式</strong>组织并且分布在全世界范围内。不存在一台DNS服务器拥有因特网上所有域名的映射。</p>
+<p>大致说来，有3种类型的DNS服务器：</p>
+<ul>
+<li>根DNS服务器：根DNS服务器提供顶级域名DNS服务器的IP地址；</li>
+<li>顶级域名DNS服务器：顶级域名DNS服务器提供权威DNS服务器的IP地址；</li>
+<li>权威DNS服务器：权威DNS服务器提供该组织的可访问域名的IP地址。</li>
+</ul>
+<blockquote>
+<p>比如百度在因特网上有很多可以访问的域名，如百度首页baidu.com、百度贴吧tieba.baidu.com、百度新闻news.baidu.com，百度的权威服务器负责提供这些域名的IP地址。百度可以自己建权威DNS服务器，也可以花钱让中国电信这样的ISP帮它维护权威DNS服务器。</p>
+</blockquote>
+<p>这三种类型的DNS服务器以下图的层次结构组织起来。</p>
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/hier-structure.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<p>还有一种DNS服务器，叫<strong>本地DNS服务器</strong>，不在上述的DNS服务器层次结构中。本地DNS服务器就是用DHCP获得的配置信息中的DNS服务器。本地DNS服务器通常离我们的主机比较近，通常不超过几个路由器的距离。</p>
+<blockquote>
+<p>当主机发岀DNS请求时，该请求被发往本地DNS服务器，它起着代理的作用，并将该请求转发到DNS服务器层次构中，后边将详细讨论。</p>
+</blockquote>
+<h1 id="dns缓存">DNS缓存
+</h1><p>为了改善时延性并减少在因特网上到处传输的DNS报文数，DNS广泛使用了<strong>缓存技术</strong>。</p>
+<p>在一个请求链中，当某DNS服务器接收一个DNS回答 (例如，包含某域名到IP地址的映射)时，它能将映射缓存在本地存储器中。这样下次如果有对同样域名的DNS查询到达该DNS服务器时，它可以从自己的缓存中找出该域名对应的IP地址，直接返回给请求者，而不用再去问其他DNS服务器。</p>
+<blockquote>
+<p>由于域名与IP的映射不是永久的，所以DNS缓存有一个生存时间（TTL）。</p>
+</blockquote>
+<h1 id="dns资源记录类型">DNS资源记录类型
+</h1><p>虽然DNS通常用来将域名转换为对应的IP地址，但是它也有其他功能，区分这些功能的方法就是使用不同的<strong>资源记录类型</strong>。这里我们只关注以下四种资源记录类型：</p>
+<ul>
+<li>A：提供域名到IPv4地址的映射；</li>
+<li>AAAA：提供域名到IPv6地址的映射；</li>
+<li>NS：用来指定该域名由哪个DNS服务器来进行解析；</li>
+<li>CNAME：允许多个域名映射到同一IP地址。</li>
+</ul>
+<blockquote>
+<p>对于CNAME，我记得，当时用GitHub建个人博客时用到过，默认的地址xgx127.github.io用CNAME映射到我买的域名xushark.com，然后用A记录把xushark.com映射到我的云服务器的IP地址。</p>
+</blockquote>
+<h1 id="dns工作流程">DNS工作流程
+</h1><p>下面以一个简单例子来描述DNS的工作流程。本例中我们假设没有DNS缓存。</p>
+<p>假设主机cse.nyu.edu想知道主机gaia.cs.umass.edu的IP地址。</p>
+<ol>
+<li>
+<p>主机cse.nyu.edu首先向它的本地DNS服务器dns. nyu. edu发送一个DNS查询报文。 DNS查询报文内封装有要查询的域名gaia.cs.umass.edu；</p>
+</li>
+<li>
+<p>由于假定无缓存，本地DNS服务器将查询报文转发到根DNS服务器；</p>
+</li>
+<li>
+<p>根DNS服务器注意到其edu前缀，向本地DNS服务器返回负责edu的顶级域名DNS服务器的IP地址列表；</p>
+</li>
+<li>
+<p>本地DNS服务器则再次向这些顶级域名DNS服务器之一发送查询报文；</p>
+</li>
+<li>
+<p>顶级域名DNS服务器（edu）注意到umass.edu前缀，并返回权威DNS服务器的IP地址进行响应，该权威DNS服务器是负责马</p>
+<p>萨诸塞大学的dns.umass.edu；</p>
+</li>
+<li>
+<p>本地DNS服务器向dns.umass.edu发送查询报文；</p>
+</li>
+<li>
+<p>权威DNS服务器（dns.umass.edu）用gaia. cs. umass. edu的IP地址进行响应；</p>
+</li>
+<li>
+<p>本地DNS服务器将gaia.cs.umass.edu的IP地址反馈给主机cse.nyu.edu。</p>
+</li>
+</ol>
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/DNS-server-interaction.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<blockquote>
+<p>理论上讲，任何DNS查询既可以是迭代的也可以是递归的；</p>
+<p>实践上，通常遵循上图的模式，请求主机到本地DNS服务器的查询是递归的，其余的查询是迭代的。</p>
+</blockquote>
+<h1 id="dns消息格式">DNS消息格式
+</h1><p>基本的DNS消息以固定的12字节头部开始，其后跟随4个可变长度的区段：问题（或查询）、回答、授权记录和额外信息。</p>
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/DNS-protocol/DNS-message.png"
+	
+	
+	
+	loading="lazy"
+	
+	
+></p>
+<blockquote>
+<ul>
+<li>事务ID：由客户端设置，由服务器返回。客户端用它来匹配响应与查询；</li>
+<li>QR：0表示查询消息，1表示响应消息；</li>
+<li>OpCode：0表示标准查询（查询和响应），4表示通知，5表示更新，其他值弃用；</li>
+<li>AA：表示授权回答（与缓存回答相对）；</li>
+<li>TC：表示“可截断的”。使用UDP时，它表示当应答的总长度超过512字节时，只返回前512个字节；</li>
+<li>RD：表示“期望递归”。在查询中设置，在响应中返回。它告诉服务器执行递归查询；</li>
+<li>RA：表示“递归可用”。如果服务器支持递归查询，则在响应中设置该字段；</li>
+<li>Z：目前Z字段必须为0，为将来而保留；</li>
+<li>AD：若包含的信息是已授权的，则AD置1；</li>
+<li>CD：若禁用安全检查，则CD置1；</li>
+<li>RCODE：返回码字段，常见值如0（NoError）、3（NXDomain）；</li>
+<li>QDCOUNT、ANCOUNT、NSCOUNT、ARCOUNT：说明了组成DNS消息的问题、回答、授权和额外信息区段中的条目数目。对于查询消息，QDCOUNT通常为1，其他三个为0；对于应答消息，ANCOUNT至少为1；</li>
+</ul>
+</blockquote>
+
+</section>
+
+
+    <footer class="article-footer">
+    
+    <section class="article-tags">
+        
+            <a href="/tags/dns/">DNS</a>
+        
+            <a href="/tags/tcp/ip/">TCP/IP</a>
+        
+    </section>
+
+
+    
+    <section class="article-copyright">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+</svg>
+
+
+
+        <span>Licensed under CC BY-NC-SA 4.0</span>
+    </section>
+    </footer>
+
+
+    
+</article>
+
+    
+
+    
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="">
+    <a href="/posts/arp-protocol/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">ARP Protocol</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/tcp-introduction-deeper/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Tcp Introduction Deeper</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/tcp-introduction/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">TCP:传输控制协议</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/dhcp-protocol/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">DHCP Protocol</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
+    <a href="/posts/cpp-constructor-destructor-calling-order/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">Cpp Constructor Destructor Calling Order</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
+
+     
+    
+        
+    
+
+    <footer class="site-footer">
+    <section class="copyright">
+        &copy; 
+        
+            2018 - 
+        
+        2024 bitdove. All Rights Reserved.
+    </section>
+    
+    <section class="powerby">
+        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
+        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+    </section>
+</footer>
+
+
+    
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    
+    <div class="pswp__bg"></div>
+
+    
+    <div class="pswp__scroll-wrap">
+
+        
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                
+                
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
+                defer
+                >
+            </script><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
+            ><link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
+            >
+
+            </main>
+        </div>
+        <script 
+                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
+                
+                >
+            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<script>
+    (function () {
+        const customFont = document.createElement('link');
+        customFont.href = "https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap";
+
+        customFont.type = "text/css";
+        customFont.rel = "stylesheet";
+
+        document.head.appendChild(customFont);
+    }());
+</script>
+
+    </body>
+</html>
