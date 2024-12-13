@@ -7,7 +7,15 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en-us</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
-        <lastBuildDate>Tue, 05 Nov 2024 02:15:01 -0800</lastBuildDate><atom:link href="https://bitdove.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 12 Dec 2024 16:06:53 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/categories/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Solutions</title>
+        <link>https://bitdove.github.io/categories/solutions/</link>
+        <pubDate>Thu, 12 Dec 2024 16:06:53 -0700</pubDate>
+        
+        <guid>https://bitdove.github.io/categories/solutions/</guid>
+        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Solutions.png" alt="Featured image of post Solutions" /&gt;</description>
+        </item>
+        <item>
         <title>Diary Essays</title>
         <link>https://bitdove.github.io/categories/diary_essays/</link>
         <pubDate>Tue, 05 Nov 2024 02:15:01 -0800</pubDate>
@@ -22,14 +30,6 @@
         
         <guid>https://bitdove.github.io/categories/learning_notes/</guid>
         <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Learning-Notes.png" alt="Featured image of post Learning Notes" /&gt;</description>
-        </item>
-        <item>
-        <title>Solutions</title>
-        <link>https://bitdove.github.io/categories/solutions/</link>
-        <pubDate>Fri, 20 Sep 2024 15:18:02 +0800</pubDate>
-        
-        <guid>https://bitdove.github.io/categories/solutions/</guid>
-        <description>&lt;img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/HugoBlogCategories/Solutions.png" alt="Featured image of post Solutions" /&gt;</description>
         </item>
         <item>
         <title>Projects</title>
