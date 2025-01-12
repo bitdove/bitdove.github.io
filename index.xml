@@ -13,7 +13,10 @@
         <pubDate>Thu, 12 Dec 2024 16:06:53 -0700</pubDate>
         
         <guid>https://bitdove.github.io/posts/xray-core-as-client/</guid>
-        <description>&lt;h1 id=&#34;install-xray-with-homebrew&#34;&gt;Install Xray with Homebrew
+        <description>&lt;blockquote&gt;
+&lt;p&gt;This is for macOS&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;install-xray-with-homebrew&#34;&gt;Install Xray with Homebrew
 &lt;/h1&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -33,7 +36,16 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;&lt;h2 id=&#34;write-xray-client-config-file&#34;&gt;Write Xray Client Config File
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;replace username with your real username&lt;/li&gt;
+&lt;li&gt;create .xray_log folder under your home folder&lt;/li&gt;
+&lt;li&gt;create access.log and error.log file under .xray_log folder&lt;/li&gt;
+&lt;li&gt;grant 755 to .xray_log, and 666 to access.log and error.log.&lt;/li&gt;
+&lt;li&gt;replace IPaddress, port, id, serverName, publicKey, shortId&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;  1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;  2
