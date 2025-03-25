@@ -25,7 +25,10 @@
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install xray
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h1 id=&#34;write-xray-config-file&#34;&gt;Write Xray Config File
+&lt;/div&gt;&lt;blockquote&gt;
+&lt;p&gt;I will not use Homebrew anymore due to macOS downgrade.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;write-xray-config-file&#34;&gt;Write Xray Config File
 &lt;/h1&gt;&lt;h2 id=&#34;open-config-file-using-nano&#34;&gt;Open Config File Using nano
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
