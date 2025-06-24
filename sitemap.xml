@@ -32,10 +32,10 @@
     <loc>https://bitdove.github.io/categories/%E7%94%9F%E6%B4%BB%E4%B8%8E%E5%85%B4%E8%B6%A3/</loc>
     <lastmod>2024-12-12T16:06:53-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/c/c&#43;&#43;/</loc>
+    <loc>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</loc>
     <lastmod>2024-10-30T23:48:55-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</loc>
+    <loc>https://bitdove.github.io/tags/c/c&#43;&#43;/</loc>
     <lastmod>2024-10-30T23:48:55-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/categories/%E6%8A%80%E6%9C%AF%E4%B8%8E%E9%A1%B9%E7%9B%AE/</loc>
@@ -50,10 +50,10 @@
     <loc>https://bitdove.github.io/tags/stl/</loc>
     <lastmod>2024-10-30T23:34:54-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/linux/</loc>
+    <loc>https://bitdove.github.io/posts/linux-condition/</loc>
     <lastmod>2024-10-13T02:27:51-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/posts/linux-condition/</loc>
+    <loc>https://bitdove.github.io/tags/linux/</loc>
     <lastmod>2024-10-13T02:27:51-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/tags/os/</loc>
@@ -62,10 +62,10 @@
     <loc>https://bitdove.github.io/posts/cpp-static/</loc>
     <lastmod>2024-10-13T02:27:03-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/posts/build-echo-project-with-cmake/</loc>
+    <loc>https://bitdove.github.io/tags/cmake/</loc>
     <lastmod>2024-10-13T02:26:15-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/cmake/</loc>
+    <loc>https://bitdove.github.io/posts/build-echo-project-with-cmake/</loc>
     <lastmod>2024-10-13T02:26:15-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/posts/cmake-include-directories/</loc>
@@ -98,10 +98,10 @@
     <loc>https://bitdove.github.io/%E5%85%B3%E4%BA%8E/</loc>
     <lastmod>2024-09-17T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/arp/</loc>
+    <loc>https://bitdove.github.io/posts/arp-protocol/</loc>
     <lastmod>2024-05-09T00:28:32-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/posts/arp-protocol/</loc>
+    <loc>https://bitdove.github.io/tags/arp/</loc>
     <lastmod>2024-05-09T00:28:32-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/tags/tcp/ip/</loc>
@@ -140,16 +140,16 @@
     <loc>https://bitdove.github.io/posts/basic-of-process-and-thread/</loc>
     <lastmod>2021-05-07T00:56:15-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/dns/</loc>
-    <lastmod>2021-05-06T00:44:05-07:00</lastmod>
-  </url><url>
     <loc>https://bitdove.github.io/posts/dns-protocol/</loc>
     <lastmod>2021-05-06T00:44:05-07:00</lastmod>
   </url><url>
-    <loc>https://bitdove.github.io/tags/dhcp/</loc>
-    <lastmod>2021-05-05T00:37:38-07:00</lastmod>
+    <loc>https://bitdove.github.io/tags/dns/</loc>
+    <lastmod>2021-05-06T00:44:05-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/posts/dhcp-protocol/</loc>
+    <lastmod>2021-05-05T00:37:38-07:00</lastmod>
+  </url><url>
+    <loc>https://bitdove.github.io/tags/dhcp/</loc>
     <lastmod>2021-05-05T00:37:38-07:00</lastmod>
   </url><url>
     <loc>https://bitdove.github.io/archives/</loc>

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Linux on 留白</title>
+        <title>Linux on 缘起性空</title>
         <link>https://bitdove.github.io/tags/linux/</link>
-        <description>Recent content in Linux on 留白</description>
+        <description>Recent content in Linux on 缘起性空</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
         <lastBuildDate>Sun, 13 Oct 2024 02:27:51 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/linux/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Linux Condition</title>
+        <title>【一文读懂】互斥锁与条件变量</title>
         <link>https://bitdove.github.io/posts/linux-condition/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
@@ -249,7 +249,7 @@
 </description>
         </item>
         <item>
-        <title>Interprocess Communication</title>
+        <title>【一文读懂】进程间通信</title>
         <link>https://bitdove.github.io/posts/interprocess-communication/</link>
         <pubDate>Tue, 07 Jun 2022 01:18:12 -0700</pubDate>
         
@@ -848,7 +848,7 @@
 </description>
         </item>
         <item>
-        <title>Threads Sync</title>
+        <title>【一文读懂】线程同步</title>
         <link>https://bitdove.github.io/posts/threads-sync/</link>
         <pubDate>Wed, 12 May 2021 00:48:23 -0700</pubDate>
         
@@ -1945,7 +1945,7 @@
 </description>
         </item>
         <item>
-        <title>Basic of Process and Thread</title>
+        <title>【一文读懂】进程与线程</title>
         <link>https://bitdove.github.io/posts/basic-of-process-and-thread/</link>
         <pubDate>Fri, 07 May 2021 00:56:15 -0700</pubDate>
         

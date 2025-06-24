@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>C/C&#43;&#43; on 留白</title>
+        <title>C/C&#43;&#43; on 缘起性空</title>
         <link>https://bitdove.github.io/tags/c/c&#43;&#43;/</link>
-        <description>Recent content in C/C&#43;&#43; on 留白</description>
+        <description>Recent content in C/C&#43;&#43; on 缘起性空</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
         <lastBuildDate>Wed, 30 Oct 2024 23:48:55 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/tags/c/c++/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>Cpp Constructor Destructor Calling Order</title>
+        <title>【一文读懂】C&#43;&#43;构造函数与析构函数的调用顺序</title>
         <link>https://bitdove.github.io/posts/cpp-constructor-destructor-calling-order/</link>
         <pubDate>Wed, 30 Oct 2024 23:48:55 -0700</pubDate>
         
@@ -216,7 +216,7 @@
 &lt;/div&gt;</description>
         </item>
         <item>
-        <title>Cpp Type Size Test</title>
+        <title>【测试】C&#43;&#43;类型大小测试</title>
         <link>https://bitdove.github.io/posts/cpp-type-size-test/</link>
         <pubDate>Wed, 30 Oct 2024 23:40:39 -0700</pubDate>
         
@@ -333,7 +333,7 @@
 &lt;/div&gt;</description>
         </item>
         <item>
-        <title>Cpp STL Container</title>
+        <title>【一文读懂】C&#43;&#43; STL中的容器</title>
         <link>https://bitdove.github.io/posts/cpp-stl-container/</link>
         <pubDate>Wed, 30 Oct 2024 23:34:54 -0700</pubDate>
         
@@ -632,7 +632,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 </description>
         </item>
         <item>
-        <title>C&#43;&#43; Static</title>
+        <title>【一文读懂】C&#43;&#43;中的static关键字</title>
         <link>https://bitdove.github.io/posts/cpp-static/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:03 -0700</pubDate>
         
@@ -709,7 +709,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 </description>
         </item>
         <item>
-        <title>Cpp Const</title>
+        <title>【一文读懂】C&#43;&#43;中的const关键字</title>
         <link>https://bitdove.github.io/posts/cpp-const/</link>
         <pubDate>Sun, 13 Oct 2024 02:22:13 -0700</pubDate>
         
@@ -994,7 +994,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 </description>
         </item>
         <item>
-        <title>C&#43;&#43; new那些事儿</title>
+        <title>【一文读懂】C&#43;&#43; new那些事儿</title>
         <link>https://bitdove.github.io/posts/things-about-new/</link>
         <pubDate>Mon, 30 Sep 2024 09:52:09 +0800</pubDate>
         
@@ -1030,7 +1030,7 @@ $$ Address = Hash(key)$$&lt;p&gt;哈希冲突：可能出现不同的元素被�
 </description>
         </item>
         <item>
-        <title>C&#43;&#43;成员函数调用方式</title>
+        <title>【一文读懂】C&#43;&#43;成员函数的调用方式</title>
         <link>https://bitdove.github.io/posts/cpp-member-function-calling/</link>
         <pubDate>Mon, 28 Jun 2021 20:24:15 -0700</pubDate>
         
