@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\nconst可以修饰内置类型变量、自定义的类对象、类的成员函数、函数的返回值、函数的参数。\nconst修饰普通变量 1 2 3 const int a = 8; int b = a; //Correct a = 9; //Fault 编译器会把a认定为常量，其值不可被改变，所以对它赋值是错误的。\nconst修饰指针变量 const修饰指针变量有三种情况：\nconst修饰指针指向的内容，即指针所指地址中的内容不可变。 const修饰指针本身，即指针所指向的地址不可变。 const同时修饰指针和指针指向的内容，即二者皆不可变。 1 const int *p = 8; 由内向外看，*表示p是一个指针；const int表示p指针指向一个int型常量，综合起来就是p是一个常量指针。即p指针指向的这个地址存的是个8，这个值不能变，但是p可以指向其他的地址。\n1 2 int a = 8; int* const p = &amp;a; 由内而外看，const表示p是一个常量，这已经说明它自身的值是不变的；int*表示p是一个指向int型变量的指针；所以，综合起来，p是一个指向int型变量的指针常量。即p指向的地址是不可变的，但这段地址存放的内容是可以变的。\n1 2 int a = 8; const int* const p = &amp;a; 依旧由内而外看，const表示p是一个常量；const int*表示p是一个指向int型常量的指针；综合起来，p是一个指向int型常量的指针常量。即p指向的地址以及它指向的地址中存放的内容均为不可变的。\n总结：*左边的const表示内容不变；*右边的const表示地址不变。\v常量指针：指向常量的指针，即其指向的地址中的内容不变。\n指针常量：指针本身是常量，即其指向地址不变。\nconst修饰函数参数 const修饰函数参数也分三种情况：\n对于值传递的函数，一般这种情况不需要 const 修饰，因为函数会自动产生临时变量复制实参值。\n1 2 3 4 5 6 7 8 9 include &lt;iostream&gt; void ValueTransfer(const int a){ ++a; std::cout &lt;&lt; a &lt;&lt; std::endl; } int main(){ ValueTransfer(8); return 0; } 上边这段程序用g++编译时报错：\n1 2 3 const_test.cpp: In function ‘void ValueTransfer(int)’: const_test.cpp:3:4: error: increment of read-only parameter ‘a’ ++a; 对只读的参数a进行自增操作是非法的，编译直接不通过。\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\n">
 <title>Cpp Const</title>
 
 <link rel='canonical' href='https://bitdove.github.io/posts/cpp-const/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Cpp Const">
-<meta property='og:description' content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\nconst可以修饰内置类型变量、自定义的类对象、类的成员函数、函数的返回值、函数的参数。\nconst修饰普通变量 1 2 3 const int a = 8; int b = a; //Correct a = 9; //Fault 编译器会把a认定为常量，其值不可被改变，所以对它赋值是错误的。\nconst修饰指针变量 const修饰指针变量有三种情况：\nconst修饰指针指向的内容，即指针所指地址中的内容不可变。 const修饰指针本身，即指针所指向的地址不可变。 const同时修饰指针和指针指向的内容，即二者皆不可变。 1 const int *p = 8; 由内向外看，*表示p是一个指针；const int表示p指针指向一个int型常量，综合起来就是p是一个常量指针。即p指针指向的这个地址存的是个8，这个值不能变，但是p可以指向其他的地址。\n1 2 int a = 8; int* const p = &amp;a; 由内而外看，const表示p是一个常量，这已经说明它自身的值是不变的；int*表示p是一个指向int型变量的指针；所以，综合起来，p是一个指向int型变量的指针常量。即p指向的地址是不可变的，但这段地址存放的内容是可以变的。\n1 2 int a = 8; const int* const p = &amp;a; 依旧由内而外看，const表示p是一个常量；const int*表示p是一个指向int型常量的指针；综合起来，p是一个指向int型常量的指针常量。即p指向的地址以及它指向的地址中存放的内容均为不可变的。\n总结：*左边的const表示内容不变；*右边的const表示地址不变。\v常量指针：指向常量的指针，即其指向的地址中的内容不变。\n指针常量：指针本身是常量，即其指向地址不变。\nconst修饰函数参数 const修饰函数参数也分三种情况：\n对于值传递的函数，一般这种情况不需要 const 修饰，因为函数会自动产生临时变量复制实参值。\n1 2 3 4 5 6 7 8 9 include &lt;iostream&gt; void ValueTransfer(const int a){ ++a; std::cout &lt;&lt; a &lt;&lt; std::endl; } int main(){ ValueTransfer(8); return 0; } 上边这段程序用g++编译时报错：\n1 2 3 const_test.cpp: In function ‘void ValueTransfer(int)’: const_test.cpp:3:4: error: increment of read-only parameter ‘a’ ++a; 对只读的参数a进行自增操作是非法的，编译直接不通过。\n">
+<meta property='og:description' content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/cpp-const/'>
-<meta property='og:site_name' content='bitdove&#39;s Blog'>
+<meta property='og:site_name' content='留白'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:published_time' content='2024-10-13T02:22:13-07:00'/><meta property='article:modified_time' content='2024-10-13T02:22:13-07:00'/>
 <meta name="twitter:title" content="Cpp Const">
-<meta name="twitter:description" content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\nconst可以修饰内置类型变量、自定义的类对象、类的成员函数、函数的返回值、函数的参数。\nconst修饰普通变量 1 2 3 const int a = 8; int b = a; //Correct a = 9; //Fault 编译器会把a认定为常量，其值不可被改变，所以对它赋值是错误的。\nconst修饰指针变量 const修饰指针变量有三种情况：\nconst修饰指针指向的内容，即指针所指地址中的内容不可变。 const修饰指针本身，即指针所指向的地址不可变。 const同时修饰指针和指针指向的内容，即二者皆不可变。 1 const int *p = 8; 由内向外看，*表示p是一个指针；const int表示p指针指向一个int型常量，综合起来就是p是一个常量指针。即p指针指向的这个地址存的是个8，这个值不能变，但是p可以指向其他的地址。\n1 2 int a = 8; int* const p = &amp;a; 由内而外看，const表示p是一个常量，这已经说明它自身的值是不变的；int*表示p是一个指向int型变量的指针；所以，综合起来，p是一个指向int型变量的指针常量。即p指向的地址是不可变的，但这段地址存放的内容是可以变的。\n1 2 int a = 8; const int* const p = &amp;a; 依旧由内而外看，const表示p是一个常量；const int*表示p是一个指向int型常量的指针；综合起来，p是一个指向int型常量的指针常量。即p指向的地址以及它指向的地址中存放的内容均为不可变的。\n总结：*左边的const表示内容不变；*右边的const表示地址不变。\v常量指针：指向常量的指针，即其指向的地址中的内容不变。\n指针常量：指针本身是常量，即其指向地址不变。\nconst修饰函数参数 const修饰函数参数也分三种情况：\n对于值传递的函数，一般这种情况不需要 const 修饰，因为函数会自动产生临时变量复制实参值。\n1 2 3 4 5 6 7 8 9 include &lt;iostream&gt; void ValueTransfer(const int a){ ++a; std::cout &lt;&lt; a &lt;&lt; std::endl; } int main(){ ValueTransfer(8); return 0; } 上边这段程序用g++编译时报错：\n1 2 3 const_test.cpp: In function ‘void ValueTransfer(int)’: const_test.cpp:3:4: error: increment of read-only parameter ‘a’ ++a; 对只读的参数a进行自增操作是非法的，编译直接不通过。\n">
+<meta name="twitter:description" content="const关键字 const即constan的缩写，即不变的，被const修饰之后，相当于程序员告诉编译器：这个值是不变的，你处理的时候注意着点儿。const关键字的核心是ReadOnly，即“只读”。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -42,7 +42,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
+            <h1 class="site-name"><a href="/">留白</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -113,13 +113,13 @@
 
 
                 
-                <span>Home</span>
+                <span>首页</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/about/' >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
                 
                 
                 
@@ -132,7 +132,7 @@
 
 
                 
-                <span>About</span>
+                <span>关于</span>
             </a>
         </li>
         
@@ -152,7 +152,7 @@
 
 
                 
-                <span>Archives</span>
+                <span>归档</span>
             </a>
         </li>
         
@@ -171,13 +171,13 @@
 
 
                 
-                <span>Search</span>
+                <span>搜索</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/links/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -190,7 +190,7 @@
 
 
                 
-                <span>Links</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -215,7 +215,7 @@
 
 
 
-                        <span>Dark Mode</span>
+                        <span></span>
                     </li>
                 
             </ol>
@@ -240,7 +240,7 @@
 
 
         </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
+        <h2 class="widget-title section-title"></h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
@@ -329,7 +329,7 @@
 
 
                 <time class="article-time--reading">
-                    2 minute read
+                    
                 </time>
             </div>
         
@@ -657,7 +657,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">Related content</h2>
+    <h2 class="section-title"></h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -745,8 +745,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 

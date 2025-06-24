@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n单继承，子类继承一个父类 多继承：子类继承多个父类 另外还有一种虚继承，虚继承其实是为了解决多继承带了的问题而引入的。后边再详述。 单继承没什么好说的，所以不单独列一节。并且下边的美人鱼例子，虽是为讲多继承而设计，但它也包含了单继承的内容。\n多继承 我们以美人鱼为例，美人鱼既有美人的某些属性，又有鱼的某些属性，可以把美人和鱼看作美人鱼的父类；而美人和鱼都是动物，可以把动物看作美人和鱼的共同父类。这样我们就可以定义如下几个类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Animal{ public: int data_Animal; }; class Beauty : public Animal{ public: int data_Beauty; }; class Fish : public Animal{ public: int data_Fish; }; class BeautyFish : public Beauty, public Fish{ public: int data_BeautyFish; }; 如果把这四个类的继承关系画成图，你就会发现，四个类组成一个菱形，这就是菱形继承。\n那么这四个类的对象会占用多大的内存呢？我在64位Linux平台下，用g++编译器的-fdump-class-hierarchy选项做了测试，为忽略内存对齐影响，使用#pragma pack(1)设为1字节对齐。测试结果如下：\n1 2 3 4 sizeof(Animal) == 4 sizeof(Beauty) == 8 sizeof(Fish) == 8 sizeof(BeautyFish) == 20 -fdump-class-hierarchy生成的文件内容如下（只保留以上四个类）\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n">
 <title>美人&#43;鱼=美人鱼——谈C&#43;&#43;多继承</title>
 
 <link rel='canonical' href='https://bitdove.github.io/posts/cpp-multiple-inheritance/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="美人+鱼=美人鱼——谈C++多继承">
-<meta property='og:description' content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n单继承，子类继承一个父类 多继承：子类继承多个父类 另外还有一种虚继承，虚继承其实是为了解决多继承带了的问题而引入的。后边再详述。 单继承没什么好说的，所以不单独列一节。并且下边的美人鱼例子，虽是为讲多继承而设计，但它也包含了单继承的内容。\n多继承 我们以美人鱼为例，美人鱼既有美人的某些属性，又有鱼的某些属性，可以把美人和鱼看作美人鱼的父类；而美人和鱼都是动物，可以把动物看作美人和鱼的共同父类。这样我们就可以定义如下几个类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Animal{ public: int data_Animal; }; class Beauty : public Animal{ public: int data_Beauty; }; class Fish : public Animal{ public: int data_Fish; }; class BeautyFish : public Beauty, public Fish{ public: int data_BeautyFish; }; 如果把这四个类的继承关系画成图，你就会发现，四个类组成一个菱形，这就是菱形继承。\n那么这四个类的对象会占用多大的内存呢？我在64位Linux平台下，用g++编译器的-fdump-class-hierarchy选项做了测试，为忽略内存对齐影响，使用#pragma pack(1)设为1字节对齐。测试结果如下：\n1 2 3 4 sizeof(Animal) == 4 sizeof(Beauty) == 8 sizeof(Fish) == 8 sizeof(BeautyFish) == 20 -fdump-class-hierarchy生成的文件内容如下（只保留以上四个类）\n">
+<meta property='og:description' content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/cpp-multiple-inheritance/'>
-<meta property='og:site_name' content='bitdove&#39;s Blog'>
+<meta property='og:site_name' content='留白'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='C/C&#43;&#43;' /><meta property='article:published_time' content='2021-06-22T06:19:43-07:00'/><meta property='article:modified_time' content='2021-06-22T06:19:43-07:00'/>
 <meta name="twitter:title" content="美人+鱼=美人鱼——谈C++多继承">
-<meta name="twitter:description" content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n单继承，子类继承一个父类 多继承：子类继承多个父类 另外还有一种虚继承，虚继承其实是为了解决多继承带了的问题而引入的。后边再详述。 单继承没什么好说的，所以不单独列一节。并且下边的美人鱼例子，虽是为讲多继承而设计，但它也包含了单继承的内容。\n多继承 我们以美人鱼为例，美人鱼既有美人的某些属性，又有鱼的某些属性，可以把美人和鱼看作美人鱼的父类；而美人和鱼都是动物，可以把动物看作美人和鱼的共同父类。这样我们就可以定义如下几个类：\n1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 class Animal{ public: int data_Animal; }; class Beauty : public Animal{ public: int data_Beauty; }; class Fish : public Animal{ public: int data_Fish; }; class BeautyFish : public Beauty, public Fish{ public: int data_BeautyFish; }; 如果把这四个类的继承关系画成图，你就会发现，四个类组成一个菱形，这就是菱形继承。\n那么这四个类的对象会占用多大的内存呢？我在64位Linux平台下，用g++编译器的-fdump-class-hierarchy选项做了测试，为忽略内存对齐影响，使用#pragma pack(1)设为1字节对齐。测试结果如下：\n1 2 3 4 sizeof(Animal) == 4 sizeof(Beauty) == 8 sizeof(Fish) == 8 sizeof(BeautyFish) == 20 -fdump-class-hierarchy生成的文件内容如下（只保留以上四个类）\n">
+<meta name="twitter:description" content="引言 继承是C++作为面向对象语言的一大特性。继承提高了代码的复用和可扩展性。子类可以把父类的数据成员“完整”地继承下来，而对于父类的成员函数，子类继承的是它们的调用权。 根据子类继承父类的个数，继承分为单继承、多继承：\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -42,7 +42,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
+            <h1 class="site-name"><a href="/">留白</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -113,13 +113,13 @@
 
 
                 
-                <span>Home</span>
+                <span>首页</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/about/' >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
                 
                 
                 
@@ -132,7 +132,7 @@
 
 
                 
-                <span>About</span>
+                <span>关于</span>
             </a>
         </li>
         
@@ -152,7 +152,7 @@
 
 
                 
-                <span>Archives</span>
+                <span>归档</span>
             </a>
         </li>
         
@@ -171,13 +171,13 @@
 
 
                 
-                <span>Search</span>
+                <span>搜索</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/links/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -190,7 +190,7 @@
 
 
                 
-                <span>Links</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -215,7 +215,7 @@
 
 
 
-                        <span>Dark Mode</span>
+                        <span></span>
                     </li>
                 
             </ol>
@@ -240,7 +240,7 @@
 
 
         </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
+        <h2 class="widget-title section-title"></h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
@@ -317,7 +317,7 @@
 
 
                 <time class="article-time--reading">
-                    3 minute read
+                    
                 </time>
             </div>
         
@@ -828,7 +828,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">Related content</h2>
+    <h2 class="section-title"></h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -916,8 +916,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 

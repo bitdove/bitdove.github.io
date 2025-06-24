@@ -1,18 +1,18 @@
 <!DOCTYPE html>
-<html lang="zh-cn" dir="ltr">
+<html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\nDHCP的主要作用是集中的管理、分配IP地址，使网络环境中的主机动态的获得IP地址、子网掩码、默认网关、DNS服务器地址等信息，并能够提升IP地址的使用率。\nDHCP采用客户端/服务器模型。客户端主机的IP地址等配置信息的动态分配任务由其自身发起，当DHCP服务器接收到来自客户端主机申请地址的信息时，才会向客户端主机发送相关的地址配置等信息，以实现客户端主机地址信息的动态配置。\nDHCP位于五层网络模型中的应用层，其传输层采用UDP协议。客户端端口号为68，服务器端口号为67。\nDHCP服务器可提供三种地址分配：自动分配、动态分配、手动分配。三者区别在于地址分配是否基于客户端的身份以及该地址是否可撤销或变更。我们只关注动态分配。\n动态分配：客户端从服务器的地址池中获得一个可撤销的IP地址。\n地址池和租用期 动态分配中，DHCP客户端请求分配一个IP地址时，DHCP服务器从其地址池中选择一个地址作为响应。\n地址池：专门为DHCP用途而分配的一个连续的IP地址范围。\n租用期：分配给客户端的IP地址只在一段特定时间内有效，这段时间称为租用期。\n租用期是可以延长的，即客户端可以续约。\nDHCP消息格式 Op：标识消息是请求消息（1）还是应答消息（2）； HW类型：硬件类型，基于ARP使用的值，对于以太网，该值为1； HW长度：存放硬件（MAC）地址的长度，对于以太网MAC地址，该值为6； 跳步数：保存消息传输过程中的中继次数。消息发送方将该值设置为0，并在每次中继时递增； 事务ID：由客户机选择的随机数，服务器将它复制到响应中，用于将请求和应答匹配起来； 秒数：由客户机设置，它是第一次尝试申请或重新申请地址经过的秒数； 标志：该字段16位中，目前只用了1位，称为广播标志。客户机可以在请求中设置该位，表示它们不能或不愿处理单播IP数据报，但可处理广播数据报（例如，客户机还没有IP地址的情况）。通过设置该位通知服务器和中继代理，广播地址可用于响应中。 ciaddr：如果客户机已有IP地址的话，客户机在发送请求时将自己的IP地址放在此处； yiaddr：由服务器填写，服务器把想要分配给客户机的IP地址放在此处； siaddr：一般是DHCP服务器的IP地址； giaddr：如果需要跨子网进行DHCP地址分配（DHCP服务器与客户机不在同一子网），则在此处填写经过的路由器的IP地址； chaddr：客户机的硬件地址，即MAC地址； sname：并非每次都要填写，表示服务器名； file：并非每次都要填写，表示启动文件路径； 选项：常见选项见下。 常见选项：\n子网掩码（1）、路由器地址（3）、域名服务器（6）、请求的IP地址（50）、地址租用期（51）、DHCP消息类型（53）、租约更新时间（58）、租约重新绑定时间（59）。\n选项可由DHCP选项字段携带，也可由sname和file字段携带，由sname和file携带时，称为选项超载。\nDHCP消息类型（53）是1字节长的选项，其常见可能值如下：\nDHCPDISCOVER（1）、DHCPOFFER（2）、DHCPREQUEST（3）、DHCPACK（5）、DHCPNAK（6）\nDHCP协议操作 接下来我将通过一个实际场景描述DHCP协议的基本工作流程。\n场景：小明在学校有一台笔记本电脑，一直用着学校的校园网。现在五一假期了，小明打算把笔记本带回家连上家里的网络打英雄联盟。我们假定校园网与小明家的网不是同一子网。\n小明的笔记本由校园网切换到家里的网络，其IP地址等配置信息自然要发生变化，这个过程就是由DHCP来完成的，下面来看一下DHCP如何完成这项工作。\n注：链路层以以太网为例。假定小明笔记本MAC地址为00:13:02:20:b9:18。\nDHCPREQUEST 由于小明的笔记本电脑会记住之前在校园网中使用的IP地址（假定为172.16.1.34），所以在连接到新的网络（小明家的网络）时，它首先通过一个DHCPREQUEST消息尝试继续使用该地址。该DHCPREQUEST消息封装如下图所示。\nOp为1代表这是一个DHCP请求；\nhtype为1代表是以太网；\nhlen为6是MAC地址的长度（以字节为单位）；\n跳步数设置为0，每次中继时递增；\n事务ID为随机生成，这里假定为0xdb23247d；\n标志为0x8000，即最高位为1，意味着该消息的响应应该通过广播地址发送。\nciaddr、yiaddr、siaddr、giaddr均为0.0.0.0；\nchaddr为小明笔记本的MAC地址00:13:02:20:b9:18；\nsname、file未指定；\n选项中指明了DHCP消息类型为DHCPREQUEST以及请求的IP地址为172.16.1.34。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为68，目的端口号填写为67；\n然后该UDP用户数据报被封装到IP数据报中，其中IP头部中的源IP地址填写为0.0.0.0，目的IP地址填写为广播地址255.255.255.255；\n然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:13:02:20:b9:18，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。\n由于客户机不知道它请求的地址是否分配成功，也不知道它所连接的新网络的网络前缀，所以它不得不使用这些广播地址。\nDHCPNAK 附近的DHCP服务器会收到客户机的DHCPREQUEST消息，由于连接到了新网络，172.16.1.34不在当前网络中，所以当前的DHCP服务器无法给小明的笔记本分配其请求的IP地址（172.16.1.34）。因此服务器会发送一个DHCPNAK消息，拒绝客户机的请求。\nOp为2代表这是一个DHCP应答；\nxid与之前的DHCPREQUEST消息中的一样，代表这是对该DHCPREQUEST消息的应答；\n选项中指明了DHCP消息类型为DHCPNAK、DHCP服务器标识符10.0.0.1、以及一个表示错误类型的文本字符串“wrong address”。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为67，目的端口号填写为68；\n">
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\n">
 <title>DHCP Protocol</title>
 
 <link rel='canonical' href='https://bitdove.github.io/posts/dhcp-protocol/'>
 
 <link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="DHCP Protocol">
-<meta property='og:description' content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\nDHCP的主要作用是集中的管理、分配IP地址，使网络环境中的主机动态的获得IP地址、子网掩码、默认网关、DNS服务器地址等信息，并能够提升IP地址的使用率。\nDHCP采用客户端/服务器模型。客户端主机的IP地址等配置信息的动态分配任务由其自身发起，当DHCP服务器接收到来自客户端主机申请地址的信息时，才会向客户端主机发送相关的地址配置等信息，以实现客户端主机地址信息的动态配置。\nDHCP位于五层网络模型中的应用层，其传输层采用UDP协议。客户端端口号为68，服务器端口号为67。\nDHCP服务器可提供三种地址分配：自动分配、动态分配、手动分配。三者区别在于地址分配是否基于客户端的身份以及该地址是否可撤销或变更。我们只关注动态分配。\n动态分配：客户端从服务器的地址池中获得一个可撤销的IP地址。\n地址池和租用期 动态分配中，DHCP客户端请求分配一个IP地址时，DHCP服务器从其地址池中选择一个地址作为响应。\n地址池：专门为DHCP用途而分配的一个连续的IP地址范围。\n租用期：分配给客户端的IP地址只在一段特定时间内有效，这段时间称为租用期。\n租用期是可以延长的，即客户端可以续约。\nDHCP消息格式 Op：标识消息是请求消息（1）还是应答消息（2）； HW类型：硬件类型，基于ARP使用的值，对于以太网，该值为1； HW长度：存放硬件（MAC）地址的长度，对于以太网MAC地址，该值为6； 跳步数：保存消息传输过程中的中继次数。消息发送方将该值设置为0，并在每次中继时递增； 事务ID：由客户机选择的随机数，服务器将它复制到响应中，用于将请求和应答匹配起来； 秒数：由客户机设置，它是第一次尝试申请或重新申请地址经过的秒数； 标志：该字段16位中，目前只用了1位，称为广播标志。客户机可以在请求中设置该位，表示它们不能或不愿处理单播IP数据报，但可处理广播数据报（例如，客户机还没有IP地址的情况）。通过设置该位通知服务器和中继代理，广播地址可用于响应中。 ciaddr：如果客户机已有IP地址的话，客户机在发送请求时将自己的IP地址放在此处； yiaddr：由服务器填写，服务器把想要分配给客户机的IP地址放在此处； siaddr：一般是DHCP服务器的IP地址； giaddr：如果需要跨子网进行DHCP地址分配（DHCP服务器与客户机不在同一子网），则在此处填写经过的路由器的IP地址； chaddr：客户机的硬件地址，即MAC地址； sname：并非每次都要填写，表示服务器名； file：并非每次都要填写，表示启动文件路径； 选项：常见选项见下。 常见选项：\n子网掩码（1）、路由器地址（3）、域名服务器（6）、请求的IP地址（50）、地址租用期（51）、DHCP消息类型（53）、租约更新时间（58）、租约重新绑定时间（59）。\n选项可由DHCP选项字段携带，也可由sname和file字段携带，由sname和file携带时，称为选项超载。\nDHCP消息类型（53）是1字节长的选项，其常见可能值如下：\nDHCPDISCOVER（1）、DHCPOFFER（2）、DHCPREQUEST（3）、DHCPACK（5）、DHCPNAK（6）\nDHCP协议操作 接下来我将通过一个实际场景描述DHCP协议的基本工作流程。\n场景：小明在学校有一台笔记本电脑，一直用着学校的校园网。现在五一假期了，小明打算把笔记本带回家连上家里的网络打英雄联盟。我们假定校园网与小明家的网不是同一子网。\n小明的笔记本由校园网切换到家里的网络，其IP地址等配置信息自然要发生变化，这个过程就是由DHCP来完成的，下面来看一下DHCP如何完成这项工作。\n注：链路层以以太网为例。假定小明笔记本MAC地址为00:13:02:20:b9:18。\nDHCPREQUEST 由于小明的笔记本电脑会记住之前在校园网中使用的IP地址（假定为172.16.1.34），所以在连接到新的网络（小明家的网络）时，它首先通过一个DHCPREQUEST消息尝试继续使用该地址。该DHCPREQUEST消息封装如下图所示。\nOp为1代表这是一个DHCP请求；\nhtype为1代表是以太网；\nhlen为6是MAC地址的长度（以字节为单位）；\n跳步数设置为0，每次中继时递增；\n事务ID为随机生成，这里假定为0xdb23247d；\n标志为0x8000，即最高位为1，意味着该消息的响应应该通过广播地址发送。\nciaddr、yiaddr、siaddr、giaddr均为0.0.0.0；\nchaddr为小明笔记本的MAC地址00:13:02:20:b9:18；\nsname、file未指定；\n选项中指明了DHCP消息类型为DHCPREQUEST以及请求的IP地址为172.16.1.34。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为68，目的端口号填写为67；\n然后该UDP用户数据报被封装到IP数据报中，其中IP头部中的源IP地址填写为0.0.0.0，目的IP地址填写为广播地址255.255.255.255；\n然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:13:02:20:b9:18，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。\n由于客户机不知道它请求的地址是否分配成功，也不知道它所连接的新网络的网络前缀，所以它不得不使用这些广播地址。\nDHCPNAK 附近的DHCP服务器会收到客户机的DHCPREQUEST消息，由于连接到了新网络，172.16.1.34不在当前网络中，所以当前的DHCP服务器无法给小明的笔记本分配其请求的IP地址（172.16.1.34）。因此服务器会发送一个DHCPNAK消息，拒绝客户机的请求。\nOp为2代表这是一个DHCP应答；\nxid与之前的DHCPREQUEST消息中的一样，代表这是对该DHCPREQUEST消息的应答；\n选项中指明了DHCP消息类型为DHCPNAK、DHCP服务器标识符10.0.0.1、以及一个表示错误类型的文本字符串“wrong address”。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为67，目的端口号填写为68；\n">
+<meta property='og:description' content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/dhcp-protocol/'>
-<meta property='og:site_name' content='bitdove&#39;s Blog'>
+<meta property='og:site_name' content='留白'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='DHCP' /><meta property='article:tag' content='TCP/IP' /><meta property='article:published_time' content='2021-05-05T00:37:38-07:00'/><meta property='article:modified_time' content='2021-05-05T00:37:38-07:00'/>
 <meta name="twitter:title" content="DHCP Protocol">
-<meta name="twitter:description" content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\nDHCP的主要作用是集中的管理、分配IP地址，使网络环境中的主机动态的获得IP地址、子网掩码、默认网关、DNS服务器地址等信息，并能够提升IP地址的使用率。\nDHCP采用客户端/服务器模型。客户端主机的IP地址等配置信息的动态分配任务由其自身发起，当DHCP服务器接收到来自客户端主机申请地址的信息时，才会向客户端主机发送相关的地址配置等信息，以实现客户端主机地址信息的动态配置。\nDHCP位于五层网络模型中的应用层，其传输层采用UDP协议。客户端端口号为68，服务器端口号为67。\nDHCP服务器可提供三种地址分配：自动分配、动态分配、手动分配。三者区别在于地址分配是否基于客户端的身份以及该地址是否可撤销或变更。我们只关注动态分配。\n动态分配：客户端从服务器的地址池中获得一个可撤销的IP地址。\n地址池和租用期 动态分配中，DHCP客户端请求分配一个IP地址时，DHCP服务器从其地址池中选择一个地址作为响应。\n地址池：专门为DHCP用途而分配的一个连续的IP地址范围。\n租用期：分配给客户端的IP地址只在一段特定时间内有效，这段时间称为租用期。\n租用期是可以延长的，即客户端可以续约。\nDHCP消息格式 Op：标识消息是请求消息（1）还是应答消息（2）； HW类型：硬件类型，基于ARP使用的值，对于以太网，该值为1； HW长度：存放硬件（MAC）地址的长度，对于以太网MAC地址，该值为6； 跳步数：保存消息传输过程中的中继次数。消息发送方将该值设置为0，并在每次中继时递增； 事务ID：由客户机选择的随机数，服务器将它复制到响应中，用于将请求和应答匹配起来； 秒数：由客户机设置，它是第一次尝试申请或重新申请地址经过的秒数； 标志：该字段16位中，目前只用了1位，称为广播标志。客户机可以在请求中设置该位，表示它们不能或不愿处理单播IP数据报，但可处理广播数据报（例如，客户机还没有IP地址的情况）。通过设置该位通知服务器和中继代理，广播地址可用于响应中。 ciaddr：如果客户机已有IP地址的话，客户机在发送请求时将自己的IP地址放在此处； yiaddr：由服务器填写，服务器把想要分配给客户机的IP地址放在此处； siaddr：一般是DHCP服务器的IP地址； giaddr：如果需要跨子网进行DHCP地址分配（DHCP服务器与客户机不在同一子网），则在此处填写经过的路由器的IP地址； chaddr：客户机的硬件地址，即MAC地址； sname：并非每次都要填写，表示服务器名； file：并非每次都要填写，表示启动文件路径； 选项：常见选项见下。 常见选项：\n子网掩码（1）、路由器地址（3）、域名服务器（6）、请求的IP地址（50）、地址租用期（51）、DHCP消息类型（53）、租约更新时间（58）、租约重新绑定时间（59）。\n选项可由DHCP选项字段携带，也可由sname和file字段携带，由sname和file携带时，称为选项超载。\nDHCP消息类型（53）是1字节长的选项，其常见可能值如下：\nDHCPDISCOVER（1）、DHCPOFFER（2）、DHCPREQUEST（3）、DHCPACK（5）、DHCPNAK（6）\nDHCP协议操作 接下来我将通过一个实际场景描述DHCP协议的基本工作流程。\n场景：小明在学校有一台笔记本电脑，一直用着学校的校园网。现在五一假期了，小明打算把笔记本带回家连上家里的网络打英雄联盟。我们假定校园网与小明家的网不是同一子网。\n小明的笔记本由校园网切换到家里的网络，其IP地址等配置信息自然要发生变化，这个过程就是由DHCP来完成的，下面来看一下DHCP如何完成这项工作。\n注：链路层以以太网为例。假定小明笔记本MAC地址为00:13:02:20:b9:18。\nDHCPREQUEST 由于小明的笔记本电脑会记住之前在校园网中使用的IP地址（假定为172.16.1.34），所以在连接到新的网络（小明家的网络）时，它首先通过一个DHCPREQUEST消息尝试继续使用该地址。该DHCPREQUEST消息封装如下图所示。\nOp为1代表这是一个DHCP请求；\nhtype为1代表是以太网；\nhlen为6是MAC地址的长度（以字节为单位）；\n跳步数设置为0，每次中继时递增；\n事务ID为随机生成，这里假定为0xdb23247d；\n标志为0x8000，即最高位为1，意味着该消息的响应应该通过广播地址发送。\nciaddr、yiaddr、siaddr、giaddr均为0.0.0.0；\nchaddr为小明笔记本的MAC地址00:13:02:20:b9:18；\nsname、file未指定；\n选项中指明了DHCP消息类型为DHCPREQUEST以及请求的IP地址为172.16.1.34。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为68，目的端口号填写为67；\n然后该UDP用户数据报被封装到IP数据报中，其中IP头部中的源IP地址填写为0.0.0.0，目的IP地址填写为广播地址255.255.255.255；\n然后该IP数据报被封装到以太网帧中，其中以太网帧中源MAC地址填为00:13:02:20:b9:18，目的MAC地址填为ff:ff:ff:ff:ff:ff:ff。\n由于客户机不知道它请求的地址是否分配成功，也不知道它所连接的新网络的网络前缀，所以它不得不使用这些广播地址。\nDHCPNAK 附近的DHCP服务器会收到客户机的DHCPREQUEST消息，由于连接到了新网络，172.16.1.34不在当前网络中，所以当前的DHCP服务器无法给小明的笔记本分配其请求的IP地址（172.16.1.34）。因此服务器会发送一个DHCPNAK消息，拒绝客户机的请求。\nOp为2代表这是一个DHCP应答；\nxid与之前的DHCPREQUEST消息中的一样，代表这是对该DHCPREQUEST消息的应答；\n选项中指明了DHCP消息类型为DHCPNAK、DHCP服务器标识符10.0.0.1、以及一个表示错误类型的文本字符串“wrong address”。\n该DHCP消息被封装在UDP用户数据报中，其中UDP头部中源端口号填写为67，目的端口号填写为68；\n">
+<meta name="twitter:description" content="何为DHCP？ DHCP是Dynamic Host Configuration Protocol的首字母缩写，即动态主机配置协议。\n任何连接到的互联网的主机或路由器都需要IP地址、子网掩码、默认网关、DNS服务器等配置信息，当一个网络中的主机或路由器数量很多时，采用人工来配置这些信息显然是低效且易错的。DHCP就是解决这个问题的。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -42,7 +42,7 @@
     })();
 </script>
 <div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="Toggle Menu">
+    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
         <span class="hamburger-box">
             <span class="hamburger-inner"></span>
         </span>
@@ -69,7 +69,7 @@
         
         
         <div class="site-meta">
-            <h1 class="site-name"><a href="/">bitdove&#39;s Blog</a></h1>
+            <h1 class="site-name"><a href="/">留白</a></h1>
             <h2 class="site-description"></h2>
         </div>
     </header><ol class="menu-social">
@@ -113,13 +113,13 @@
 
 
                 
-                <span>Home</span>
+                <span>首页</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/about/' >
+            <a href='/%E5%85%B3%E4%BA%8E/' >
                 
                 
                 
@@ -132,7 +132,7 @@
 
 
                 
-                <span>About</span>
+                <span>关于</span>
             </a>
         </li>
         
@@ -152,7 +152,7 @@
 
 
                 
-                <span>Archives</span>
+                <span>归档</span>
             </a>
         </li>
         
@@ -171,13 +171,13 @@
 
 
                 
-                <span>Search</span>
+                <span>搜索</span>
             </a>
         </li>
         
         
         <li >
-            <a href='/links/' >
+            <a href='/%E9%93%BE%E6%8E%A5/' >
                 
                 
                 
@@ -190,7 +190,7 @@
 
 
                 
-                <span>Links</span>
+                <span>链接</span>
             </a>
         </li>
         
@@ -215,7 +215,7 @@
 
 
 
-                        <span>Dark Mode</span>
+                        <span></span>
                     </li>
                 
             </ol>
@@ -240,7 +240,7 @@
 
 
         </div>
-        <h2 class="widget-title section-title">Table of contents</h2>
+        <h2 class="widget-title section-title"></h2>
         
         <div class="widget--toc">
             <nav id="TableOfContents">
@@ -329,7 +329,7 @@
 
 
                 <time class="article-time--reading">
-                    1 minute read
+                    
                 </time>
             </div>
         
@@ -638,7 +638,7 @@
     
 
 <aside class="related-content--wrapper">
-    <h2 class="section-title">Related content</h2>
+    <h2 class="section-title"></h2>
     <div class="related-content">
         <div class="flex article-list--tile">
             
@@ -726,8 +726,8 @@
     </section>
     
     <section class="powerby">
-        Built with <a href="https://gohugo.io/" target="_blank" rel="noopener">Hugo</a> <br />
-        Theme <b><a href="https://github.com/CaiJimmy/hugo-theme-stack" target="_blank" rel="noopener" data-version="3.27.0">Stack</a></b> designed by <a href="https://jimmycai.com" target="_blank" rel="noopener">Jimmy</a>
+         <br />
+        
     </section>
 </footer>
 

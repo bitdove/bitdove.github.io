@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
-        <title>Pages on bitdove&#39;s Blog</title>
+        <title>Pages on 留白</title>
         <link>https://bitdove.github.io/page/</link>
-        <description>Recent content in Pages on bitdove&#39;s Blog</description>
+        <description>Recent content in Pages on 留白</description>
         <generator>Hugo -- gohugo.io</generator>
-        <language>zh-cn</language>
+        <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
         <lastBuildDate>Tue, 17 Sep 2024 00:00:00 +0000</lastBuildDate><atom:link href="https://bitdove.github.io/page/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>About</title>
-        <link>https://bitdove.github.io/about/</link>
+        <title>关于</title>
+        <link>https://bitdove.github.io/%E5%85%B3%E4%BA%8E/</link>
         <pubDate>Tue, 17 Sep 2024 00:00:00 +0000</pubDate>
         
-        <guid>https://bitdove.github.io/about/</guid>
+        <guid>https://bitdove.github.io/%E5%85%B3%E4%BA%8E/</guid>
         <description>&lt;p&gt;Hello, everyone.
 I&amp;rsquo;m bitdove on GitHub. Welcome to my blog.&lt;/p&gt;
 &lt;h2 id=&#34;gpg-public-key--fingerprint&#34;&gt;GPG Public Key &amp;amp; Fingerprint
@@ -87,7 +87,7 @@ I&amp;rsquo;m bitdove on GitHub. Welcome to my blog.&lt;/p&gt;
 </description>
         </item>
         <item>
-        <title>Archives</title>
+        <title>归档</title>
         <link>https://bitdove.github.io/archives/</link>
         <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
         
@@ -95,15 +95,15 @@ I&amp;rsquo;m bitdove on GitHub. Welcome to my blog.&lt;/p&gt;
         <description></description>
         </item>
         <item>
-        <title>Links</title>
-        <link>https://bitdove.github.io/links/</link>
+        <title>链接</title>
+        <link>https://bitdove.github.io/%E9%93%BE%E6%8E%A5/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
-        <guid>https://bitdove.github.io/links/</guid>
+        <guid>https://bitdove.github.io/%E9%93%BE%E6%8E%A5/</guid>
         <description></description>
         </item>
         <item>
-        <title>Search</title>
+        <title>搜索</title>
         <link>https://bitdove.github.io/search/</link>
         <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
         
