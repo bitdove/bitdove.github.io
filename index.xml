@@ -7,7 +7,200 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
-        <lastBuildDate>Tue, 24 Jun 2025 00:42:32 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Mon, 30 Jun 2025 21:01:32 -0700</lastBuildDate><atom:link href="https://bitdove.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>【摩托保养】五本NWG150更换机油齿轮油</title>
+        <link>https://bitdove.github.io/posts/ride/</link>
+        <pubDate>Mon, 30 Jun 2025 21:01:32 -0700</pubDate>
+        
+        <guid>https://bitdove.github.io/posts/ride/</guid>
+        <description>&lt;h1 id=&#34;思路&#34;&gt;思路
+&lt;/h1&gt;&lt;p&gt;NWG150总里程已经达到了3000km，可以进行二保了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;首保是1050公里时自己做的，换了&lt;strong&gt;港版灰壳超凡喜力5W-30&lt;/strong&gt;机油和&lt;strong&gt;速马力80W-90&lt;/strong&gt;齿轮油。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;二保打算继续使用汽车机油，这次换完使用周期主要在七八九月份，是夏天，天气炎热，所以打算提高一个标号，采用港版灰壳超凡喜力5W-40机油，618活动80两瓶。一瓶机油是1L，NWG150的机油加注量是800ml，齿轮油加注量是120ml。综合各种信息，齿轮油加注同标号机油，应该是没有问题的。PCX的日版说明书对齿轮油的要求和机油的要求一模一样，所以我这次打算直接拿剩的机油当齿轮油换上。至于剩的80ml，就留着用来下次换机油的时候，旧油放完冲刷机油箱。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;踏板车加注汽车机油，除要注意“xW-x0”这个标号外，还要注意所选择机油带有“&lt;strong&gt;A3/B4&lt;/strong&gt;”标志。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;材料准备&#34;&gt;材料准备
+&lt;/h1&gt;&lt;h2 id=&#34;车辆&#34;&gt;车辆
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;五羊本田NWG150 2025款
+&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/NWG150.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;机油齿轮油&#34;&gt;机油/齿轮油
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;港版壳牌全合成机油 灰壳超凡喜力5W-40 API/SP A3/B4级 1L；
+&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/%E7%81%B0%E5%A3%B35w40.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;工具&#34;&gt;工具
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;12-14-17mm三叉套筒扳手。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;其中，12mm用于拆机油放油螺栓，17mm用于机油拆滤网螺栓。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/12-14-17%E6%89%B3%E6%89%8B.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;12mm烟斗套筒&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于拆齿轮油放油螺栓和注油螺栓。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/12mm%E7%83%9F%E6%96%97%E5%A5%97%E7%AD%92%E6%89%B3%E6%89%8B.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;螺栓记号笔&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于标记螺栓位置，确保更换机油后螺栓拧到位，既不过松也不过禁。可用扭力扳手替代。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/%E8%9E%BA%E4%B8%9D%E5%AE%9A%E4%BD%8D%E8%AE%B0%E5%8F%B7%E7%AC%94.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;化油器清洗剂&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于清洗拆下来的各种螺栓、垫片和机油滤网。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;接油盆&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于收集更换下来的废机油。废机油是重度污染物，需无害化处理。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/%E6%8E%A5%E6%B2%B9%E7%9B%86.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;加油漏斗&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于加注机油。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/%E5%8A%A0%E6%B2%B9%E6%BC%8F%E6%96%97.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;注射器&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;用于加注齿轮油。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/nwg150/%E6%B3%A8%E5%B0%84%E5%99%A8.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;抹布、卫生纸、一次性手套等清洁用具&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;保养过程&#34;&gt;保养过程
+&lt;/h1&gt;&lt;h2 id=&#34;0-螺栓定位&#34;&gt;0. 螺栓定位
+&lt;/h2&gt;&lt;p&gt;用油漆笔在&lt;strong&gt;机油放油螺栓&lt;/strong&gt;、&lt;strong&gt;机油滤网螺栓&lt;/strong&gt;、&lt;strong&gt;齿轮油放油螺栓&lt;/strong&gt;、&lt;strong&gt;齿轮油加注螺栓&lt;/strong&gt;处进行标记。&lt;/p&gt;
+&lt;h2 id=&#34;1-热车&#34;&gt;1. 热车
+&lt;/h2&gt;&lt;p&gt;找一平坦地面，怠速运行3~5分钟（或水温表升至中间刻度）。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;热车可提升机油流动性，排放更彻底；冷车状态杂质沉到油底壳底部，直接放油可能排不干净。热车后杂质随油流动，换油更彻底；&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;2-放齿轮油&#34;&gt;2. 放齿轮油
+&lt;/h2&gt;&lt;p&gt;用&lt;strong&gt;12mm烟斗套筒扳手&lt;/strong&gt;逆时针拧开&lt;strong&gt;齿轮油注油螺栓&lt;/strong&gt;；&lt;/p&gt;
+&lt;p&gt;放好&lt;strong&gt;接油盆&lt;/strong&gt;，用&lt;strong&gt;12mm烟斗套筒扳手&lt;/strong&gt;逆时针拧开&lt;strong&gt;齿轮油放油螺栓&lt;/strong&gt;，齿轮油开始流出。&lt;/p&gt;
+&lt;p&gt;可以适度倾斜车辆，让油放得更彻底。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ol&gt;
+&lt;li&gt;拆下来的螺栓和垫片要保管好，并且不要弄混。&lt;/li&gt;
+&lt;li&gt;先拆注油螺栓，再拆放油螺栓。这样放得更快。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;3-放机油与加齿轮油&#34;&gt;3. 放机油与加齿轮油
+&lt;/h2&gt;&lt;p&gt;放完齿轮油，熄火应已有2-3分钟，机油已回流油底壳，可以开始放机油。&lt;/p&gt;
+&lt;p&gt;同理，为放油更快，先把&lt;strong&gt;机油尺&lt;/strong&gt;拧下来；
+放置好接油盆，用&lt;strong&gt;17mm套筒&lt;/strong&gt;把&lt;strong&gt;机油滤网螺栓&lt;/strong&gt;拧下来；
+再用&lt;strong&gt;12mm烟斗套筒扳手&lt;/strong&gt;把&lt;strong&gt;机油放油螺栓&lt;/strong&gt;拧下来，机油开始流出。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;一定要注意：
+放油螺栓往&lt;strong&gt;车头方向&lt;/strong&gt;拧是松开。
+放油螺栓有个垫片，千万不要弄丢，如果找不到，在废机油里捞一捞。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;在放机油期间，可以去加齿轮油。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用&lt;strong&gt;化油器清洗剂&lt;/strong&gt;清洗&lt;strong&gt;齿轮油放油螺栓&lt;/strong&gt;、&lt;strong&gt;齿轮油注油螺栓&lt;/strong&gt;及垫片，并擦拭放油及注油螺丝孔周边金属面；&lt;/li&gt;
+&lt;li&gt;将&lt;strong&gt;齿轮油放油螺栓&lt;/strong&gt;原样安装回去，用扳手将其拧至标线重合。&lt;/li&gt;
+&lt;li&gt;用&lt;strong&gt;注射器&lt;/strong&gt;抽取120ml新机油，从齿轮油注油口注入；&lt;/li&gt;
+&lt;li&gt;将&lt;strong&gt;齿轮油注油螺栓&lt;/strong&gt;原样安装回去，用扳手将其拧至标线重合。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;4-加机油&#34;&gt;4. 加机油
+&lt;/h2&gt;&lt;p&gt;此时机油应该差不多放完了，可以适当晃动车辆，使机油放得更彻底。若新机油有剩余，可将剩余部分通过&lt;strong&gt;加油漏斗&lt;/strong&gt;注入，冲刷一下，彻底排放干净后，开始加机油。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;用&lt;strong&gt;化油器清洗剂&lt;/strong&gt;清洗&lt;strong&gt;机油滤网&lt;/strong&gt;、&lt;strong&gt;机油滤网螺栓&lt;/strong&gt;及垫片，擦干后原样安装回去，用扳手将其拧至标线重合。&lt;/li&gt;
+&lt;li&gt;用&lt;strong&gt;化油器清洗剂&lt;/strong&gt;清洗&lt;strong&gt;机油放油螺栓&lt;/strong&gt;及垫片，擦干后原样安装回去，用扳手将其拧至标线重合。&lt;/li&gt;
+&lt;li&gt;用&lt;strong&gt;化油器清洗剂&lt;/strong&gt;清洗机油标尺，擦干备用；&lt;/li&gt;
+&lt;li&gt;用&lt;strong&gt;加油漏斗&lt;/strong&gt;注入800ml机油；&lt;/li&gt;
+&lt;li&gt;用机油尺检测机油量，油位应在中等偏上位置，多抽少添。机油量正常后装回机油尺并拧紧。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;5-善后&#34;&gt;5. 善后
+&lt;/h2&gt;&lt;p&gt;至此，机油和齿轮油已经全部更换完毕。接下来的工作是收拾战场，把保养过程产生的垃圾适当处理，工具清洁并收纳。&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>【摩旅】小踏板日行千里——千岛湖环湖之旅</title>
+        <link>https://bitdove.github.io/posts/ride/</link>
+        <pubDate>Thu, 26 Jun 2025 20:17:32 -0700</pubDate>
+        
+        <guid>https://bitdove.github.io/posts/ride/</guid>
+        <description>&lt;h1 id=&#34;千岛湖小环线&#34;&gt;千岛湖小环线
+&lt;/h1&gt;</description>
+        </item>
+        <item>
         <title>【TODO】我的极简生活观</title>
         <link>https://bitdove.github.io/posts/minimalism/</link>
         <pubDate>Tue, 24 Jun 2025 00:42:32 -0700</pubDate>
