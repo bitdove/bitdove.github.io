@@ -16,14 +16,6 @@
         <description></description>
         </item>
         <item>
-        <title>摩旅</title>
-        <link>https://bitdove.github.io/tags/%E6%91%A9%E6%97%85/</link>
-        <pubDate>Thu, 26 Jun 2025 20:17:32 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/%E6%91%A9%E6%97%85/</guid>
-        <description></description>
-        </item>
-        <item>
         <title>极简主义</title>
         <link>https://bitdove.github.io/tags/%E6%9E%81%E7%AE%80%E4%B8%BB%E4%B9%89/</link>
         <pubDate>Tue, 24 Jun 2025 00:42:32 -0700</pubDate>
@@ -48,35 +40,11 @@
         <description></description>
         </item>
         <item>
-        <title>STL</title>
-        <link>https://bitdove.github.io/tags/stl/</link>
-        <pubDate>Wed, 30 Oct 2024 23:34:54 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/stl/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Linux</title>
-        <link>https://bitdove.github.io/tags/linux/</link>
+        <title>操作系统</title>
+        <link>https://bitdove.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</link>
         <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
         
-        <guid>https://bitdove.github.io/tags/linux/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>OS</title>
-        <link>https://bitdove.github.io/tags/os/</link>
-        <pubDate>Sun, 13 Oct 2024 02:27:51 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/os/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>CMake</title>
-        <link>https://bitdove.github.io/tags/cmake/</link>
-        <pubDate>Sun, 13 Oct 2024 02:26:15 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/cmake/</guid>
+        <guid>https://bitdove.github.io/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/</guid>
         <description></description>
         </item>
         <item>
@@ -88,59 +56,11 @@
         <description></description>
         </item>
         <item>
-        <title>VPS</title>
-        <link>https://bitdove.github.io/tags/vps/</link>
-        <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/vps/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>XRay</title>
-        <link>https://bitdove.github.io/tags/xray/</link>
-        <pubDate>Wed, 18 Sep 2024 16:26:03 +0800</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/xray/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>ARP</title>
-        <link>https://bitdove.github.io/tags/arp/</link>
+        <title>计算机网络</title>
+        <link>https://bitdove.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</link>
         <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
         
-        <guid>https://bitdove.github.io/tags/arp/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>TCP/IP</title>
-        <link>https://bitdove.github.io/tags/tcp/ip/</link>
-        <pubDate>Thu, 09 May 2024 00:28:32 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/tcp/ip/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Socket</title>
-        <link>https://bitdove.github.io/tags/socket/</link>
-        <pubDate>Fri, 14 May 2021 06:44:38 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/socket/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>DNS</title>
-        <link>https://bitdove.github.io/tags/dns/</link>
-        <pubDate>Thu, 06 May 2021 00:44:05 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/dns/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>DHCP</title>
-        <link>https://bitdove.github.io/tags/dhcp/</link>
-        <pubDate>Wed, 05 May 2021 00:37:38 -0700</pubDate>
-        
-        <guid>https://bitdove.github.io/tags/dhcp/</guid>
+        <guid>https://bitdove.github.io/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/</guid>
         <description></description>
         </item>
         
