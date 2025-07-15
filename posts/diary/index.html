@@ -2,16 +2,16 @@
 <html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="从掌控冲动开始，逐步建立更专注、有掌控感的生活。">
-<title>【NoFap】</title>
+<title>【日记】2025年7月</title>
 
-<link rel='canonical' href='https://bitdove.github.io/posts/nofap/'>
+<link rel='canonical' href='https://bitdove.github.io/posts/diary/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【NoFap】">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【日记】2025年7月">
 <meta property='og:description' content="从掌控冲动开始，逐步建立更专注、有掌控感的生活。">
-<meta property='og:url' content='https://bitdove.github.io/posts/nofap/'>
+<meta property='og:url' content='https://bitdove.github.io/posts/diary/'>
 <meta property='og:site_name' content='缘起性空'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Recovery' /><meta property='article:published_time' content='2025-06-24T00:42:32-07:00'/><meta property='article:modified_time' content='2025-06-24T00:42:32-07:00'/>
-<meta name="twitter:title" content="【NoFap】">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Recovery' /><meta property='article:published_time' content='2025-07-14T01:30:32-07:00'/><meta property='article:modified_time' content='2025-07-14T01:30:32-07:00'/>
+<meta name="twitter:title" content="【日记】2025年7月">
 <meta name="twitter:description" content="从掌控冲动开始，逐步建立更专注、有掌控感的生活。">
     <link rel="shortcut icon" href="/favicon.ico" />
 
@@ -247,6 +247,16 @@
   <ol>
     <li><a href="#7月总览">7月总览</a></li>
     <li><a href="#20250714">2025/07/14</a></li>
+    <li><a href="#20250715">2025/07/15</a>
+      <ol>
+        <li><a href="#工作碎碎念">工作碎碎念</a>
+          <ol>
+            <li><a href="#llm优化">LLM优化</a></li>
+            <li><a href="#树莓派硬件身份识别">树莓派硬件身份识别</a></li>
+          </ol>
+        </li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -274,7 +284,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/nofap/">【NoFap】</a>
+            <a href="/posts/diary/">【日记】2025年7月</a>
         </h2>
     
         
@@ -300,7 +310,7 @@
   <path d="M3 11h16" />
   <path d="M18 16.496v1.504l1 1" />
 </svg>
-                <time class="article-time--published">2025/06/24</time>
+                <time class="article-time--published">2025/07/14</time>
             </div>
         
 
@@ -391,7 +401,155 @@
 <li>禁止下载Telegram。</li>
 </ol>
 </blockquote>
-
+<p>**罪恶！**想到今天已然是失败的一天，多来一次也无妨，所以晚上回家之后，一个人在家居然又来了一次！</p>
+<h1 id="20250715">2025/07/15
+</h1><p>今天7：50出门，8：30吃完早饭坐在工位上了。今天专注力恢复计划的第一天，我一定能够可以的！</p>
+<ul>
+<li>
+<p>9:00 - 10:00 制定公考备考计划。</p>
+</li>
+<li>
+<p>10:00 - 12:30 学习论文《Towards Efficient Generative Large Language Model Serving: A Survey from Algorithms to Systems》。</p>
+</li>
+<li>
+<p>12:30 - 14:00 午间休息。</p>
+</li>
+<li>
+<p>14:00 - 17:00 思考树莓派硬件身份识别工作如何开展。</p>
+</li>
+</ul>
+<h2 id="工作碎碎念">工作碎碎念
+</h2><h3 id="llm优化">LLM优化
+</h3><p>如果要将LLM应用于自动驾驶，那么LLM的输入是道路场景，包含丰富的信息，即大输入；而输出可能只有一两个token，如刹车、右转等，即小输出。在大输入-小输出的场景，对LLM的优化是否应该聚焦在prefilling阶段呢？
+prefiiling和decoding的主要区别是prefilling阶段没有KV cache，所以如果要针对prefilling阶段进行优化，那么与KVcache相关的优化思路的优先级就低一些？</p>
+<p>decoding阶段的优化在小输出场景收益有限：优化如KV Cache管理、加速单个token生成的技术（如更好的解码算法、小kernel优化）当然也有价值，但由于生成阶段本身耗时占比小，其优化的绝对收益远不如优化Prefilling显著。在小输出场景下，投入过多精力在生成阶段优化上性价比不高。</p>
+<h3 id="树莓派硬件身份识别">树莓派硬件身份识别
+</h3><p>我们在空闲、中负载、高负载三种情境下采集涵盖CPU、GPU、内存、SD卡的指标，如温度、时钟周期、执行时间差异等，每次采样的数据组成一条特征向量，每台树莓派采几百条，然后针对每台设备训练一个小模型，学习对应设备的特有运行轨迹。这样再从新设备上采集参数序列，输入到所有设备的模型，理论上，误差应该是全部过大，判定为“未知设备”</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span><span class="lnt">54
+</span><span class="lnt">55
+</span><span class="lnt">56
+</span><span class="lnt">57
+</span><span class="lnt">58
+</span><span class="lnt">59
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">subprocess</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">time</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">csv</span>
+</span></span><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">os</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">capture_output</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_temp</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">run_cmd</span><span class="p">(</span><span class="s2">&#34;vcgencmd measure_temp&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">2</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_freq</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">run_cmd</span><span class="p">(</span><span class="s2">&#34;vcgencmd measure_clock arm&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_volts</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">run_cmd</span><span class="p">(</span><span class="s2">&#34;vcgencmd measure_volts core&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">][:</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_mem_free</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">mem</span> <span class="o">=</span> <span class="n">run_cmd</span><span class="p">(</span><span class="s2">&#34;free -m&#34;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">int</span><span class="p">(</span><span class="n">mem</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>  <span class="c1"># free memory in MB</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_sd_write_speed</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">cmd</span> <span class="o">=</span> <span class="s2">&#34;dd if=/dev/zero of=tempfile bs=1M count=10 oflag=dsync status=none &amp;&amp; sync&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">run_cmd</span><span class="p">(</span><span class="n">cmd</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">elapsed</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span>
+</span></span><span class="line"><span class="cl">    <span class="n">os</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="s2">&#34;tempfile&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="n">elapsed</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>  <span class="c1"># MB/s</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">get_exec_time</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="n">_</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="o">**</span><span class="mf">0.5</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">)]</span>  <span class="c1"># dummy workload</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="nb">round</span><span class="p">((</span><span class="n">time</span><span class="o">.</span><span class="n">perf_counter</span><span class="p">()</span> <span class="o">-</span> <span class="n">start</span><span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>  <span class="c1"># ms</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">collect_once</span><span class="p">():</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_temp</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_freq</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_volts</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_mem_free</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_sd_write_speed</span><span class="p">(),</span>
+</span></span><span class="line"><span class="cl">        <span class="n">get_exec_time</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">main_loop</span><span class="p">(</span><span class="n">outfile</span><span class="o">=</span><span class="s2">&#34;metrics.csv&#34;</span><span class="p">,</span> <span class="n">interval</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">rounds</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">outfile</span><span class="p">,</span> <span class="s2">&#34;w&#34;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s2">&#34;&#34;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">([</span><span class="s2">&#34;timestamp&#34;</span><span class="p">,</span> <span class="s2">&#34;cpu_temp&#34;</span><span class="p">,</span> <span class="s2">&#34;cpu_freq&#34;</span><span class="p">,</span> <span class="s2">&#34;cpu_volts&#34;</span><span class="p">,</span> <span class="s2">&#34;mem_free_MB&#34;</span><span class="p">,</span> <span class="s2">&#34;sd_speed_MBps&#34;</span><span class="p">,</span> <span class="s2">&#34;exec_time_ms&#34;</span><span class="p">])</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">rounds</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">row</span> <span class="o">=</span> <span class="n">collect_once</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">            <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="nb">print</span><span class="p">(</span><span class="s2">&#34;Collected:&#34;</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="n">interval</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&#34;__main__&#34;</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="n">main_loop</span><span class="p">()</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 
