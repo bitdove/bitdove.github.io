@@ -7,21 +7,13 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
-        <lastBuildDate>Mon, 28 Jul 2025 14:05:44 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/categories/%E4%BD%99%E7%99%BD%E4%B8%8E%E6%98%9F%E5%B0%98/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>【日记】2025年8月</title>
-        <link>https://bitdove.github.io/posts/%E6%97%A5%E8%AE%B02025%E5%B9%B48%E6%9C%88/</link>
-        <pubDate>Mon, 28 Jul 2025 14:05:44 +0800</pubDate>
-        
-        <guid>https://bitdove.github.io/posts/%E6%97%A5%E8%AE%B02025%E5%B9%B48%E6%9C%88/</guid>
-        <description></description>
-        </item>
-        <item>
+        <lastBuildDate>Mon, 14 Jul 2025 16:30:32 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/categories/%E4%BD%99%E7%99%BD%E4%B8%8E%E6%98%9F%E5%B0%98/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>【日记】2025年7月</title>
-        <link>https://bitdove.github.io/posts/diary202507/</link>
-        <pubDate>Mon, 14 Jul 2025 01:30:32 -0700</pubDate>
+        <link>https://bitdove.github.io/posts/%E6%97%A5%E8%AE%B02025%E5%B9%B47%E6%9C%88/</link>
+        <pubDate>Mon, 14 Jul 2025 16:30:32 +0800</pubDate>
         
-        <guid>https://bitdove.github.io/posts/diary202507/</guid>
-        <description>&lt;h1 id=&#34;7月总览&#34;&gt;7月总览
+        <guid>https://bitdove.github.io/posts/%E6%97%A5%E8%AE%B02025%E5%B9%B47%E6%9C%88/</guid>
+        <description>&lt;h1 id=&#34;2025年7月日历&#34;&gt;2025年7月日历
 &lt;/h1&gt;&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -72,7 +64,7 @@
           &lt;td style=&#34;text-align: center&#34;&gt;27&lt;/td&gt;
       &lt;/tr&gt;
       &lt;tr&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;28&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;28 ×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;29&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;30&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;31&lt;/td&gt;
@@ -412,7 +404,18 @@ prefiiling和decoding的主要区别是prefilling阶段没有KV cache，所以�
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;h1 id=&#34;20250728&#34;&gt;2025/07/28
-&lt;/h1&gt;</description>
+&lt;/h1&gt;&lt;p&gt;隔6天破功，继续加油！&lt;/p&gt;
+&lt;p&gt;今天给HugoBlog加了一个实用的小脚本&lt;code&gt;newpost.sh&lt;/code&gt;，有了它，创建新文章就简单多了。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;根据创建时间自动填入date字段；&lt;/li&gt;
+&lt;li&gt;提供选择菜单，将新文件放在哪个位置，并根据目录在新文件里填充categories字段；&lt;/li&gt;
+&lt;li&gt;自定义输入文件名，并根据文件名自动填充title字段；&lt;/li&gt;
+&lt;li&gt;如果文件名中包含“日记”二字，则自动在md文件插入当月的日历。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我的HugoBlog已经彻底不需要在本地安装Hugo，更换电脑只需要在新设备上配置好Git和GitHub，把HugoBlog这个仓库clone下来，用&lt;code&gt;newpost.sh&lt;/code&gt;脚本进行创作，用&lt;code&gt;deploy.sh&lt;/code&gt;一键发布即可。&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
         </item>
         
     </channel>
