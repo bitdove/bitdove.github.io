@@ -67,7 +67,7 @@
           &lt;td style=&#34;text-align: center&#34;&gt;28 ×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;29&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;30&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;31&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;31×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;&lt;/td&gt;
@@ -438,6 +438,20 @@ prefiiling和decoding的主要区别是prefilling阶段没有KV cache，所以�
 &lt;/div&gt;&lt;h1 id=&#34;20250731&#34;&gt;2025/07/31
 &lt;/h1&gt;&lt;h2 id=&#34;数字极简&#34;&gt;数字极简
 &lt;/h2&gt;&lt;p&gt;今天把手机上的YouTube和YouTube Music也卸载了，现在手机里没有任何娱乐类和信息流APP了。&lt;/p&gt;
+&lt;h2 id=&#34;破功-1&#34;&gt;破功！
+&lt;/h2&gt;&lt;p&gt;尽管我为屏蔽网络色情内容已经做了以下事情：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;xray规则添加了block geosite:category-porn；&lt;/li&gt;
+&lt;li&gt;Google Safe Search开启Filter模式；&lt;/li&gt;
+&lt;li&gt;卸载并注销Twitter、Telegram、Instagram等平台；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;但依旧不够全面，在Google搜索中仍能见到色情内容。接下来需要做：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不主动搜索色情关键字；&lt;/li&gt;
+&lt;li&gt;偶遇色情链接不点开；&lt;/li&gt;
+&lt;li&gt;发现疑似内容立刻关掉。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;继续加油！&lt;/p&gt;
 </description>
         </item>
         
