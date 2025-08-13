@@ -1,18 +1,18 @@
 <!DOCTYPE html>
 <html lang="zh" dir="ltr">
     <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
-<title>【Proxy】How to Build Proxy with XRay</title>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
+<title>【Proxy】How to Build Proxy with Xray</title>
 
 <link rel='canonical' href='https://bitdove.github.io/posts/how-to-build-proxy-with-xray/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【Proxy】How to Build Proxy with XRay">
-<meta property='og:description' content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【Proxy】How to Build Proxy with Xray">
+<meta property='og:description' content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
 <meta property='og:url' content='https://bitdove.github.io/posts/how-to-build-proxy-with-xray/'>
 <meta property='og:site_name' content='空山无我心自闲'>
 <meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Proxy' /><meta property='article:published_time' content='2024-09-18T16:26:03&#43;08:00'/><meta property='article:modified_time' content='2024-09-18T16:26:03&#43;08:00'/>
-<meta name="twitter:title" content="【Proxy】How to Build Proxy with XRay">
-<meta name="twitter:description" content="Preface As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.\n">
+<meta name="twitter:title" content="【Proxy】How to Build Proxy with Xray">
+<meta name="twitter:description" content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
     <link rel="shortcut icon" href="/favicon.ico" />
 
     </head>
@@ -247,7 +247,7 @@
         <li><a href="#install-fail2ban">Install Fail2Ban</a></li>
       </ol>
     </li>
-    <li><a href="#xray-installation-and-configuration">XRay installation and configuration</a>
+    <li><a href="#xray-installation-and-configuration">Xray installation and configuration</a>
       <ol>
         <li><a href="#install-xray">Install Xray</a></li>
         <li><a href="#config-xray">Config Xray</a></li>
@@ -282,7 +282,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/posts/how-to-build-proxy-with-xray/">【Proxy】How to Build Proxy with XRay</a>
+            <a href="/posts/how-to-build-proxy-with-xray/">【Proxy】How to Build Proxy with Xray</a>
         </h2>
     
         
@@ -320,7 +320,11 @@
     <section class="article-content">
     
     
-    <h1 id="preface">Preface
+    <blockquote>
+<p><strong>免责声明</strong>：
+本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。</p>
+</blockquote>
+<h1 id="preface">Preface
 </h1><p>As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.</p>
 <blockquote>
 <p>Technically speaking, VPN ≠ circumventing the Great Firewall. However, in mainland China, VPN has become synonymous with circumventing the Great Firewall, so I won’t go into details here.</p>
@@ -533,7 +537,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
@@ -635,7 +639,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Find the item <code>PasswordAuthentication</code>, uncomment it and change it to <code>no</code>, then save and exit.</p>
@@ -655,7 +659,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config.d/50-cloud-init.conf
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config.d/50-cloud-init.conf
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Similarly, uncomment the PasswordAuthentication option and change it to no, then save and exit.</p>
@@ -758,7 +762,7 @@
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">vim /etc/ssh/sshd_config
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Restart the sshd service for the changes to take effect.</p>
@@ -847,7 +851,7 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>At this point, the VPS security configuration has been completed. The next step is to actually build a proxy.</p>
-<h1 id="xray-installation-and-configuration">XRay installation and configuration
+<h1 id="xray-installation-and-configuration">Xray installation and configuration
 </h1><p>It is not recommended to use any third-party one-click scripts. Who knows if there is anything hidden in them? The official documentation is detailed enough and the installation and configuration are simple enough. For details of this part, please refer to <a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
     >Official Documentation</a>。</p>
 <h2 id="install-xray">Install Xray
@@ -998,8 +1002,8 @@
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ufw allow 12345/tcp comment <span class="s2">&#34;XRay&#34;</span>
-</span></span><span class="line"><span class="cl">sudo ufw allow 12345/udp comment <span class="s2">&#34;XRay&#34;</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ufw allow 12345/tcp comment <span class="s2">&#34;Xray&#34;</span>
+</span></span><span class="line"><span class="cl">sudo ufw allow 12345/udp comment <span class="s2">&#34;Xray&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/openport12345.png"
@@ -1025,15 +1029,15 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start XRay</span>
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start Xray</span>
 </span></span><span class="line"><span class="cl">sudo systemctl start xray
-</span></span><span class="line"><span class="cl"><span class="c1"># Set XRay to start at boot</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Set Xray to start at boot</span>
 </span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> xray
-</span></span><span class="line"><span class="cl"><span class="c1"># Check XRay status</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Check Xray status</span>
 </span></span><span class="line"><span class="cl">sudo systemctl status xray
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>When you see the green <code>active(running)</code> as shown in the figure below, it means that XRay has been successfully started and the server is configured.</p>
+</div><p>When you see the green <code>active(running)</code> as shown in the figure below, it means that Xray has been successfully started and the server is configured.</p>
 <p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/startxray.png"
 	
 	
@@ -1232,7 +1236,7 @@
 	
 ></p>
 <p>This way the VPS has an IPv6 address.</p>
-<p>Modify the XRay configuration file</p>
+<p>Modify the Xray configuration file</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1403,7 +1407,7 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>Restart XRay and confirm that Xray has run successfully.</p>
+</div><p>Restart Xray and confirm that Xray has run successfully.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
@@ -1470,6 +1474,19 @@
             
                 
 <article class="">
+    <a href="/posts/%E4%BB%A3%E7%90%86%E5%9C%A8%E4%B8%80%E5%8F%B0%E5%BA%9F%E5%BC%83vps%E4%B8%8A%E9%87%8D%E6%96%B0%E8%B5%B0%E4%B8%80%E9%81%8Dxray-core%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/">
+        
+        
+
+        <div class="article-details">
+            <h2 class="article-title">【代理】在一台废弃VPS上重新走一遍Xray-core代理配置流程</h2>
+        </div>
+    </a>
+</article>
+
+            
+                
+<article class="">
     <a href="/posts/xray-core-as-client/">
         
         
@@ -1515,19 +1532,6 @@
 
         <div class="article-details">
             <h2 class="article-title">【摩托保养】五羊本田NWG150更换机油齿轮油</h2>
-        </div>
-    </a>
-</article>
-
-            
-                
-<article class="">
-    <a href="/posts/ride-to-qiandaolake/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【摩旅】小踏板日行千里——千岛湖环湖之旅</h2>
         </div>
     </a>
 </article>
