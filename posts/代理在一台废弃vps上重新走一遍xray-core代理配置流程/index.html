@@ -406,6 +406,9 @@
 </div><p>这样就能正常安装后续需要的工具了。</p>
 </li>
 </ol>
+<blockquote>
+<p>本部分由ChatGPT生成，经本人验证，可以解决问题。</p>
+</blockquote>
 <h1 id="配置vps">配置VPS
 </h1><p>这里参考之前写过的文章<a class="link" href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#configuring-the-vps"  target="_blank" rel="noopener"
     >【Proxy】How to Build Proxy with XRay</a>，此处不再赘述。</p>
@@ -448,9 +451,11 @@
 	
 ></p>
 <h1 id="配置xray-core">配置Xray-core
-</h1><p>以下以VLESS-TCP-XTLS-Vision-REALITY为例</p>
+</h1><p>以下以<code>VLESS-TCP-XTLS-Vision-REALITY</code>为例。Xray官方也给出了各种配置示例，详情可以参考<a class="link" href="https://github.com/XTLS/Xray-examples"  target="_blank" rel="noopener"
+    >GitHub Xray-examples</a>。</p>
 <h2 id="生成uuid">生成uuid
-</h2><div class="highlight"><div class="chroma">
+</h2><p>生成一个<code>uuid</code>备用。</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span></code></pre></td>
@@ -468,9 +473,10 @@
 	
 	
 ></p>
-<ul>
-<li>6b22b0d8-4bcb-4c95-b8d8-1a3488d0f460</li>
-</ul>
+<p>本文使用以上图生成的<code>6b22b0d8-4bcb-4c95-b8d8-1a3488d0f460</code>。</p>
+<blockquote>
+<p>uuid相当于一个令牌(Token)，不要轻易示人，客户端需要配置此id才可使用此梯子。</p>
+</blockquote>
 <h2 id="生成x25519公私钥">生成x25519公私钥
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -490,10 +496,14 @@
 	
 	
 ></p>
+<p>本文使用上图生成的公私钥：</p>
 <ul>
 <li>Private key: YPus0-HqMBiQpiJ02hpnmJSodGRIhxG-tGlRjKoAV18</li>
 <li>Public key: CLQaGhx37ZpcLbNhl5JXRay-5hJwbg7wYQtIDS5R9mc</li>
 </ul>
+<blockquote>
+<p>私钥会写在Xray服务端的配置文件中，而公钥是需要使用此梯子的客户端需要配置的内容。</p>
+</blockquote>
 <h2 id="生成shortids">生成shortIds
 </h2><p>shortIds是一个客户端可用的shortId列表，服务端可用此来区分不同的客户端。自己造就好了。规则如下：</p>
 <ol>
@@ -501,14 +511,25 @@
 <li>长度是2的倍数；</li>
 <li>最大长度为16。</li>
 </ol>
-<ul>
-<li>7df26a3cb5</li>
-</ul>
+<p>本文使用<code>7df26a3cb5</code>。</p>
+<blockquote>
+<p>客户端需要填上shortIds中的其中之一才可使用该梯子。</p>
+</blockquote>
 <h2 id="warp解锁chatgpt客户端非必须">warp解锁ChatGPT客户端（非必须）
 </h2><p>如有需要，参考<a class="link" href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#warp-unlock-chatgpt-client"  target="_blank" rel="noopener"
     >Warp解锁ChatGPT客户端</a>。</p>
 <h2 id="修改xray配置文件">修改Xray配置文件
-</h2><div class="highlight"><div class="chroma">
+</h2><p>执行以下命令修改Xray配置文件：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
+</span></span></code></pre></td></tr></table>
+</div>
+</div><p>根据VPS的IP地址以及前述步骤生成的各种id、密钥等，本文使用以下配置文件：</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
@@ -668,8 +689,23 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h1 id="运行xray-core">运行Xray-core
-</h1><div class="highlight"><div class="chroma">
+</div><p>针对<code>VLESS-TCP-XTLS-Vision-REALITY</code>方案,以上配置文件需要注意以下内容：</p>
+<ol>
+<li><code>id</code>：之前通过<code>xray uuid</code>生成的内容；</li>
+<li><code>dest</code>：填一个地址，这就是所谓“reality偷域名”中偷的那个域名，后边加上443端口。上述以洛杉矶图书馆的域名(<code>lapl.org</code>)为例子，填<code>lapl.org:443</code>；</li>
+<li><code>serverNames</code>：填“偷”的域名，如<code>lapl.org</code>；</li>
+<li><code>privateKey</code>：之前通过<code>xray x25519</code>生成的<strong>私钥</strong>（<strong>PrivateKey</strong>）；</li>
+<li><code>shortIds</code>：之前编的shortIds，如<code>7df26a3cb5</code>;</li>
+<li>IP地址：IPv4地址填VPS的公网IPv4地址，IPv6地址填Warp虚拟出的IPv6地址。</li>
+</ol>
+<blockquote>
+<p>关于偷域名有一些讲究，最好是偷自己，其次是偷与VPS IP地址同段的网址或者VPS附近的大学、图书馆、政府网站等等。对被偷域名的要求是支持TLS1.3和H2。详情参考<a class="link" href="https://github.com/XTLS/REALITY"  target="_blank" rel="noopener"
+    >Xray官方解释</a>和<a class="link" href="https://github.com/XTLS/Xray-core/discussions/2256"  target="_blank" rel="noopener"
+    >REALITY作者在GitHub的回复</a>。</p>
+</blockquote>
+<h1 id="运行xray-core">运行Xray-core
+</h1><p>以下为<code>Xray-core</code>进程常用管理命令。</p>
+<div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
@@ -693,22 +729,87 @@
 </div>
 </div><h1 id="客户端配置">客户端配置
 </h1><h2 id="android">Android
-</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Android-config.jpg"
+</h2><p>安卓端目前比较好用的客户端是<a class="link" href="https://github.com/2dust/v2rayNG"  target="_blank" rel="noopener"
+    >V2RayNG</a>。</p>
+<p>以上述服务端配置为例，在V2RayNG中添加一个VLESS配置，内容如下图：</p>
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Android-config.jpg"
 	
 	
 	
 	loading="lazy"
 	
+		alt="V2RayNG"
+	
 	
 ></p>
+<p>需要注意：</p>
+<ol>
+<li><code>remarks</code>：给该梯子起个名字；</li>
+<li><code>address</code>：梯子的IPv4地址；</li>
+<li><code>port</code>：Reality使用443端口；</li>
+<li><code>id</code>：即服务端的<code>id</code>；</li>
+<li><code>flow</code>：与服务端一致，<code>xtls-rprx-vision</code>；</li>
+<li><code>encryption</code>：none；</li>
+<li><code>network</code>：tcp；</li>
+<li><code>TLS</code>：选reality；</li>
+<li><code>SNI</code>：即偷的域名；</li>
+<li><code>PublicKey</code>：即服务端<code>xray x25519</code>生成的公私钥中的<strong>公钥</strong>（<strong>PublicKey</strong>）。</li>
+<li><code>ShortId</code>：即服务端<code>ShortIds</code>中的一个。</li>
+</ol>
 <h2 id="windows">Windows
-</h2><h2 id="macos">macOS
-</h2><h1 id="reference">Reference
+</h2><p>Windows目前比较好用的客户端为<a class="link" href="https://github.com/2dust/v2rayN"  target="_blank" rel="noopener"
+    >V2RayN</a>。与安卓端的V2RayNG同作者。</p>
+<blockquote>
+<p>其实V2RayN是一个跨平台GUI客户端，支持Windows、Linux、macOS。</p>
+</blockquote>
+<p>以上述服务端配置为例，在V2RayN中添加一个VLESS配置，内容如下图：</p>
+<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Windows-V2RayN.png"
+	
+	
+	
+	loading="lazy"
+	
+		alt="V2RayN"
+	
+	
+></p>
+<p>需要注意的内容同安卓端一样。</p>
+<ol>
+<li><code>别名</code>：给该梯子起个名字；</li>
+<li><code>地址</code>：梯子的IPv4地址；</li>
+<li><code>端口</code>：Reality使用443端口；</li>
+<li><code>用户ID</code>：即服务端的<code>id</code>；</li>
+<li><code>流控</code>：与服务端一致，<code>xtls-rprx-vision</code>；</li>
+<li><code>加密方式</code>：none；</li>
+<li><code>传输协议</code>：tcp；</li>
+<li><code>传输层安全</code>：选reality；</li>
+<li><code>SNI</code>：即偷的域名；</li>
+<li><code>PublicKey</code>：即服务端<code>xray x25519</code>生成的公私钥中的<strong>公钥</strong>（<strong>PublicKey</strong>）。</li>
+<li><code>ShortId</code>：即服务端<code>ShortIds</code>中的一个。</li>
+</ol>
+<h2 id="macos">macOS
+</h2><p>macOS端目前本人没有使用GUI客户端，而是直接命令行跑的<code>Xray-core</code>，详情可参考<a class="link" href="https://bitdove.github.io/posts/xray-core-as-client/"  target="_blank" rel="noopener"
+    >You Don&rsquo;t Need a GUI Proxy Client</a>。</p>
+<h1 id="reference">Reference
 </h1><ol>
 <li><a class="link" href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#configuring-the-vps"  target="_blank" rel="noopener"
     >【Proxy】How to Build Proxy with XRay</a></li>
 <li><a class="link" href="https://github.com/XTLS"  target="_blank" rel="noopener"
-    >Project X Community官方GitHub</a></li>
+    >Xray官方GitHub</a></li>
+<li><a class="link" href="https://github.com/XTLS/Xray-install"  target="_blank" rel="noopener"
+    >Xray官方安装教程</a></li>
+<li><a class="link" href="https://github.com/XTLS/Xray-examples"  target="_blank" rel="noopener"
+    >Xray官方配置示例</a></li>
+<li><a class="link" href="https://github.com/XTLS/REALITY"  target="_blank" rel="noopener"
+    >Xray官方解释</a></li>
+<li><a class="link" href="https://github.com/XTLS/Xray-core/discussions/2256"  target="_blank" rel="noopener"
+    >REALITY作者在GitHub的回复</a></li>
+<li><a class="link" href="https://github.com/2dust/v2rayNG"  target="_blank" rel="noopener"
+    >V2RayNG官方GitHub</a></li>
+<li><a class="link" href="https://github.com/2dust/v2rayN"  target="_blank" rel="noopener"
+    >V2RayN官方GitHub</a></li>
+<li><a class="link" href="https://bitdove.github.io/posts/xray-core-as-client/"  target="_blank" rel="noopener"
+    >You Don&rsquo;t Need a GUI Proxy Client</a></li>
 </ol>
 
 </section>

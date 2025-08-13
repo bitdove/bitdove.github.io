@@ -105,6 +105,9 @@
 &lt;/div&gt;&lt;p&gt;这样就能正常安装后续需要的工具了。&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本部分由ChatGPT生成，经本人验证，可以解决问题。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h1 id=&#34;配置vps&#34;&gt;配置VPS
 &lt;/h1&gt;&lt;p&gt;这里参考之前写过的文章&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#configuring-the-vps&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;【Proxy】How to Build Proxy with XRay&lt;/a&gt;，此处不再赘述。&lt;/p&gt;
@@ -147,9 +150,11 @@
 	
 &gt;&lt;/p&gt;
 &lt;h1 id=&#34;配置xray-core&#34;&gt;配置Xray-core
-&lt;/h1&gt;&lt;p&gt;以下以VLESS-TCP-XTLS-Vision-REALITY为例&lt;/p&gt;
+&lt;/h1&gt;&lt;p&gt;以下以&lt;code&gt;VLESS-TCP-XTLS-Vision-REALITY&lt;/code&gt;为例。Xray官方也给出了各种配置示例，详情可以参考&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/Xray-examples&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GitHub Xray-examples&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;生成uuid&#34;&gt;生成uuid
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h2&gt;&lt;p&gt;生成一个&lt;code&gt;uuid&lt;/code&gt;备用。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -167,9 +172,10 @@
 	
 	
 &gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;6b22b0d8-4bcb-4c95-b8d8-1a3488d0f460&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;本文使用以上图生成的&lt;code&gt;6b22b0d8-4bcb-4c95-b8d8-1a3488d0f460&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;uuid相当于一个令牌(Token)，不要轻易示人，客户端需要配置此id才可使用此梯子。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;生成x25519公私钥&#34;&gt;生成x25519公私钥
 &lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
@@ -189,10 +195,14 @@
 	
 	
 &gt;&lt;/p&gt;
+&lt;p&gt;本文使用上图生成的公私钥：&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Private key: YPus0-HqMBiQpiJ02hpnmJSodGRIhxG-tGlRjKoAV18&lt;/li&gt;
 &lt;li&gt;Public key: CLQaGhx37ZpcLbNhl5JXRay-5hJwbg7wYQtIDS5R9mc&lt;/li&gt;
 &lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;私钥会写在Xray服务端的配置文件中，而公钥是需要使用此梯子的客户端需要配置的内容。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;生成shortids&#34;&gt;生成shortIds
 &lt;/h2&gt;&lt;p&gt;shortIds是一个客户端可用的shortId列表，服务端可用此来区分不同的客户端。自己造就好了。规则如下：&lt;/p&gt;
 &lt;ol&gt;
@@ -200,14 +210,25 @@
 &lt;li&gt;长度是2的倍数；&lt;/li&gt;
 &lt;li&gt;最大长度为16。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;ul&gt;
-&lt;li&gt;7df26a3cb5&lt;/li&gt;
-&lt;/ul&gt;
+&lt;p&gt;本文使用&lt;code&gt;7df26a3cb5&lt;/code&gt;。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;客户端需要填上shortIds中的其中之一才可使用该梯子。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;warp解锁chatgpt客户端非必须&#34;&gt;warp解锁ChatGPT客户端（非必须）
 &lt;/h2&gt;&lt;p&gt;如有需要，参考&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#warp-unlock-chatgpt-client&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Warp解锁ChatGPT客户端&lt;/a&gt;。&lt;/p&gt;
 &lt;h2 id=&#34;修改xray配置文件&#34;&gt;修改Xray配置文件
-&lt;/h2&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/h2&gt;&lt;p&gt;执行以下命令修改Xray配置文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;sudo nano /usr/local/etc/xray/config.json
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;根据VPS的IP地址以及前述步骤生成的各种id、密钥等，本文使用以下配置文件：&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
@@ -367,8 +388,23 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;}&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h1 id=&#34;运行xray-core&#34;&gt;运行Xray-core
-&lt;/h1&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;/div&gt;&lt;p&gt;针对&lt;code&gt;VLESS-TCP-XTLS-Vision-REALITY&lt;/code&gt;方案,以上配置文件需要注意以下内容：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;id&lt;/code&gt;：之前通过&lt;code&gt;xray uuid&lt;/code&gt;生成的内容；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;dest&lt;/code&gt;：填一个地址，这就是所谓“reality偷域名”中偷的那个域名，后边加上443端口。上述以洛杉矶图书馆的域名(&lt;code&gt;lapl.org&lt;/code&gt;)为例子，填&lt;code&gt;lapl.org:443&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;serverNames&lt;/code&gt;：填“偷”的域名，如&lt;code&gt;lapl.org&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;privateKey&lt;/code&gt;：之前通过&lt;code&gt;xray x25519&lt;/code&gt;生成的&lt;strong&gt;私钥&lt;/strong&gt;（&lt;strong&gt;PrivateKey&lt;/strong&gt;）；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;shortIds&lt;/code&gt;：之前编的shortIds，如&lt;code&gt;7df26a3cb5&lt;/code&gt;;&lt;/li&gt;
+&lt;li&gt;IP地址：IPv4地址填VPS的公网IPv4地址，IPv6地址填Warp虚拟出的IPv6地址。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;关于偷域名有一些讲究，最好是偷自己，其次是偷与VPS IP地址同段的网址或者VPS附近的大学、图书馆、政府网站等等。对被偷域名的要求是支持TLS1.3和H2。详情参考&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/REALITY&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Xray官方解释&lt;/a&gt;和&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/Xray-core/discussions/2256&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;REALITY作者在GitHub的回复&lt;/a&gt;。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;运行xray-core&#34;&gt;运行Xray-core
+&lt;/h1&gt;&lt;p&gt;以下为&lt;code&gt;Xray-core&lt;/code&gt;进程常用管理命令。&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
@@ -392,22 +428,87 @@
 &lt;/div&gt;
 &lt;/div&gt;&lt;h1 id=&#34;客户端配置&#34;&gt;客户端配置
 &lt;/h1&gt;&lt;h2 id=&#34;android&#34;&gt;Android
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Android-config.jpg&#34;
+&lt;/h2&gt;&lt;p&gt;安卓端目前比较好用的客户端是&lt;a class=&#34;link&#34; href=&#34;https://github.com/2dust/v2rayNG&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;V2RayNG&lt;/a&gt;。&lt;/p&gt;
+&lt;p&gt;以上述服务端配置为例，在V2RayNG中添加一个VLESS配置，内容如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Android-config.jpg&#34;
 	
 	
 	
 	loading=&#34;lazy&#34;
 	
+		alt=&#34;V2RayNG&#34;
+	
 	
 &gt;&lt;/p&gt;
+&lt;p&gt;需要注意：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;remarks&lt;/code&gt;：给该梯子起个名字；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;address&lt;/code&gt;：梯子的IPv4地址；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;port&lt;/code&gt;：Reality使用443端口；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;id&lt;/code&gt;：即服务端的&lt;code&gt;id&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;flow&lt;/code&gt;：与服务端一致，&lt;code&gt;xtls-rprx-vision&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;encryption&lt;/code&gt;：none；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;network&lt;/code&gt;：tcp；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;TLS&lt;/code&gt;：选reality；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SNI&lt;/code&gt;：即偷的域名；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PublicKey&lt;/code&gt;：即服务端&lt;code&gt;xray x25519&lt;/code&gt;生成的公私钥中的&lt;strong&gt;公钥&lt;/strong&gt;（&lt;strong&gt;PublicKey&lt;/strong&gt;）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ShortId&lt;/code&gt;：即服务端&lt;code&gt;ShortIds&lt;/code&gt;中的一个。&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h2 id=&#34;windows&#34;&gt;Windows
-&lt;/h2&gt;&lt;h2 id=&#34;macos&#34;&gt;macOS
-&lt;/h2&gt;&lt;h1 id=&#34;reference&#34;&gt;Reference
+&lt;/h2&gt;&lt;p&gt;Windows目前比较好用的客户端为&lt;a class=&#34;link&#34; href=&#34;https://github.com/2dust/v2rayN&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;V2RayN&lt;/a&gt;。与安卓端的V2RayNG同作者。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;其实V2RayN是一个跨平台GUI客户端，支持Windows、Linux、macOS。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;以上述服务端配置为例，在V2RayN中添加一个VLESS配置，内容如下图：&lt;/p&gt;
+&lt;p&gt;&lt;img src=&#34;https://raw.githubusercontent.com/bitdove/PicsBed_1/main/re-config-VPS/Windows-V2RayN.png&#34;
+	
+	
+	
+	loading=&#34;lazy&#34;
+	
+		alt=&#34;V2RayN&#34;
+	
+	
+&gt;&lt;/p&gt;
+&lt;p&gt;需要注意的内容同安卓端一样。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;别名&lt;/code&gt;：给该梯子起个名字；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;地址&lt;/code&gt;：梯子的IPv4地址；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;端口&lt;/code&gt;：Reality使用443端口；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;用户ID&lt;/code&gt;：即服务端的&lt;code&gt;id&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;流控&lt;/code&gt;：与服务端一致，&lt;code&gt;xtls-rprx-vision&lt;/code&gt;；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;加密方式&lt;/code&gt;：none；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;传输协议&lt;/code&gt;：tcp；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;传输层安全&lt;/code&gt;：选reality；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;SNI&lt;/code&gt;：即偷的域名；&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;PublicKey&lt;/code&gt;：即服务端&lt;code&gt;xray x25519&lt;/code&gt;生成的公私钥中的&lt;strong&gt;公钥&lt;/strong&gt;（&lt;strong&gt;PublicKey&lt;/strong&gt;）。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;ShortId&lt;/code&gt;：即服务端&lt;code&gt;ShortIds&lt;/code&gt;中的一个。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;macos&#34;&gt;macOS
+&lt;/h2&gt;&lt;p&gt;macOS端目前本人没有使用GUI客户端，而是直接命令行跑的&lt;code&gt;Xray-core&lt;/code&gt;，详情可参考&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/xray-core-as-client/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;You Don&amp;rsquo;t Need a GUI Proxy Client&lt;/a&gt;。&lt;/p&gt;
+&lt;h1 id=&#34;reference&#34;&gt;Reference
 &lt;/h1&gt;&lt;ol&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#configuring-the-vps&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;【Proxy】How to Build Proxy with XRay&lt;/a&gt;&lt;/li&gt;
 &lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
-    &gt;Project X Community官方GitHub&lt;/a&gt;&lt;/li&gt;
+    &gt;Xray官方GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/Xray-install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Xray官方安装教程&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/Xray-examples&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Xray官方配置示例&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/REALITY&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Xray官方解释&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/XTLS/Xray-core/discussions/2256&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;REALITY作者在GitHub的回复&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/2dust/v2rayNG&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;V2RayNG官方GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://github.com/2dust/v2rayN&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;V2RayN官方GitHub&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/xray-core-as-client/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;You Don&amp;rsquo;t Need a GUI Proxy Client&lt;/a&gt;&lt;/li&gt;
 &lt;/ol&gt;
 </description>
         </item>
