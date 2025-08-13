@@ -17,7 +17,6 @@
 &lt;p&gt;&lt;strong&gt;免责声明&lt;/strong&gt;：
 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;6mjoW6R0ExR74Ff9lK&lt;/p&gt;
 &lt;h1 id=&#34;前言&#34;&gt;前言
 &lt;/h1&gt;&lt;blockquote&gt;
 &lt;p&gt;这是一台即将到期的RackNerd的VPS，我已不打算续费。在它生命即将走到尽头之际，我打算用它重新配置一遍Xray-core，并作此记录，以留后用。&lt;/p&gt;
@@ -783,6 +782,8 @@
 &lt;h1 id=&#34;20250813&#34;&gt;2025/08/13
 &lt;/h1&gt;&lt;h2 id=&#34;xray-core&#34;&gt;xray-core
 &lt;/h2&gt;&lt;p&gt;早上想在xray服务端屏蔽一个特定网址，不知道为什么，配置之后无效，还是可以访问。&lt;/p&gt;
+&lt;p&gt;今天写了&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/%E4%BB%A3%E7%90%86%E5%9C%A8%E4%B8%80%E5%8F%B0%E5%BA%9F%E5%BC%83vps%E4%B8%8A%E9%87%8D%E6%96%B0%E8%B5%B0%E4%B8%80%E9%81%8Dxray-core%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;【代理】在一台废弃VPS上重新走一遍Xray-core代理配置流程&lt;/a&gt;这篇博客。&lt;/p&gt;
 </description>
         </item>
         <item>
