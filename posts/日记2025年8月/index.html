@@ -267,6 +267,7 @@
     <li><a href="#20250814">2025/08/14</a>
       <ol>
         <li><a href="#中国城市之我见">中国城市之我见</a></li>
+        <li><a href="#warp突然不可用">Warp突然不可用</a></li>
       </ol>
     </li>
   </ol>
@@ -658,7 +659,125 @@
 <li>闽台港澳新青藏</li>
 </ul>
 </blockquote>
-
+<h2 id="warp突然不可用">Warp突然不可用
+</h2><blockquote>
+<p>由于chatGPT对VPS厂商的IP进行封锁，无法使用ChatGPT客户端（网页端是可以正常使用的），所以之前为了用chatGPT APP，使用了Warp虚拟出一个IPv6地址，然后在Xray配置文件里配置访问chatGPT的流量走这个网卡。</p>
+</blockquote>
+<p>下午突然发现访问不了chatGPT了。登上VPS后台一看，warp虚拟出的IPv6网卡没有了，尝试重新获取也一直失败。索性直接把warp卸载了，无非就是用不了chatGPT客户端嘛。网页端能用就行，手机端直接用Gemini了，现在大模型多的是，不用上赶着OpenAI。</p>
+<p>所以现在服务端配置如下：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span><span class="lnt">23
+</span><span class="lnt">24
+</span><span class="lnt">25
+</span><span class="lnt">26
+</span><span class="lnt">27
+</span><span class="lnt">28
+</span><span class="lnt">29
+</span><span class="lnt">30
+</span><span class="lnt">31
+</span><span class="lnt">32
+</span><span class="lnt">33
+</span><span class="lnt">34
+</span><span class="lnt">35
+</span><span class="lnt">36
+</span><span class="lnt">37
+</span><span class="lnt">38
+</span><span class="lnt">39
+</span><span class="lnt">40
+</span><span class="lnt">41
+</span><span class="lnt">42
+</span><span class="lnt">43
+</span><span class="lnt">44
+</span><span class="lnt">45
+</span><span class="lnt">46
+</span><span class="lnt">47
+</span><span class="lnt">48
+</span><span class="lnt">49
+</span><span class="lnt">50
+</span><span class="lnt">51
+</span><span class="lnt">52
+</span><span class="lnt">53
+</span></code></pre></td>
+<td class="lntd">
+<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;debug&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">443</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vless&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;***********************&#34;</span><span class="p">,</span> <span class="c1">// run `xray uuid` to generate
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="nt">&#34;flow&#34;</span><span class="p">:</span> <span class="s2">&#34;xtls-rprx-vision&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">                <span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;decryption&#34;</span><span class="p">:</span> <span class="s2">&#34;none&#34;</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;tcp&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;security&#34;</span><span class="p">:</span> <span class="s2">&#34;reality&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;realitySettings&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;dest&#34;</span><span class="p">:</span> <span class="s2">&#34;lapl.org:443&#34;</span><span class="p">,</span> <span class="c1">// A website that support TLS1.3 and h2. You can also use `1.1.1.1:443` as dest
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nt">&#34;serverNames&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                        <span class="s2">&#34;lapl.org&#34;</span>        <span class="c1">// A server name in the cert of dest site. If you use `1.1.1.1:443` as dest, then you can leave `serverNames` empty, it is a possible ways to bypass Iran&#39;s internet speed restrictions.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">                    <span class="nt">&#34;privateKey&#34;</span><span class="p">:</span> <span class="s2">&#34;****************************&#34;</span><span class="p">,</span> <span class="c1">// run `xray x25519` to generate. Public and private keys need to be corresponding.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="nt">&#34;shortIds&#34;</span><span class="p">:</span> <span class="p">[</span> <span class="c1">// Required, list of shortIds available to clients, can be used to distinguish different clients
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                        <span class="s2">&#34;****************&#34;</span> <span class="c1">// If this item exists, client shortId can be empty. 0 to f, length is a multiple of 2, maximum length is 16
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>                    <span class="p">]</span>
+</span></span><span class="line"><span class="cl">                <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            <span class="p">},</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;sniffing&#34;</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;enabled&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;destOverride&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;http&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;tls&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;quic&#34;</span>
+</span></span><span class="line"><span class="cl">                <span class="p">],</span>
+</span></span><span class="line"><span class="cl">                <span class="nt">&#34;routeOnly&#34;</span><span class="p">:</span> <span class="kc">true</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">],</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">                <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;direct&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                        <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span>  <span class="c1">// Main Outgoing Protocol
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">},</span>
+</span></span><span class="line"><span class="cl">        <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;blackhole&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span>
+</span></span><span class="line"><span class="cl">        <span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></td></tr></table>
+</div>
+</div>
 </section>
 
 

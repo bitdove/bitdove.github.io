@@ -236,7 +236,6 @@
         <li><a href="#生成uuid">生成uuid</a></li>
         <li><a href="#生成x25519公私钥">生成x25519公私钥</a></li>
         <li><a href="#生成shortids">生成shortIds</a></li>
-        <li><a href="#warp解锁chatgpt客户端非必须">warp解锁ChatGPT客户端（非必须）</a></li>
         <li><a href="#修改xray配置文件">修改Xray配置文件</a></li>
       </ol>
     </li>
@@ -514,9 +513,6 @@
 <blockquote>
 <p>客户端需要填上shortIds中的其中之一才可使用该梯子。</p>
 </blockquote>
-<h2 id="warp解锁chatgpt客户端非必须">warp解锁ChatGPT客户端（非必须）
-</h2><p>如有需要，参考<a class="link" href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#warp-unlock-chatgpt-client"  target="_blank" rel="noopener"
-    >Warp解锁ChatGPT客户端</a>。</p>
 <h2 id="修改xray配置文件">修改Xray配置文件
 </h2><p>执行以下命令修改Xray配置文件：</p>
 <div class="highlight"><div class="chroma">
@@ -527,7 +523,7 @@
 <pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p>根据VPS的IP地址以及前述步骤生成的各种id、密钥等，本文使用以下配置文件：</p>
+</div><p>根据VPS的IP地址以及前述步骤生成的各种id、密钥等，本文使用以下配置文件（未使用warp解锁chatGPT客户端）：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre tabindex="0" class="chroma"><code><span class="lnt"> 1
@@ -583,30 +579,6 @@
 </span><span class="lnt">51
 </span><span class="lnt">52
 </span><span class="lnt">53
-</span><span class="lnt">54
-</span><span class="lnt">55
-</span><span class="lnt">56
-</span><span class="lnt">57
-</span><span class="lnt">58
-</span><span class="lnt">59
-</span><span class="lnt">60
-</span><span class="lnt">61
-</span><span class="lnt">62
-</span><span class="lnt">63
-</span><span class="lnt">64
-</span><span class="lnt">65
-</span><span class="lnt">66
-</span><span class="lnt">67
-</span><span class="lnt">68
-</span><span class="lnt">69
-</span><span class="lnt">70
-</span><span class="lnt">71
-</span><span class="lnt">72
-</span><span class="lnt">73
-</span><span class="lnt">74
-</span><span class="lnt">75
-</span><span class="lnt">76
-</span><span class="lnt">77
 </span></code></pre></td>
 <td class="lntd">
 <pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="p">{</span>
@@ -653,38 +625,14 @@
 </span></span><span class="line"><span class="cl">    <span class="p">],</span>
 </span></span><span class="line"><span class="cl">    <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv4&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">},</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;107.174.252.50&#34;</span> <span class="c1">// VPS public IPv4 address
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">},</span>
-</span></span><span class="line"><span class="cl">        <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;warp&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv6&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">},</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;2606:4700:110:811a:3242:f665:c1af:b909&#34;</span> <span class="c1">// warp network card IPv6 address
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;direct&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span>  <span class="c1">// Main Outgoing Protocol
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">},</span>
 </span></span><span class="line"><span class="cl">        <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">            <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;blackhole&#34;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="p">],</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;routing&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;rules&#34;</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">            <span class="p">{</span>
-</span></span><span class="line"><span class="cl">                <span class="nt">&#34;domain&#34;</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;geosite:openai&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;geosite:bing&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                    <span class="s2">&#34;geosite:reddit&#34;</span>
-</span></span><span class="line"><span class="cl">                <span class="p">],</span>
-</span></span><span class="line"><span class="cl">                <span class="nt">&#34;outboundTag&#34;</span><span class="p">:</span> <span class="s2">&#34;warp&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">                <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;field&#34;</span>
-</span></span><span class="line"><span class="cl">            <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="p">]</span>
-</span></span><span class="line"><span class="cl">    <span class="p">}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></td></tr></table>
 </div>
@@ -698,9 +646,13 @@
 <li>IP地址：IPv4地址填VPS的公网IPv4地址，IPv6地址填Warp虚拟出的IPv6地址。</li>
 </ol>
 <blockquote>
-<p>关于偷域名有一些讲究，最好是偷自己，其次是偷与VPS IP地址同段的网址或者VPS附近的大学、图书馆、政府网站等等。对被偷域名的要求是支持TLS1.3和H2。详情参考<a class="link" href="https://github.com/XTLS/REALITY"  target="_blank" rel="noopener"
+<ol>
+<li>关于偷域名有一些讲究，最好是偷自己，其次是偷与VPS IP地址同段的网址或者VPS附近的大学、图书馆、政府网站等等。对被偷域名的要求是支持TLS1.3和H2。详情参考<a class="link" href="https://github.com/XTLS/REALITY"  target="_blank" rel="noopener"
     >Xray官方解释</a>和<a class="link" href="https://github.com/XTLS/Xray-core/discussions/2256"  target="_blank" rel="noopener"
-    >REALITY作者在GitHub的回复</a>。</p>
+    >REALITY作者在GitHub的回复</a>。</li>
+<li>warp解锁ChatGPT客户端参考<a class="link" href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/#warp-unlock-chatgpt-client"  target="_blank" rel="noopener"
+    >Warp解锁ChatGPT客户端</a>。</li>
+</ol>
 </blockquote>
 <h1 id="运行xray-core">运行Xray-core
 </h1><p>以下为<code>Xray-core</code>进程常用管理命令。</p>
