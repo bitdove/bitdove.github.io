@@ -784,6 +784,63 @@
 &lt;/h2&gt;&lt;p&gt;早上想在xray服务端屏蔽一个特定网址，不知道为什么，配置之后无效，还是可以访问。&lt;/p&gt;
 &lt;p&gt;今天写了&lt;a class=&#34;link&#34; href=&#34;https://bitdove.github.io/posts/%E4%BB%A3%E7%90%86%E5%9C%A8%E4%B8%80%E5%8F%B0%E5%BA%9F%E5%BC%83vps%E4%B8%8A%E9%87%8D%E6%96%B0%E8%B5%B0%E4%B8%80%E9%81%8Dxray-core%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;【代理】在一台废弃VPS上重新走一遍Xray-core代理配置流程&lt;/a&gt;这篇博客。&lt;/p&gt;
+&lt;h1 id=&#34;20250814&#34;&gt;2025/08/14
+&lt;/h1&gt;&lt;h2 id=&#34;中国城市之我见&#34;&gt;中国城市之我见
+&lt;/h2&gt;&lt;p&gt;不知何时起，各种各样的城市排名充斥在网络上，而且很多排名的分级方式已经不满足于传统的“一二三线”，而是不断往上拔高，出现了类似“中杯、大杯、超大杯”这种夸张的命名方式。超一线、强一线、弱一线、新一线、准一线，只要定语够多，大家都是一线。我的观点，就用一二三线排，以下是我个人的看法。&lt;/p&gt;
+&lt;p&gt;首先按一级行政区盘点各省主要城市：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;晋 - 山西：太原&lt;/li&gt;
+&lt;li&gt;冀 - 河北：石家庄&lt;/li&gt;
+&lt;li&gt;鲁 - 山东：济南、青岛&lt;/li&gt;
+&lt;li&gt;豫 - 河南：郑州&lt;/li&gt;
+&lt;li&gt;黑 - 黑龙江：哈尔滨&lt;/li&gt;
+&lt;li&gt;吉 - 吉林：长春&lt;/li&gt;
+&lt;li&gt;辽 - 辽宁：沈阳、大连&lt;/li&gt;
+&lt;li&gt;京 - 北京：北京&lt;/li&gt;
+&lt;li&gt;津 - 天津：天津&lt;/li&gt;
+&lt;li&gt;内蒙- 内蒙古：呼和浩特&lt;/li&gt;
+&lt;li&gt;陕 - 陕西：西安&lt;/li&gt;
+&lt;li&gt;甘 - 甘肃：兰州&lt;/li&gt;
+&lt;li&gt;宁 - 宁夏：银川&lt;/li&gt;
+&lt;li&gt;江 - 江苏：南京、苏州、无锡&lt;/li&gt;
+&lt;li&gt;浙 - 浙江：杭州、宁波&lt;/li&gt;
+&lt;li&gt;沪 - 上海：上海&lt;/li&gt;
+&lt;li&gt;皖 - 安徽：合肥&lt;/li&gt;
+&lt;li&gt;鄂 - 湖北：武汉&lt;/li&gt;
+&lt;li&gt;湘 - 湖南：长沙&lt;/li&gt;
+&lt;li&gt;赣 - 江西：南昌&lt;/li&gt;
+&lt;li&gt;云 - 云南：昆明&lt;/li&gt;
+&lt;li&gt;贵 - 贵州：贵阳&lt;/li&gt;
+&lt;li&gt;川 - 四川：成都&lt;/li&gt;
+&lt;li&gt;渝 - 重庆：重庆&lt;/li&gt;
+&lt;li&gt;粤 - 广东：广州、深圳&lt;/li&gt;
+&lt;li&gt;桂 - 广西：南宁&lt;/li&gt;
+&lt;li&gt;琼 - 海南：海口、三亚&lt;/li&gt;
+&lt;li&gt;闽 - 福建：福州、泉州、厦门&lt;/li&gt;
+&lt;li&gt;台 - 台湾：台北&lt;/li&gt;
+&lt;li&gt;港 - 香港：香港&lt;/li&gt;
+&lt;li&gt;澳 - 澳门：澳门&lt;/li&gt;
+&lt;li&gt;新 - 新疆：乌鲁木齐&lt;/li&gt;
+&lt;li&gt;青 - 青海：西宁&lt;/li&gt;
+&lt;li&gt;藏 - 西藏：拉萨&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;下面给出我的分级：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;一线：香港、上海、北京&lt;/li&gt;
+&lt;li&gt;二线：（深圳）、（广州、杭州）、（南京、成都、武汉、重庆）、（天津、苏州）&lt;/li&gt;
+&lt;li&gt;三线：（青岛、宁波）、济南、西安、合肥、福州、长沙、郑州&lt;/li&gt;
+&lt;li&gt;其他：所有其他城市&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;本人自编的中国一级行政区顺口溜：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;晋冀鲁豫黑吉辽&lt;/li&gt;
+&lt;li&gt;京津内蒙陕甘宁&lt;/li&gt;
+&lt;li&gt;江浙沪皖鄂湘赣&lt;/li&gt;
+&lt;li&gt;云贵川渝粤桂琼&lt;/li&gt;
+&lt;li&gt;闽台港澳新青藏&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
