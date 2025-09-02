@@ -29,7 +29,7 @@
   &lt;tbody&gt;
       &lt;tr&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;1&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;2&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;2×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;3&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;4&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;5&lt;/td&gt;
@@ -78,6 +78,10 @@
 &lt;/h1&gt;&lt;p&gt;今天是出院时间，早上6点多就起来了。8点多医生过来拔引流管。因为要等药房把药送到住院部，等到11点才办出院手续。&lt;/p&gt;
 &lt;p&gt;回到家，收拾了一番，给G洗了头发，出门买了些水果、红薯。在家看《万物生》。&lt;/p&gt;
 &lt;p&gt;10点睡觉。&lt;/p&gt;
+&lt;h1 id=&#34;20250902&#34;&gt;2025/09/02
+&lt;/h1&gt;&lt;p&gt;为期一周的陪护生活结束了，今天恢复上班了。&lt;/p&gt;
+&lt;h2 id=&#34;硬件身份认证&#34;&gt;硬件身份认证
+&lt;/h2&gt;&lt;p&gt;今天下午3点多，跟沈老师讨论了下树莓派硬件身份识别的工作。通过沟通，我感觉现在从0开始做也可以，他并不了解。现在让我写一个实验方案，把硬件、软件等信息列出来，还有采集的参数等等。&lt;/p&gt;
 </description>
         </item>
         <item>
