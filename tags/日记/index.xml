@@ -117,6 +117,16 @@
 &lt;li&gt;名人大咖观点后做一个总结，说说当前的技术趋势；&lt;/li&gt;
 &lt;li&gt;第一部分的产业大爆发要重新组织一下逻辑。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;h1 id=&#34;把bitwarden极简掉&#34;&gt;把Bitwarden极简掉
+&lt;/h1&gt;&lt;p&gt;今天下午突然萌生出把Bitwarden极简掉的想法。其实，Bitwarden是一个很好用的密码管理器，它全平台通用，且在主流浏览器上均有可用的扩展，免费版本已足够使用，我其实想不出它的任何缺点。那我为什么要极简掉它呢？因为不用它，就又少了一个软件。但是问题是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Bitwarden可以保存部分Passkey，如GitHub、Google、Microsoft，这些passkey保存在Bitwarden，随云端同步，在跨设备登录时非常方便；&lt;/li&gt;
+&lt;li&gt;Bitwarden上还保存了一些SSH Key，比如实验室服务器的私钥、VPS登录的私钥等；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;我觉得都可以克服。开搞。直接把这些账号密码存在chrome好了。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Chrome肯定是不如Bitwarden安全，甚至也不那么方便。但是我不想多维护一套密码管理系统了。&lt;/p&gt;
+&lt;/blockquote&gt;
 </description>
         </item>
         <item>
