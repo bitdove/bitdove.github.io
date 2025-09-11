@@ -86,7 +86,7 @@
           &lt;td style=&#34;text-align: center&#34;&gt;8&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;9×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;10&lt;/td&gt;
-          &lt;td style=&#34;text-align: center&#34;&gt;11&lt;/td&gt;
+          &lt;td style=&#34;text-align: center&#34;&gt;11×&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;12&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;13&lt;/td&gt;
           &lt;td style=&#34;text-align: center&#34;&gt;14&lt;/td&gt;
@@ -179,8 +179,17 @@
 &lt;ol&gt;
 &lt;li&gt;Google账号的Passkey无法迁移（总不能把google的登陆密码保存在google吧）；&lt;/li&gt;
 &lt;li&gt;部分SSH密钥Google Password Manager无法保存；&lt;/li&gt;
-&lt;li&gt;国产APP的账号密码Google Password Manager无法保存。&lt;/li&gt;
+&lt;li&gt;有些国产APP的账号密码Google Password Manager无法保存。&lt;/li&gt;
 &lt;/ol&gt;
+&lt;p&gt;针对上述问题，解决方案如下：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Google账号的Passkey就存一份在Bitwarden好了，以备使用；&lt;/li&gt;
+&lt;li&gt;SSH密钥无非就两个，一个是学校实验室服务器的私钥，一个是VPS登录的私钥，也存在Bitwarden吧；&lt;/li&gt;
+&lt;li&gt;国产APP越来越依赖手机号验证码以及人脸，密码的作用愈来愈弱，可以考虑密码统一化。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;隐私摆烂了，国产APP的密码直接存在微信收藏了。&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;h2 id=&#34;弃用gpg&#34;&gt;弃用GPG
 &lt;/h2&gt;&lt;p&gt;GnuPG是不错的加密选择，但是我还是决定弃用了，因为使用场景太少了。现在唯一的用处就是GitHub提交签名，但是也没必要。所以，我决定弃用。&lt;/p&gt;
 </description>
