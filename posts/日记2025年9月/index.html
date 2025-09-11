@@ -253,8 +253,16 @@
         <li><a href="#下班">下班</a></li>
       </ol>
     </li>
-    <li><a href="#20250910">2025/09/10</a></li>
-    <li><a href="#把bitwarden极简掉">把Bitwarden极简掉</a></li>
+    <li><a href="#20250910">2025/09/10</a>
+      <ol>
+        <li><a href="#把bitwarden极简掉">把Bitwarden极简掉</a></li>
+      </ol>
+    </li>
+    <li><a href="#20250911">2025/09/11</a>
+      <ol>
+        <li><a href="#弃用gpg">弃用GPG</a></li>
+      </ol>
+    </li>
   </ol>
 </nav>
         </div>
@@ -424,8 +432,8 @@
 <li>名人大咖观点后做一个总结，说说当前的技术趋势；</li>
 <li>第一部分的产业大爆发要重新组织一下逻辑。</li>
 </ol>
-<h1 id="把bitwarden极简掉">把Bitwarden极简掉
-</h1><p>今天下午突然萌生出把Bitwarden极简掉的想法。其实，Bitwarden是一个很好用的密码管理器，它全平台通用，且在主流浏览器上均有可用的扩展，免费版本已足够使用，我其实想不出它的任何缺点。那我为什么要极简掉它呢？因为不用它，就又少了一个软件。但是问题是：</p>
+<h2 id="把bitwarden极简掉">把Bitwarden极简掉
+</h2><p>今天下午突然萌生出把Bitwarden极简掉的想法。其实，Bitwarden是一个很好用的密码管理器，它全平台通用，且在主流浏览器上均有可用的扩展，免费版本已足够使用，我其实想不出它的任何缺点。那我为什么要极简掉它呢？因为不用它，就又少了一个软件。但是问题是：</p>
 <ol>
 <li>Bitwarden可以保存部分Passkey，如GitHub、Google、Microsoft，这些passkey保存在Bitwarden，随云端同步，在跨设备登录时非常方便；</li>
 <li>Bitwarden上还保存了一些SSH Key，比如实验室服务器的私钥、VPS登录的私钥等；</li>
@@ -434,6 +442,16 @@
 <blockquote>
 <p>Chrome肯定是不如Bitwarden安全，甚至也不那么方便。但是我不想多维护一套密码管理系统了。</p>
 </blockquote>
+<h1 id="20250911">2025/09/11
+</h1><p>今天10天出头到公司，改了几页PPT。</p>
+<p>昨天把Bitwarden极简掉了，密码管理采用Google Password Manager。现在存在几个问题。</p>
+<ol>
+<li>Google账号的Passkey无法迁移（总不能把google的登陆密码保存在google吧）；</li>
+<li>部分SSH密钥Google Password Manager无法保存；</li>
+<li>国产APP的账号密码Google Password Manager无法保存。</li>
+</ol>
+<h2 id="弃用gpg">弃用GPG
+</h2><p>GnuPG是不错的加密选择，但是我还是决定弃用了，因为使用场景太少了。现在唯一的用处就是GitHub提交签名，但是也没必要。所以，我决定弃用。</p>
 
 </section>
 
