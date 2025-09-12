@@ -7,7 +7,187 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>zh</language>
         <copyright>bitdove. All Rights Reserved.</copyright>
-        <lastBuildDate>Fri, 05 Sep 2025 12:59:00 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Fri, 12 Sep 2025 14:03:10 +0800</lastBuildDate><atom:link href="https://bitdove.github.io/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>【English Learning】The System of English Grammar</title>
+        <link>https://bitdove.github.io/posts/english-learningthe-system-of-english-grammar/</link>
+        <pubDate>Fri, 12 Sep 2025 14:03:10 +0800</pubDate>
+        
+        <guid>https://bitdove.github.io/posts/english-learningthe-system-of-english-grammar/</guid>
+        <description>&lt;h1 id=&#34;preface&#34;&gt;Preface
+&lt;/h1&gt;&lt;p&gt;Any language has three main components: vocabulary, pronunciation, and grammar. In this article, we focus on the grammar of English.&lt;/p&gt;
+&lt;p&gt;英语的核心是动词。&lt;/p&gt;
+&lt;h1 id=&#34;简单句&#34;&gt;简单句
+&lt;/h1&gt;&lt;p&gt;长句子由简单句组合而来，拆的不能再拆的句子称为简单句。简单句表达的是“什么+怎么样”。而“什么”和“怎么样”分别对应主语和谓语这两种句子成分。即简单句=主语+谓语。主语是人或物，而谓语是广义的动作。&lt;/p&gt;
+&lt;p&gt;动作（动词）分类：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;不及物动词：可以独立完成的动作；&lt;/li&gt;
+&lt;li&gt;单及物动词：有1个动作承受者；&lt;/li&gt;
+&lt;li&gt;双及物动词：有2个动作承受者；&lt;/li&gt;
+&lt;li&gt;复杂及物动词：只有1个动作承受者（但需补充）；&lt;/li&gt;
+&lt;li&gt;系动词：非“动作”，仅赋予主语某种性质或状态。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;动词类型&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;解释&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;代表结构&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;例词&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;例句&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;解释&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;不及物动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;可以独立完成的动作&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主语+不及物动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;sleep&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Mason sleeps.&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;/&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;单及物动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;有1个动作承受者&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主语+单及物动词+宾语&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;like&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Mason likes you.&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;you为宾语&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;双及物动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;有2个动作承受者&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主语+双及物动词+间接宾语+直接宾语&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;teach&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Mason teaches you English.&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;you为间接宾语，English为直接宾语&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;复杂及物动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;只有1个动作承受者（但需补充说明）&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主语+复杂及物动词+宾语+宾语补语&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;consider&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Mason considers you smart.&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;you为宾语，smart为宾语补语&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;系动词&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;非“动作”，赋予主语某种性质&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;主语+系动词+主语补语/表语&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;am/is/are, look&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;Mason is handsome.&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;handsome为表语&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;谓语 ≠ 谓语动词&lt;/strong&gt;
+句子除去主语，剩下的部分都是谓语，谓语动词只是谓语的一部分。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&#34;句子成分&#34;&gt;句子成分
+&lt;/h2&gt;&lt;p&gt;主语
+谓语动词
+宾语
+宾语补语
+主语补语/表语
+定语
+状语
+同位语&lt;/p&gt;
+&lt;h2 id=&#34;复合句和复杂句&#34;&gt;复合句和复杂句
+&lt;/h2&gt;&lt;p&gt;简单句互相组合可成为复合句 Compound Sentence和复杂句 Complex Sentence。
+复合句是并列关系。复杂句是主从关系。&lt;/p&gt;
+&lt;p&gt;复杂句中的从句就是把简单句修改一下作为主句的句子成分。&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;名词性从句：
+主语从句
+宾语从句
+表语从句
+同位语从句&lt;/li&gt;
+&lt;li&gt;定语从句&lt;/li&gt;
+&lt;li&gt;状语从句&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&#34;词性十大词类&#34;&gt;词性（十大词类）
+&lt;/h2&gt;&lt;p&gt;动词
+名词
+冠词
+代词
+形容词
+数词
+副词
+介词
+叹词
+连词&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;除了谓语动词是动词，其他句子成分都有可能包含不同的词类。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&#34;verb-tenses&#34;&gt;Verb Tenses
+&lt;/h1&gt;&lt;p&gt;谓语动词有三大本领：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;表示动作时间&lt;/li&gt;
+&lt;li&gt;表示动作状态&lt;/li&gt;
+&lt;li&gt;表示动词语气，如动作的假设、情感等。&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;1和2合称时态（Verb Tenses）。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;助动词：没有实义，仅帮助谓语动词完成各种本领。如时态、虚拟语气、可能性、否定等等。&lt;/p&gt;
+&lt;p&gt;常见助动词：have, be, can, might, must, do。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;注意，助动词也有作实义词的时候，比如have可以是“拥有”，can可以是“易拉罐”。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;table&gt;
+  &lt;thead&gt;
+      &lt;tr&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Simple 一般&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Continuous 进行&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Perfect 完成&lt;/th&gt;
+          &lt;th style=&#34;text-align: left&#34;&gt;Perfect continuous 完成进行&lt;/th&gt;
+      &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Past 过去&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;did&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;was/were doing&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;had done&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;had been doing&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Present 现在&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;do/does&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;am/is/are doing&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;have/has done&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;have/has been doing&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Future 将来&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;will do&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;will be doing&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;will have done&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;will have been doing&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;&lt;strong&gt;Past future 过去将来&lt;/strong&gt;&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;would do&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;would be doing&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;would have done&lt;/td&gt;
+          &lt;td style=&#34;text-align: left&#34;&gt;would have been doing&lt;/td&gt;
+      &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+&lt;h1 id=&#34;非谓语动词&#34;&gt;非谓语动词
+&lt;/h1&gt;&lt;p&gt;动词除了做谓语动词外，可以不同的形式作为其他句子成分（如主语、宾语、宾语补语、定语等等），这时候动词叫做非谓语动词。&lt;/p&gt;
+&lt;p&gt;有以下形式：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;动词不定式&lt;/li&gt;
+&lt;li&gt;现在分词&lt;/li&gt;
+&lt;li&gt;动名词&lt;/li&gt;
+&lt;li&gt;过去分词&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
         <title>【WIP】【健康】一场手术让我重新认识甲状腺</title>
         <link>https://bitdove.github.io/posts/wip%E5%81%A5%E5%BA%B7%E4%B8%80%E5%9C%BA%E6%89%8B%E6%9C%AF%E8%AE%A9%E6%88%91%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86%E7%94%B2%E7%8A%B6%E8%85%BA/</link>
         <pubDate>Fri, 05 Sep 2025 12:59:00 +0800</pubDate>
