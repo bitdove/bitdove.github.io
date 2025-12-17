@@ -342,8 +342,7 @@
 &lt;li&gt;&lt;code&gt;dest&lt;/code&gt;：填一个地址，这就是所谓“reality偷域名”中偷的那个域名，后边加上443端口。上述以洛杉矶图书馆的域名(&lt;code&gt;lapl.org&lt;/code&gt;)为例子，填&lt;code&gt;lapl.org:443&lt;/code&gt;；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;serverNames&lt;/code&gt;：填“偷”的域名，如&lt;code&gt;lapl.org&lt;/code&gt;；&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;privateKey&lt;/code&gt;：之前通过&lt;code&gt;xray x25519&lt;/code&gt;生成的&lt;strong&gt;私钥&lt;/strong&gt;（&lt;strong&gt;PrivateKey&lt;/strong&gt;）；&lt;/li&gt;
-&lt;li&gt;&lt;code&gt;shortIds&lt;/code&gt;：之前编的shortIds，如&lt;code&gt;7df26a3cb5&lt;/code&gt;;&lt;/li&gt;
-&lt;li&gt;IP地址：IPv4地址填VPS的公网IPv4地址，IPv6地址填Warp虚拟出的IPv6地址。&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;shortIds&lt;/code&gt;：之前编的shortIds，如&lt;code&gt;7df26a3cb5&lt;/code&gt;。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;blockquote&gt;
 &lt;ol&gt;
