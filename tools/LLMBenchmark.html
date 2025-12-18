@@ -1,0 +1,1069 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本地大模型推理速度测试工具</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --success-color: #98c379;
+            --error-color: #e06c75;
+            --info-color: #61afef;
+            --dark-bg: #282c34;
+            --dark-row: #2f343a;
+            --light-bg: #f4f7f9;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .container {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .api-selector {
+            display: flex;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .api-option {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            background: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
+        }
+
+        .api-option:first-child {
+            border-radius: 5px 0 0 5px;
+        }
+
+        .api-option:last-child {
+            border-radius: 0 5px 5px 0;
+        }
+
+        .api-option.active {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            border-color: var(--primary-color);
+        }
+
+        .api-option:hover:not(.active) {
+            background-color: #f0f7ff;
+        }
+
+        .config-section {
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #444;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: filter 0.1s, transform 0.1s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            filter: brightness(0.95);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #a0a0a0 !important;
+            cursor: not-allowed;
+        }
+
+        #results {
+            background-color: var(--dark-bg);
+            color: #abb2bf;
+            padding: 15px;
+            border-radius: 5px;
+            min-height: 150px;
+            margin-top: 20px;
+            overflow-x: auto;
+        }
+
+        #results table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-family: "Courier New", Courier, monospace;
+            font-size: 0.9em;
+            table-layout: fixed;
+        }
+
+        #results th,
+        #results td {
+            border: 1px solid #444;
+            padding: 8px;
+            text-align: left;
+            color: #abb2bf;
+            white-space: normal;
+        }
+
+        #results th {
+            background-color: #333;
+            color: #f8f8f2;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+
+        /* 提示词长度 */
+        #results th:nth-child(1),
+        #results td:nth-child(1) {
+            width: 14%;
+        }
+
+        /* 预填充耗时 */
+        #results th:nth-child(2),
+        #results td:nth-child(2) {
+            width: 16%;
+        }
+
+        /* 预填充速度 */
+        #results th:nth-child(3),
+        #results td:nth-child(3) {
+            width: 14%;
+        }
+
+        /* 输出长度 */
+        #results th:nth-child(4),
+        #results td:nth-child(4) {
+            width: 14%;
+        }
+
+        /* 输出耗时 */
+        #results th:nth-child(5),
+        #results td:nth-child(5) {
+            width: 16%;
+        }
+
+        /* 输出速度 */
+        #results th:nth-child(6),
+        #results td:nth-child(6) {
+            width: 14%;
+        }
+
+        /* 状态 */
+        #results th:nth-child(7),
+        #results td:nth-child(7) {
+            width: 12%;
+        }
+
+        #results tr:nth-child(even) {
+            background-color: var(--dark-row);
+        }
+
+        .success {
+            color: var(--success-color);
+        }
+
+        .error {
+            color: var(--error-color);
+        }
+
+        .info {
+            color: var(--info-color);
+            padding: 5px 0;
+            text-align: center;
+        }
+
+        .notes {
+            color: var(--info-color);
+            padding-bottom: 5px;
+        }
+
+        #markdownOutputHidden {
+            position: absolute;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            white-space: pre;
+        }
+
+        .progress-container {
+            margin: 15px 0;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .action-buttons button {
+            flex: 1;
+        }
+
+        .api-description {
+            margin-top: 10px;
+            margin-bottom: 10px;
+            padding: 15px;
+            background-color: #f0f7ff;
+            border-radius: 5px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .api-description h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .api-description ul {
+            padding-left: 20px;
+        }
+
+        .api-description li {
+            margin-bottom: 8px;
+        }
+
+        .logo {
+            font-size: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><span class="logo">🚀</span> 大模型 Prefill & Decode 性能测试工具</h1>
+
+        <div class="api-selector">
+            <div class="api-option active" data-type="openai">OpenAI兼容接口</div>
+            <div class="api-option" data-type="ollama">Ollama接口</div>
+        </div>
+
+        <div class="api-description" id="apiDescription">
+            <h3>OpenAI兼容接口测试说明</h3>
+            <ul>
+                <li>使用流式响应(stream=true)测量首字延迟</li>
+                <li>预填充速度 = 提示词长度 / (首字到达时间 - 请求开始时间)</li>
+                <li>输出速度 = 输出token数 / (输出完成时间 - 首字到达时间)</li>
+                <li>适用于所有兼容OpenAI API的大模型服务</li>
+            </ul>
+        </div>
+
+        <div class="config-section">
+            <h2>API 信息</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="apiUrl">API 地址</label>
+                    <input type="text" id="apiUrl" value="">
+                </div>
+                <div class="form-group">
+                    <label for="modelName">模型名称</label>
+                    <input type="text" id="modelName" value="">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="apiKey">API-Key</label>
+                    <input type="text" id="apiKey" value="" placeholder="未设置 API-Key 则留空">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="notes">备注</label>
+                    <input type="text" id="notes" value="" placeholder="请填写设备信息、模型信息、模型推理框架，以便在结果中显示">
+                </div>
+            </div>
+        </div>
+
+        <div class="config-section">
+            <h2>测试参数配置</h2>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="minLength">最小提示词长度</label>
+                    <input type="number" id="minLength" value="" step="128">
+                </div>
+                <div class="form-group">
+                    <label for="maxLength">最大提示词长度</label>
+                    <input type="number" id="maxLength" value="" step="128">
+                </div>
+                <div class="form-group">
+                    <label for="step">步长</label>
+                    <input type="number" id="step" value="" step="128">
+                </div>
+                <div class="form-group">
+                    <label for="outputLength">期望输出长度</label>
+                    <input type="number" id="outputLength" value="" min="1">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="temperatureInput">Temperature</label>
+                    <input type="number" id="temperatureInput" value="" step="0.1" min="0" max="2">
+                </div>
+                <div class="form-group">
+                    <label for="topPInput">Top P</label>
+                    <input type="number" id="topPInput" value="" step="0.01" min="0" max="1">
+                </div>
+                <div class="form-group">
+                    <label for="presencePenaltyInput">Presence Penalty</label>
+                    <input type="number" id="presencePenaltyInput" value="" step="0.1" min="-2" max="2">
+                </div>
+                <div class="form-group">
+                    <label for="frequencyPenaltyInput">Frequency Penalty</label>
+                    <input type="number" id="frequencyPenaltyInput" value="" step="0.1" min="-2" max="2">
+                </div>
+            </div>
+        </div>
+
+        <h2>执行测试</h2>
+        <div class="action-buttons">
+            <button id="startTest" style="background: #349bea;">开始测试</button>
+            <button id="stopTest" style="display: none; background: #E74C3C;">停止测试</button>
+            <button id="copyMarkdown" style="display: none; background: #4CAF50;">复制 Markdown 表格</button>
+            <button id="exportCSV" style="display: none; background: #4eb8a6;">导出 CSV 数据</button>
+        </div>
+        <div class="progress-container">
+            <div id="progressBar" class="progress-bar" style="width: 0%"></div>
+        </div>
+
+        <div id="results">
+            <p class="info">等待开始测试...</p>
+        </div>
+
+        <textarea id="markdownOutputHidden"></textarea>
+    </div>
+
+    <script>
+        // 默认参数设置
+        // ===============================================================================
+        // API 端点和模型名称配置
+        let d_openai_apiUrl = 'http://localhost:8000/v1/chat/completions';          // OpenAI 兼容 API 的 URL 地址
+        let d_openai_modelName = '/model';                                          // OpenAI 兼容 API 所使用的模型名称或路径
+        let d_ollama_apiUrl = 'http://localhost:11434/api/chat';                    // Ollama API 的 URL 地址
+        let d_ollama_modelName = 'qwen3:0.6b';                                      // Ollama API 所使用的模型名称
+        let d_api_key = '';                                                         // 访问 API 所需的认证密钥，如果不需要则可以留空
+        // 文本生成长度控制参数 (整数)
+        let d_minLength = 512;                                                      // 生成文本的最小长度（例如，token 或字符数）
+        let d_maxLength = 8192;                                                     // 生成文本的最大长度（例如，token 或字符数）
+        let d_step = 512;                                                           // 每次提示词长度增加的步长
+        let d_outputLength = 128;                                                   // 期望输出的文本长度
+        // 文本生成采样参数 (浮点数)
+        let d_temperature = 0.6;                                                    // 控制生成文本的随机性。值越高，文本越随机（0.0表示确定性，1.0表示较高随机性）
+        let d_top_p = 0.95;                                                          // 控制生成文本的多样性。只考虑累积概率达到 top_p 的词汇（0.0-1.0）
+        let d_presence_penalty = -1.0;                                              // 对生成文本中已经出现的词汇进行惩罚，减少重复（通常在 -2.0 到 2.0 之间）
+        let d_frequency_penalty = -1.0;                                             // 对生成文本中词汇出现的频率进行惩罚，减少常用词的重复（通常在 -2.0 到 2.0 之间）
+        // ===============================================================================
+
+        // API类型切换
+        const apiOptions = document.querySelectorAll('.api-option');
+        const apiDescription = document.getElementById('apiDescription');
+
+        apiOptions.forEach(option => {
+            option.addEventListener('click', () => {
+                apiOptions.forEach(o => o.classList.remove('active'));
+                option.classList.add('active');
+
+                const apiType = option.dataset.type;
+                updateApiDescription(apiType);
+                updateDefaultValues(apiType);
+            });
+        });
+
+        function updateApiDescription(apiType) {
+            if (apiType === 'openai') {
+                apiDescription.innerHTML = `
+                    <h3>OpenAI兼容接口测试说明</h3>
+                    <ul>
+                        <li>使用流式响应(stream=true)测量首字延迟</li>
+                        <li>预填充速度 = 提示词长度 / (首字到达时间 - 请求开始时间)</li>
+                        <li>输出速度 = 输出token数 / (输出完成时间 - 首字到达时间)</li>
+                        <li>适用于所有兼容OpenAI API的大模型服务</li>
+                    </ul>
+                `;
+            } else {
+                apiDescription.innerHTML = `
+                    <h3>Ollama接口测试说明</h3>
+                    <ul>
+                        <li>使用非流式请求(stream=false)</li>
+                        <li>直接使用API返回的prompt_eval_duration和eval_duration指标</li>
+                        <li>预填充速度 = 提示词长度 / (prompt_eval_duration / 1000)</li>
+                        <li>输出速度 = 输出token数 / (eval_duration / 1000)</li>
+                    </ul>
+                `;
+            }
+        }
+
+        function updateDefaultValues(apiType) {
+            const apiUrl = document.getElementById('apiUrl');
+            const modelName = document.getElementById('modelName');
+
+            if (apiType === 'openai') {
+                apiUrl.value = d_openai_apiUrl;
+                modelName.value = d_openai_modelName;
+            } else {
+                apiUrl.value = d_ollama_apiUrl;
+                modelName.value = d_ollama_modelName;
+            }
+        }
+
+        // 初始化
+        updateApiDescription('openai');
+
+        // 单词库用于生成提示词
+        const wordList = [
+            "active", "project", "quality", "develop", "example", "explore", "journey", "library",
+            "advance", "another", "because", "believe", "between", "central", "channel", "charity",
+            "collect", "company", "compare", "compete", "compute", "concept", "concern", "confirm",
+            "contact", "contain", "content", "context", "control", "country", "culture", "current",
+            "digital", "discuss", "document", "economy", "element", "energy", "engine", "enhance",
+            "evening", "exactly", "examine", "execute", "explain", "express", "feature", "federal",
+            "feeling", "finance"
+        ];
+
+        // 根据指定长度生成提示词
+        function generatePrompt(length, apiType) {
+            let prompt = [];
+            for (let i = 0; i < length - 20; i++) {
+                const randomIndex = Math.floor(Math.random() * wordList.length);
+                prompt.push(wordList[randomIndex]);
+            }
+
+            return prompt.join(' ') + `\n\nRepeat the above text 100 times`;    // 保证有足够长度的输出，前面随机生成的提示词长度为 length - 20
+        }
+
+        const startTestBtn = document.getElementById('startTest');
+        const stopTestBtn = document.getElementById('stopTest');
+        const copyMarkdownBtn = document.getElementById('copyMarkdown');
+        const exportCSVBtn = document.getElementById('exportCSV');
+        const resultsDiv = document.getElementById('results');
+        const markdownOutputHidden = document.getElementById('markdownOutputHidden');
+        const progressBar = document.getElementById('progressBar');
+
+        let testResultsData = [];
+        let totalTests = 0;
+        let completedTests = 0;
+        let isTestingRunning = false;
+        let currentApiType = 'openai';
+        let currentModelName = '/model';
+        let api_key = '';
+        let notes = '';
+
+        // 测试OpenAI兼容接口
+        async function testOpenAI(apiUrl, modelName, minLength, maxLength, step, outputLength, temperature, top_p, presence_penalty, frequency_penalty) {
+            for (let length = minLength; length <= maxLength; length += step) {
+                if (!isTestingRunning) break; // 检查是否停止
+                const prompt = generatePrompt(length, 'openai');
+                // 为防止输出内容过短，设置异常参数使模型倾向于生成重复内容
+                const requestBody = {
+                    "model": modelName,
+                    "messages": [
+                        { "role": "user", "content": prompt }
+                    ],
+                    "max_tokens": outputLength,
+                    "temperature": temperature,
+                    "top_p": top_p,
+                    "presence_penalty": presence_penalty,
+                    "frequency_penalty": frequency_penalty,
+                    "stream": true
+                };
+
+                // 创建表格行
+                const row = document.createElement('tr');
+                resultsDiv.querySelector('tbody').appendChild(row);
+                const cells = [];
+                for (let i = 0; i < 7; i++) {
+                    const cell = document.createElement('td');
+                    cells.push(cell);
+                    row.appendChild(cell);
+                }
+
+                cells[0].textContent = length;
+                cells[1].textContent = "测试中...";
+                cells[2].textContent = "测试中...";
+                cells[3].textContent = "测试中...";
+                cells[4].textContent = "测试中...";
+                cells[5].textContent = "测试中...";
+                cells[6].textContent = "测试中...";
+                row.classList.add('info');
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+                let resultEntry = {
+                    promptLength: length,
+                    prefillTimeMs: 'N/A',
+                    prefillSpeed: 'N/A',
+                    outputTokens: 'N/A',
+                    outputTimeMs: 'N/A',
+                    outputSpeed: 'N/A',
+                    status: '失败'
+                };
+
+                // 初始化请求，减少第一次测试的误差
+                if (length == minLength) {
+                    try {
+                        const temp_response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Authorization': `Bearer ${api_key}`,
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "model": modelName,
+                                "messages": [
+                                    { "role": "user", "content": "hello" }
+                                ],
+                                "max_tokens": 2,
+                                "temperature": temperature,
+                                "top_p": top_p,
+                                "presence_penalty": presence_penalty,
+                                "frequency_penalty": frequency_penalty,
+                                "stream": false
+                            })
+                        });
+                    }
+                    catch (error) {
+                    }
+
+                    // 每个请求之间添加800ms延时
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                }
+
+                const startTime = performance.now();
+                let firstTokenTime = null;
+                let outputContent = '';
+                let receivedTokens = 0;
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${api_key}`,
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP错误! 状态: ${response.status}. 响应: ${errorText}`);
+                    }
+
+                    // 处理流式响应
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder();
+                    let reading = true;
+
+                    while (reading) {
+                        const { value, done } = await reader.read();
+                        if (done) {
+                            reading = false;
+                            break;
+                        }
+
+                        const chunk = decoder.decode(value, { stream: true });
+                        const lines = chunk.split('\n').filter(line => line.trim() !== '');
+
+                        for (const line of lines) {
+                            if (line.startsWith('data: ') && !line.includes('[DONE]')) {
+                                const jsonLine = line.replace('data: ', '');
+                                try {
+                                    const data = JSON.parse(jsonLine);
+                                    if (data.choices && data.choices[0].delta && data.choices[0].delta.content) {
+                                        const token = data.choices[0].delta.content;
+                                        outputContent += token;
+                                        receivedTokens++;
+
+                                        // 记录第一个token的到达时间
+                                        if (!firstTokenTime) {
+                                            firstTokenTime = performance.now();
+                                            const prefillTime = firstTokenTime - startTime;
+
+                                            // 更新表格
+                                            cells[1].textContent = prefillTime.toFixed(2);
+                                            cells[2].textContent = (length / (prefillTime / 1000)).toFixed(2);
+                                        }
+                                    }
+                                } catch (e) {
+                                    console.error('解析错误:', e);
+                                }
+                            }
+                        }
+                    }
+
+                    const endTime = performance.now();
+
+                    // 计算Prefill时间
+                    const prefillTimeMs = firstTokenTime ? (firstTokenTime - startTime) : 0;
+
+                    // 计算输出时间
+                    const outputTimeMs = firstTokenTime ? (endTime - firstTokenTime) : 0;
+
+                    // 计算速度
+                    const prefillSpeed = (length / (prefillTimeMs / 1000)).toFixed(2);
+                    const outputSpeed = (receivedTokens / (outputTimeMs / 1000)).toFixed(2);
+
+                    resultEntry = {
+                        promptLength: length,
+                        prefillTimeMs: prefillTimeMs.toFixed(2),
+                        prefillSpeed: prefillSpeed,
+                        outputTokens: receivedTokens,
+                        outputTimeMs: outputTimeMs.toFixed(2),
+                        outputSpeed: outputSpeed,
+                        status: '成功'
+                    };
+
+                    // 更新表格行
+                    cells[1].textContent = resultEntry.prefillTimeMs;
+                    cells[2].textContent = resultEntry.prefillSpeed;
+                    cells[3].textContent = resultEntry.outputTokens;
+                    cells[4].textContent = resultEntry.outputTimeMs;
+                    cells[5].textContent = resultEntry.outputSpeed;
+                    cells[6].textContent = '成功';
+                    row.classList.remove('info');
+                    row.classList.add('success');
+
+                } catch (error) {
+                    const endTime = performance.now();
+                    const durationMs = (endTime - startTime).toFixed(2);
+                    resultEntry.status = `失败 (${error.message})`;
+
+                    // 更新表格行
+                    cells[1].textContent = 'N/A';
+                    cells[2].textContent = 'N/A';
+                    cells[3].textContent = 'N/A';
+                    cells[4].textContent = 'N/A';
+                    cells[5].textContent = 'N/A';
+                    cells[6].textContent = resultEntry.status;
+                    row.classList.remove('info');
+                    row.classList.add('error');
+                }
+
+                testResultsData.push(resultEntry);
+
+                // 更新进度条
+                completedTests++;
+                const progressPercentage = (completedTests / totalTests) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+                // 每个请求之间添加800ms延时
+                await new Promise(resolve => setTimeout(resolve, 800));
+            }
+        }
+
+        // 测试Ollama接口
+        async function testOllama(apiUrl, modelName, minLength, maxLength, step, outputLength, temperature, top_p, presence_penalty, frequency_penalty) {
+            for (let length = minLength; length <= maxLength; length += step) {
+                if (!isTestingRunning) break; // 检查是否停止
+                const prompt = generatePrompt(length, 'ollama');
+                // 为防止输出内容过短，设置异常参数使模型倾向于生成重复内容
+                const requestBody = {
+                    "model": modelName,
+                    "messages": [
+                        { "role": "user", "content": prompt }
+                    ],
+                    "options": {
+                        "num_predict": outputLength,
+                        "num_ctx": maxLength,
+                        "temperature": temperature,
+                        "top_p": top_p,
+                        "repeat_penalty": presence_penalty * 0.5 + frequency_penalty * 0.5
+                    },
+                    "stream": false
+                };
+
+                // 创建表格行
+                const row = document.createElement('tr');
+                resultsDiv.querySelector('tbody').appendChild(row);
+                const cells = [];
+                for (let i = 0; i < 7; i++) {
+                    const cell = document.createElement('td');
+                    cells.push(cell);
+                    row.appendChild(cell);
+                }
+
+                cells[0].textContent = length;
+                cells[1].textContent = "测试中...";
+                cells[2].textContent = "测试中...";
+                cells[3].textContent = "测试中...";
+                cells[4].textContent = "测试中...";
+                cells[5].textContent = "测试中...";
+                cells[6].textContent = "测试中...";
+                row.classList.add('info');
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+                let resultEntry = {
+                    promptLength: length,
+                    prefillTimeMs: 'N/A',
+                    prefillSpeed: 'N/A',
+                    outputTokens: 'N/A',
+                    outputTimeMs: 'N/A',
+                    outputSpeed: 'N/A',
+                    status: '失败'
+                };
+
+                // 初始化请求，减少第一次测试的误差
+                if (length == minLength) {
+                    try {
+                        const temp_response = await fetch(apiUrl, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                "model": modelName,
+                                "messages": [
+                                    { "role": "user", "content": "hello" }
+                                ],
+                                "options": {
+                                    "num_predict": 2,
+                                    "num_ctx": maxLength,
+                                    "temperature": temperature,
+                                    "top_p": top_p,
+                                    "repeat_penalty": presence_penalty * 0.5 + frequency_penalty * 0.5
+                                },
+                                "stream": false
+                            })
+                        });
+                    }
+                    catch (error) {
+                    }
+
+                    // 每个请求之间添加800ms延时
+                    await new Promise(resolve => setTimeout(resolve, 800));
+                }
+
+                const startTime = performance.now();
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    const endTime = performance.now();
+                    const totalDurationMs = (endTime - startTime);
+
+                    if (!response.ok) {
+                        const errorText = await response.text();
+                        throw new Error(`HTTP 错误! 状态: ${response.status}. 响应: ${errorText}`);
+                    }
+
+                    const data = await response.json();
+
+                    const prefillDurationMs = data.prompt_eval_duration / 1_000_000;
+                    const actualOutputTokens = data.eval_count;
+                    const outputDurationMs = data.eval_duration / 1_000_000;
+
+                    const prefillSpeed = (length / (prefillDurationMs / 1000)).toFixed(2);
+                    const outputSpeed = (actualOutputTokens / (outputDurationMs / 1000)).toFixed(2);
+
+                    resultEntry = {
+                        promptLength: length,
+                        prefillTimeMs: prefillDurationMs.toFixed(2),
+                        prefillSpeed: prefillSpeed,
+                        outputTokens: actualOutputTokens,
+                        outputTimeMs: outputDurationMs.toFixed(2),
+                        outputSpeed: outputSpeed,
+                        status: '成功'
+                    };
+
+                    // 更新表格行
+                    cells[1].textContent = resultEntry.prefillTimeMs;
+                    cells[2].textContent = resultEntry.prefillSpeed;
+                    cells[3].textContent = resultEntry.outputTokens;
+                    cells[4].textContent = resultEntry.outputTimeMs;
+                    cells[5].textContent = resultEntry.outputSpeed;
+                    cells[6].textContent = '成功';
+                    row.classList.remove('info');
+                    row.classList.add('success');
+
+                } catch (error) {
+                    const endTime = performance.now();
+                    const durationMs = (endTime - startTime).toFixed(2);
+                    resultEntry.status = `失败 (${error.message})`;
+
+                    // 更新表格行
+                    cells[1].textContent = 'N/A';
+                    cells[2].textContent = 'N/A';
+                    cells[3].textContent = 'N/A';
+                    cells[4].textContent = 'N/A';
+                    cells[5].textContent = 'N/A';
+                    cells[6].textContent = resultEntry.status;
+                    row.classList.remove('info');
+                    row.classList.add('error');
+                }
+
+                testResultsData.push(resultEntry);
+
+                // 更新进度条
+                completedTests++;
+                const progressPercentage = (completedTests / totalTests) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+
+                resultsDiv.scrollTop = resultsDiv.scrollHeight;
+
+                // 每个请求之间添加800ms延时
+                await new Promise(resolve => setTimeout(resolve, 800));
+            }
+        }
+
+        startTestBtn.addEventListener('click', async () => {
+            // 获取用户输入的配置
+            currentApiType = document.querySelector('.api-option.active').dataset.type;
+            const apiUrl = document.getElementById('apiUrl').value.trim();
+            currentModelName = document.getElementById('modelName').value.trim();
+            api_key = document.getElementById('apiKey').value.trim();
+            notes = document.getElementById('notes').value.trim() || `无用户备注，接口: ${currentApiType === 'openai' ? 'OpenAI兼容接口' : 'Ollama接口'} ，模型: ${currentModelName}`;
+            const minLength = parseInt(document.getElementById('minLength').value, 10);
+            const maxLength = parseInt(document.getElementById('maxLength').value, 10);
+            const step = parseInt(document.getElementById('step').value, 10);
+            const outputLength = parseInt(document.getElementById('outputLength').value, 10);
+            const temperature = parseFloat(document.getElementById('temperatureInput').value);
+            const top_p = parseFloat(document.getElementById('topPInput').value);
+            const presence_penalty = parseFloat(document.getElementById('presencePenaltyInput').value);
+            const frequency_penalty = parseFloat(document.getElementById('frequencyPenaltyInput').value);
+
+            // 计算总测试数量
+            totalTests = Math.floor((maxLength - minLength) / step) + 1;
+            completedTests = 0;
+
+            // 禁用按钮，清空结果
+            startTestBtn.disabled = true;
+            startTestBtn.textContent = "测试中...";
+            copyMarkdownBtn.style.display = 'none';
+            exportCSVBtn.style.display = 'none';
+            progressBar.style.width = '0%';
+            resultsDiv.innerHTML = "";
+            testResultsData = [];
+
+            // 测试开始后
+            const notesMessage = document.createElement('p');
+            notesMessage.className = 'notes';
+            notesMessage.textContent = `备注：${notes}`;
+            resultsDiv.appendChild(notesMessage);
+
+            // 创建表格结构
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const tbody = document.createElement('tbody');
+            table.appendChild(thead);
+            table.appendChild(tbody);
+            resultsDiv.appendChild(table);
+
+            // 创建表头
+            const headerRow = document.createElement('tr');
+            [
+                '提示词长度<br>(tokens)',
+                '预填充耗时<br>(ms)',
+                '预填充速度<br>(tokens/s)',
+                '输出长度<br>(tokens)',
+                '输出耗时<br>(ms)',
+                '输出速度<br>(tokens/s)',
+                '状态'
+            ].forEach(text => {
+                const th = document.createElement('th');
+                th.innerHTML = text;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+
+            // 显示停止按钮并绑定事件
+            stopTestBtn.disabled = false;
+            stopTestBtn.textContent = "停止";
+            stopTestBtn.style.display = 'block';
+            isTestingRunning = true;
+
+            // 停止按钮点击事件（仅绑定一次）
+            stopTestBtn.onclick = () => {
+                isTestingRunning = false;
+                stopTestBtn.disabled = true;
+                stopTestBtn.textContent = "停止中...";
+            };
+
+            // 根据API类型选择测试方法
+            try {
+                if (currentApiType === 'openai') {
+                    await testOpenAI(apiUrl, currentModelName, minLength, maxLength, step, outputLength, temperature, top_p, presence_penalty, frequency_penalty);
+
+                } else {
+                    await testOllama(apiUrl, currentModelName, minLength, maxLength, step, outputLength, temperature, top_p, presence_penalty, frequency_penalty);
+                }
+            } catch (e) {
+                console.error('测试过程中发生错误:', e);
+            }
+
+            // 生成Markdown表格
+            let markdownTable = `## 测试结果 (${currentApiType === 'openai' ? 'OpenAI兼容接口' : 'Ollama接口'} - ${currentModelName})\n\n`;
+            markdownTable += `备注：${notes}\n\n`;
+            markdownTable += `| 提示词长度 (tokens) | 预填充耗时 (ms) | 预填充速度 (tokens/s) | 输出长度 (tokens) | 输出耗时 (ms) | 输出速度 (tokens/s) |\n`;
+            markdownTable += `|---------------------|-------------------|-------------------------|-------------------|---------------|---------------------|\n`;
+
+            testResultsData.forEach(res => {
+                markdownTable += `| ${res.promptLength} | ${res.prefillTimeMs} | ${res.prefillSpeed} | ${res.outputTokens} | ${res.outputTimeMs} | ${res.outputSpeed} |\n`;
+            });
+            markdownOutputHidden.value = markdownTable;
+
+            // 恢复UI状态
+            startTestBtn.disabled = false;
+            startTestBtn.textContent = "开始测试";
+            copyMarkdownBtn.style.display = 'block';
+            exportCSVBtn.style.display = 'block';
+            stopTestBtn.style.display = 'none'; // 隐藏停止按钮
+        });
+
+        // 复制Markdown表格
+        copyMarkdownBtn.addEventListener('click', () => {
+            markdownOutputHidden.select();
+            document.execCommand('copy');
+            alert('Markdown表格已复制到剪贴板！');
+        });
+
+        // 导出CSV数据
+        exportCSVBtn.addEventListener('click', () => {
+            let csvContent = "data:text/csv;charset=utf-8,";
+
+            csvContent += `${currentApiType === 'openai' ? 'OpenAI兼容接口' : 'Ollama接口'}, ${currentModelName}\n`;
+
+            csvContent += `备注：, ${notes}\n`;
+
+            // 添加表头
+            csvContent += "提示词长度(tokens),预填充耗时(ms),预填充速度(tokens/s),输出长度(tokens),输出耗时(ms),输出速度(tokens/s),状态\n";
+
+            // 添加数据行
+            testResultsData.forEach(res => {
+                csvContent += `${res.promptLength},${res.prefillTimeMs},${res.prefillSpeed},${res.outputTokens},${res.outputTimeMs},${res.outputSpeed},${res.status}\n`;
+            });
+
+            // 创建下载链接
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `model_perf_${currentApiType}_${new Date().toISOString().slice(0, 19).replace(/:/g, '-')}.csv`);
+            document.body.appendChild(link);
+
+            // 触发下载
+            link.click();
+            document.body.removeChild(link);
+        });
+
+        // 加载默认参数
+        function setDefaultValues() {
+            document.getElementById('apiUrl').value = d_openai_apiUrl;
+            document.getElementById('modelName').value = d_openai_modelName;
+            document.getElementById('apiKey').value = d_api_key;
+            document.getElementById('minLength').value = d_minLength;
+            document.getElementById('maxLength').value = d_maxLength;
+            document.getElementById('step').value = d_step;
+            document.getElementById('outputLength').value = d_outputLength;
+            document.getElementById('temperatureInput').value = d_temperature;
+            document.getElementById('topPInput').value = d_top_p;
+            document.getElementById('presencePenaltyInput').value = d_presence_penalty;
+            document.getElementById('frequencyPenaltyInput').value = d_frequency_penalty;
+        }
+
+        // 刷新页面时自动加载默认参数
+        window.onload = function () { setDefaultValues(); };
+
+    </script>
+</body>
+
+</html>
