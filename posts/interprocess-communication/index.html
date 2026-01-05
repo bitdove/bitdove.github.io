@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n">
+<html dir="ltr" lang="zh">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n" name="description"/>
 <title>【一文读懂】进程间通信</title>
-
-<link rel='canonical' href='https://bitdove.github.io/posts/interprocess-communication/'>
-
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【一文读懂】进程间通信">
-<meta property='og:description' content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n">
-<meta property='og:url' content='https://bitdove.github.io/posts/interprocess-communication/'>
-<meta property='og:site_name' content='空山无我心自闲'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='操作系统' /><meta property='article:published_time' content='2022-06-07T01:18:12-07:00'/><meta property='article:modified_time' content='2022-06-07T01:18:12-07:00'/>
-<meta name="twitter:title" content="【一文读懂】进程间通信">
-<meta name="twitter:description" content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n">
-    <link rel="shortcut icon" href="/favicon.ico" />
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
+<link href="https://bitdove.github.io/posts/interprocess-communication/" rel="canonical"/>
+<link href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css" rel="stylesheet"/><meta content="【一文读懂】进程间通信" property="og:title"/>
+<meta content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n" property="og:description"/>
+<meta content="https://bitdove.github.io/posts/interprocess-communication/" property="og:url"/>
+<meta content="空山无我心自闲" property="og:site_name"/>
+<meta content="article" property="og:type"/><meta content="Post" property="article:section"/><meta content="操作系统" property="article:tag"/><meta content="2022-06-07T01:18:12-07:00" property="article:published_time"/><meta content="2022-06-07T01:18:12-07:00" property="article:modified_time"/>
+<meta content="【一文读懂】进程间通信" name="twitter:title"/>
+<meta content="引言 进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。\n进程间通信方式可以归纳为以下几类：\n" name="twitter:description"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+</head>
+<body class="article-page">
+<script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
@@ -41,282 +36,174 @@
         }
     })();
 </script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
-            <h2 class="site-description"></h2>
-        </div>
-    </header><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button aria-label="" class="hamburger hamburger--spin" id="toggle-menu" type="button">
+<span class="hamburger-box">
+<span class="hamburger-inner"></span>
+</span>
+</button>
+<header>
+<figure class="site-avatar">
+<a href="/">
+<img alt="Avatar" class="site-logo" height="300" loading="lazy" src="/img/avatar_hu16717790870751216787.png" width="300"/>
+</a>
+</figure>
+<div class="site-meta">
+<h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
+<h2 class="site-description"></h2>
+</div>
+</header><ol class="menu" id="main-menu">
+<li>
+<a href="/">
+<svg class="icon icon-tabler icon-tabler-home" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>
+<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
 </svg>
-
-
-
-                
-                <span>首页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+<span>首页</span>
+</a>
+</li>
+<li>
+<a href="/%E5%85%B3%E4%BA%8E/">
+<svg class="icon icon-tabler icon-tabler-user" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="7" r="4"></circle>
+<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
 </svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
+<span>关于</span>
+</a>
+</li>
+<li>
+<a href="/archives/">
+<svg class="icon icon-tabler icon-tabler-archive" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<rect height="4" rx="2" width="18" x="3" y="4"></rect>
+<path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+<line x1="10" x2="14" y1="12" y2="12"></line>
 </svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
+<span>归档</span>
+</a>
+</li>
+<li>
+<a href="/search/">
+<svg class="icon icon-tabler icon-tabler-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="10" cy="10" r="7"></circle>
+<line x1="21" x2="15" y1="21" y2="15"></line>
 </svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E9%93%BE%E6%8E%A5/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+<span>搜索</span>
+</a>
+</li>
+<li>
+<a href="/%E9%93%BE%E6%8E%A5/">
+<svg class="icon icon-tabler icon-tabler-link" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
+<path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
 </svg>
-
-
-
-                
-                <span>链接</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<span>链接</span>
+</a>
+</li>
+<li class="menu-bottom-section">
+<ol class="menu">
+<li id="dark-mode-toggle">
+<svg class="icon icon-tabler icon-tabler-toggle-left" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="8" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<svg class="icon icon-tabler icon-tabler-toggle-right" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="16" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <span></span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
+<span></span>
+</li>
+</ol>
+</li>
+</ol>
 </aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class="widget-icon">
+<svg class="icon icon-tabler icon-tabler-hash" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<line x1="5" x2="19" y1="9" y2="9"></line>
+<line x1="5" x2="19" y1="15" y2="15"></line>
+<line x1="11" x2="7" y1="4" y2="20"></line>
+<line x1="17" x2="13" y1="4" y2="20"></line>
 </svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title"></h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#引言">引言</a></li>
-    <li><a href="#管道">管道</a>
-      <ol>
-        <li><a href="#pipe">PIPE</a></li>
-        <li><a href="#fifo">FIFO</a></li>
-      </ol>
-    </li>
-    <li><a href="#xsi-ipc">XSI IPC</a>
-      <ol>
-        <li><a href="#消息队列">消息队列</a></li>
-        <li><a href="#共享存储">共享存储</a>
-          <ol>
-            <li><a href="#xsi-共享存储">XSI 共享存储</a></li>
-            <li><a href="#内存文件映射">内存文件映射</a></li>
-          </ol>
-        </li>
-      </ol>
-    </li>
-    <li><a href="#信号">信号</a></li>
-    <li><a href="#套接字">套接字</a>
-      <ol>
-        <li><a href="#套接字描述符">套接字描述符</a></li>
-        <li><a href="#寻址及关联">寻址及关联</a></li>
-        <li><a href="#建立连接">建立连接</a></li>
-        <li><a href="#时序图">时序图</a></li>
-      </ol>
-    </li>
-    <li><a href="#总结">总结</a></li>
-  </ol>
+</div>
+<h2 class="widget-title section-title"></h2>
+<div class="widget--toc">
+<nav id="TableOfContents">
+<ol>
+<li><a href="#引言">引言</a></li>
+<li><a href="#管道">管道</a>
+<ol>
+<li><a href="#pipe">PIPE</a></li>
+<li><a href="#fifo">FIFO</a></li>
+</ol>
+</li>
+<li><a href="#xsi-ipc">XSI IPC</a>
+<ol>
+<li><a href="#消息队列">消息队列</a></li>
+<li><a href="#共享存储">共享存储</a>
+<ol>
+<li><a href="#xsi-共享存储">XSI 共享存储</a></li>
+<li><a href="#内存文件映射">内存文件映射</a></li>
+</ol>
+</li>
+</ol>
+</li>
+<li><a href="#信号">信号</a></li>
+<li><a href="#套接字">套接字</a>
+<ol>
+<li><a href="#套接字描述符">套接字描述符</a></li>
+<li><a href="#寻址及关联">寻址及关联</a></li>
+<li><a href="#建立连接">建立连接</a></li>
+<li><a href="#时序图">时序图</a></li>
+</ol>
+</li>
+<li><a href="#总结">总结</a></li>
+</ol>
 </nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/%E6%8A%80%E6%9C%AF%E4%B8%8E%E9%A1%B9%E7%9B%AE/" style="background-color: #2a9d8f; color: #fff;">
+</div>
+</section>
+</aside>
+<main class="main full-width">
+<article class="main-article">
+<header class="article-header">
+<div class="article-details">
+<header class="article-category">
+<a href="/categories/%E6%8A%80%E6%9C%AF%E4%B8%8E%E9%A1%B9%E7%9B%AE/" style="background-color: #2a9d8f; color: #fff;">
                 技术与项目
             </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/interprocess-communication/">【一文读懂】进程间通信</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">2022/06/07</time>
-            </div>
-        
-
-        
-    </footer>
-    
-
-    
-</div>
-
 </header>
-
-    <section class="article-content">
-    
-    
-    <h1 id="引言">引言
+<div class="article-title-wrapper">
+<h2 class="article-title">
+<a href="/posts/interprocess-communication/">【一文读懂】进程间通信</a>
+</h2>
+</div>
+<footer class="article-time">
+<div>
+<svg class="icon icon-tabler icon-tabler-calendar-time" fill="none" height="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="56" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
+<circle cx="18" cy="18" r="4"></circle>
+<path d="M15 3v4"></path>
+<path d="M7 3v4"></path>
+<path d="M3 11h16"></path>
+<path d="M18 16.496v1.504l1 1"></path>
+</svg>
+<time class="article-time--published">2022/06/07</time>
+</div>
+</footer>
+</div>
+</header>
+<section class="article-content">
+<h1 id="引言">引言
 </h1><p>进程间通信即InterProcess Communication，简称IPC。其目的是实现不同进程之间的通信问题。</p>
 <p>进程间通信方式可以归纳为以下几类：</p>
 <ul>
@@ -335,12 +222,12 @@
 <p>PIPE通过调用pipe函数来创建：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;unistd.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">pipe</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//返回值：成功则返回0；出错则返回-1。
 </span></span></span></code></pre></td></tr></table>
@@ -349,27 +236,13 @@
 <li>参数fd[2]为一个长度为2的文件描述符数组，fd[0]是读出端，fd[1]是写入端。当函数成功返回，则自动维护了一个从fd[1]到fd[0]的数据通道。</li>
 </ul>
 <p>通常，进程会先调用pipe，接着调用fork，从而创建从父进程到子进程的IPC通道。如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/after-fork.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/after-fork.png"/></p>
 <p>fork之后做什么取决于我们想要的数据流的方向：</p>
 <ul>
 <li>如果想要从父进程到子进程流动的PIPE，则关闭父进程的读端（fd[0]）和子进程的写端（fd[1]）,下图展示了这种情况；</li>
 <li>如果想要从子进程到父进程流动的PIPE，则关闭父进程的写端（fd[1]）和子进程的读端（fd[0]）。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/from-father-to-son.png"/></p>
 <blockquote>
 <p>PIPE的一端被关闭后，下列两条规则起作用：</p>
 <ul>
@@ -389,14 +262,14 @@
 </ul>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;stdio.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="n">FILE</span> <span class="o">*</span><span class="nf">popen</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">cmdstring</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">type</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//返回值：若成功，返回文件指针；若出错，返回NULL
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">pclose</span><span class="p">(</span><span class="n">FILE</span> <span class="o">*</span><span class="n">fp</span><span class="p">);</span>
@@ -408,47 +281,33 @@
 <p>cmdstring由Bourne shell以下列方式执行：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sh -c cmdstring
+<pre class="chroma" tabindex="0"><code class="language-sh" data-lang="sh"><span class="line"><span class="cl">sh -c cmdstring
 </span></span></code></pre></td></tr></table>
 </div>
 </div></blockquote>
 <ul>
 <li>如果type是“r”，则文件指针连接到cmdstring的标准输出；</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/r.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/r.png"/></p>
 <ul>
 <li>如果type是“w”，则文件指针连接到cmdstring的标准输入。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/w.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/w.png"/></p>
 <h2 id="fifo">FIFO
 </h2><p>FIFO也叫<strong>命名管道</strong>。相比于PIPE，FIFO的最大优势在于：它在两个不相关的进程间也能交换数据。</p>
 <p>FIFO是一种文件类型。FIFO的路径名存在于文件系统中。创建FIFO类似于创建文件：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/stat.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">mkfifo</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">mode</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="nf">mkfifoat</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="kt">mode_t</span> <span class="n">mode</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//两个函数返回值：成功返回0；出错返回-1
@@ -503,14 +362,14 @@
 </h2><p>消息队列是消息的链表，存储在内核中，由消息队列标识符标识。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/msg.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/msg.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">msgget</span><span class="p">(</span><span class="kt">key_t</span> <span class="n">key</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">);</span><span class="c1">//成功返回消息队列ID；出错返回-1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">msgctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">msqid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">msqid_ds</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span><span class="c1">//成功返回0；出错返回-1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">msgsnd</span><span class="p">(</span><span class="kt">int</span> <span class="n">msqid</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nbytes</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">);</span><span class="c1">//成功返回0；出错返回-1
@@ -538,14 +397,14 @@
 <h3 id="xsi-共享存储">XSI 共享存储
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/shm.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/shm.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">shmget</span><span class="p">(</span><span class="kt">key_t</span> <span class="n">key</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">);</span><span class="c1">//成功返回共享存储ID；出错返回-1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">int</span> <span class="nf">shmctl</span><span class="p">(</span><span class="kt">int</span> <span class="n">shmid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">cmd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">shmid_ds</span> <span class="o">*</span><span class="n">buf</span><span class="p">);</span><span class="c1">//成功返回0；出错返回-1
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">shmat</span><span class="p">(</span><span class="kt">int</span> <span class="n">shmid</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">);</span><span class="c1">//成功返回指向共享存储段的指针；出错返回-1
@@ -561,12 +420,12 @@
 <h3 id="内存文件映射">内存文件映射
 </h3><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/mman.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/mman.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="o">*</span><span class="nf">mmap</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">prot</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flag</span><span class="p">,</span> <span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">off_t</span> <span class="n">off</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//成功返回映射区起始地址；出错返回MAP_FAILED
 </span></span></span></code></pre></td></tr></table>
@@ -579,25 +438,11 @@
 <li>prot参数指定映射区的保护要求；</li>
 <li>flag参数影响映射区的多种属性，不详细展开。</li>
 </ul>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/mmap.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/mmap.png"/></p>
 <h1 id="信号">信号
 </h1><p>信号是软件中断。它只能用于通知进程某事件的发生，并不能传输数据。</p>
 <p>通过kill -l命令可以看到目前Linux支持的全部信号，已经达到了62种（32号和33号没有）。</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/xinhaonum.png"/></p>
 <p>每个信号的名字都是以SIG开头，这些信号名在头文件&lt;signal.h&gt;中被定义为正整数常量（信号编号）。</p>
 <p>在某个信号出现时，可以告诉内核按下列三种方式之一处理：</p>
 <ul>
@@ -608,12 +453,12 @@
 <p>UNIX系统信号机制最简单的接口是signal函数：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="nf">signal</span><span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">func</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">)))</span> <span class="p">(</span><span class="kt">int</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//成功返回以前的信号处理配置；出错返回SIG_ERR
 </span></span></span></code></pre></td></tr></table>
@@ -627,14 +472,14 @@
 <p><strong>signal函数现在已基本被sigaction函数替代</strong>：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;signal.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">sigaction</span><span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">,</span> 
 </span></span><span class="line"><span class="cl">              <span class="k">const</span> <span class="k">struct</span> <span class="n">sigaction</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">act</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">              <span class="k">struct</span> <span class="n">sigaction</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">oact</span><span class="p">);</span>
@@ -655,12 +500,12 @@
 </h2><p>套接字实现通过网络相连的不同计算机之间的进程间通信。在UNIX系统中，套接字也是一种文件类型，故它也有自己的文件描述符，叫做套接字描述符。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">socket</span><span class="p">(</span><span class="kt">int</span> <span class="n">domain</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocol</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//成功返回套接字（文件）描述符；出错返回-1
 </span></span></span></code></pre></td></tr></table>
@@ -707,14 +552,14 @@
 <p>UNIX提供了四个函数，用于完成主机字节序和网络字节序的相互转换：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
 </span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">uint32_t</span> <span class="nf">htonl</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">hostint32</span><span class="p">);</span><span class="c1">//32位整数的主机字节序到网络字节序的转换
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint16_t</span> <span class="nf">htons</span><span class="p">(</span><span class="kt">uint16_t</span> <span class="n">hostint16</span><span class="p">);</span><span class="c1">//16位整数的主机字节序到网络字节序的转换
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kt">uint32_t</span> <span class="nf">ntohl</span><span class="p">(</span><span class="kt">uint32_t</span> <span class="n">netint32</span><span class="p">);</span><span class="c1">//32位整数的网络字节序到主机字节序的转换
@@ -724,7 +569,7 @@
 </div><p>在IPv4因特网中，套接字地址用结构体sockaddr_in表示：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -735,7 +580,7 @@
 </span><span class="lnt">9
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">in_addr</span><span class="p">{</span>
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="k">struct</span> <span class="n">in_addr</span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">	<span class="kt">in_addr_t</span> <span class="n">s_addr</span><span class="p">;</span> <span class="c1">//IPv4地址
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">};</span>
 </span></span><span class="line"><span class="cl">
@@ -749,7 +594,7 @@
 </div><p>IP地址我们经常用点分十进制表示，但是计算机只能理解二进制格式，所以还有两个用来转换点分十进制和二进制地址的函数：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -761,7 +606,7 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;arpa/inet.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="nf">inet_ntop</span><span class="p">(</span><span class="kt">int</span> <span class="n">domain</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">                      <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">addr</span><span class="p">,</span>
 </span></span><span class="line"><span class="cl">                      <span class="kt">char</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">str</span><span class="p">,</span>
@@ -780,12 +625,12 @@
 <p>客户端程序的套接字由系统选择默认端口即可；而对于服务端程序，我们需要把其套接字关联到一个固定的套接字地址上，这个过程由bind函数完成：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="kt">socklen_t</span> <span class="n">len</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//返回值：成功返回0；出错返回-1
 </span></span></span></code></pre></td></tr></table>
@@ -799,12 +644,12 @@
 </h2><p>对于面向连接的套接字类型（如SOCK_STREAM），在开始交换数据之前，需要在客户端和服务端之间建立连接，发起连接的一般为客户端，这由connect函数完成：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">connect</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">addr</span><span class="p">,</span> <span class="kt">socklen_t</span> <span class="n">len</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//成功返回0；出错返回-1
 </span></span></span></code></pre></td></tr></table>
@@ -820,12 +665,12 @@
 <p>服务器调用listen函数来宣告它愿意接受连接请求：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">listen</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">backlog</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//返回值：成功返回0；出错返回-1
 </span></span></span></code></pre></td></tr></table>
@@ -840,12 +685,12 @@
 <p>调用listen之后，服务端套接字就能接收连接请求，使用accept函数获得连接请求并建立连接：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
+<pre class="chroma" tabindex="0"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#include</span> <span class="cpf">&lt;sys/socket.h&gt;</span><span class="cp">
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="kt">int</span> <span class="nf">accept</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">addr</span><span class="p">,</span> <span class="n">socklen</span> <span class="o">*</span><span class="kr">restrict</span> <span class="n">len</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl"><span class="c1">//成功返回新的套接字描述符；出错返回-1
 </span></span></span></code></pre></td></tr></table>
@@ -861,28 +706,14 @@
 </blockquote>
 <h2 id="时序图">时序图
 </h2><p>一图胜千言，下面是面向连接的TCP socket通信时序图：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/princple.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/princple.png"/></p>
 <h1 id="总结">总结
 </h1><blockquote>
 <p>《APUE》中明确指明，要尽量避免使用消息队列及信号量（Semaphore）。</p>
 </blockquote>
 <p><strong>为什么共享存储是最快的IPC方式？</strong></p>
 <p>使用PIPE、FIFO、消息队列如下图所示：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/IPC-slow.png"/></p>
 <p>使用PIPE、FIFO、消息队列从一个文件传输信息到另外一个文件需要复制4次：</p>
 <ol>
 <li>服务端将信息从相应的文件复制到服务端临时缓冲区中；</li>
@@ -890,14 +721,7 @@
 <li>客户端将信息从PIPE（FIFO/消息队列）复制到客户端临时缓冲区中；</li>
 <li>从客户端临时缓冲区将信息复制到输出文件中。</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/interprocess-communicatiom/shared-memory-fast.png"/></p>
 <p>共享内存的消息复制只有两次：</p>
 <ol>
 <li>从输入文件到共享内存；</li>
@@ -907,221 +731,117 @@
 <blockquote>
 <p>共享存储的缺点就是需要进行同步操作。</p>
 </blockquote>
-
 </section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+<footer class="article-footer">
+<section class="article-tags">
+<a href="/tags/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a>
+</section>
+<section class="article-copyright">
+<svg class="icon icon-tabler icon-tabler-copyright" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M14.5 9a3.5 4 0 1 0 0 6"></path>
 </svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
 </article>
-
-    
-
-    
-
 <aside class="related-content--wrapper">
-    <h2 class="section-title"></h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
+<h2 class="section-title"></h2>
+<div class="related-content">
+<div class="flex article-list--tile">
 <article class="">
-    <a href="/posts/linux-condition/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】互斥锁与条件变量</h2>
-        </div>
-    </a>
+<a href="/posts/linux-condition/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】互斥锁与条件变量</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/process-scheduling/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】进程调度</h2>
-        </div>
-    </a>
+<a href="/posts/process-scheduling/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】进程调度</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/threads-sync/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】线程同步</h2>
-        </div>
-    </a>
+<a href="/posts/threads-sync/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】线程同步</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/basic-of-process-and-thread/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】进程与线程</h2>
-        </div>
-    </a>
+<a href="/posts/basic-of-process-and-thread/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】进程与线程</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/cpp-constructor-destructor-calling-order/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】C&#43;&#43;构造函数与析构函数的调用顺序</h2>
-        </div>
-    </a>
+<a href="/posts/cpp-constructor-destructor-calling-order/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】C++构造函数与析构函数的调用顺序</h2>
+</div>
+</a>
 </article>
-
-            
-        </div>
-    </div>
+</div>
+</div>
 </aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
+<footer class="site-footer">
+<section class="copyright">
+        © 
         
             2018 - 
         
         2026 bitdove. All Rights Reserved.
     </section>
-    
-    <section class="powerby">
-         <br />
-        
-    </section>
+<section class="powerby">
+<br/>
+</section>
 </footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+</div>
+</div>
+</div>
+</div><script crossorigin="anonymous" defer="" integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js">
+</script><script crossorigin="anonymous" defer="" integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js">
+</script><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet"/><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet"/>
+</main>
+</div>
+<script crossorigin="anonymous" integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js">
+</script><script defer="" src="/ts/main.js" type="text/javascript"></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
@@ -1133,6 +853,5 @@
         document.head.appendChild(customFont);
     }());
 </script>
-
-    </body>
+</body>
 </html>

@@ -1,12 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>本地大模型推理速度测试工具</title>
-    <style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>本地大模型推理速度测试工具</title>
+<style>
         :root {
             --primary-color: #1a73e8;
             --success-color: #98c379;
@@ -325,111 +323,102 @@
         }
     </style>
 </head>
-
 <body>
-    <div class="container">
-        <h1><span class="logo">🚀</span> 大模型 Prefill & Decode 性能测试工具</h1>
-
-        <div class="api-selector">
-            <div class="api-option active" data-type="openai">OpenAI兼容接口</div>
-            <div class="api-option" data-type="ollama">Ollama接口</div>
-        </div>
-
-        <div class="api-description" id="apiDescription">
-            <h3>OpenAI兼容接口测试说明</h3>
-            <ul>
-                <li>使用流式响应(stream=true)测量首字延迟</li>
-                <li>预填充速度 = 提示词长度 / (首字到达时间 - 请求开始时间)</li>
-                <li>输出速度 = 输出token数 / (输出完成时间 - 首字到达时间)</li>
-                <li>适用于所有兼容OpenAI API的大模型服务</li>
-            </ul>
-        </div>
-
-        <div class="config-section">
-            <h2>API 信息</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="apiUrl">API 地址</label>
-                    <input type="text" id="apiUrl" value="">
-                </div>
-                <div class="form-group">
-                    <label for="modelName">模型名称</label>
-                    <input type="text" id="modelName" value="">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="apiKey">API-Key</label>
-                    <input type="text" id="apiKey" value="" placeholder="未设置 API-Key 则留空">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="notes">备注</label>
-                    <input type="text" id="notes" value="" placeholder="请填写设备信息、模型信息、模型推理框架，以便在结果中显示">
-                </div>
-            </div>
-        </div>
-
-        <div class="config-section">
-            <h2>测试参数配置</h2>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="minLength">最小提示词长度</label>
-                    <input type="number" id="minLength" value="" step="128">
-                </div>
-                <div class="form-group">
-                    <label for="maxLength">最大提示词长度</label>
-                    <input type="number" id="maxLength" value="" step="128">
-                </div>
-                <div class="form-group">
-                    <label for="step">步长</label>
-                    <input type="number" id="step" value="" step="128">
-                </div>
-                <div class="form-group">
-                    <label for="outputLength">期望输出长度</label>
-                    <input type="number" id="outputLength" value="" min="1">
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group">
-                    <label for="temperatureInput">Temperature</label>
-                    <input type="number" id="temperatureInput" value="" step="0.1" min="0" max="2">
-                </div>
-                <div class="form-group">
-                    <label for="topPInput">Top P</label>
-                    <input type="number" id="topPInput" value="" step="0.01" min="0" max="1">
-                </div>
-                <div class="form-group">
-                    <label for="presencePenaltyInput">Presence Penalty</label>
-                    <input type="number" id="presencePenaltyInput" value="" step="0.1" min="-2" max="2">
-                </div>
-                <div class="form-group">
-                    <label for="frequencyPenaltyInput">Frequency Penalty</label>
-                    <input type="number" id="frequencyPenaltyInput" value="" step="0.1" min="-2" max="2">
-                </div>
-            </div>
-        </div>
-
-        <h2>执行测试</h2>
-        <div class="action-buttons">
-            <button id="startTest" style="background: #349bea;">开始测试</button>
-            <button id="stopTest" style="display: none; background: #E74C3C;">停止测试</button>
-            <button id="copyMarkdown" style="display: none; background: #4CAF50;">复制 Markdown 表格</button>
-            <button id="exportCSV" style="display: none; background: #4eb8a6;">导出 CSV 数据</button>
-        </div>
-        <div class="progress-container">
-            <div id="progressBar" class="progress-bar" style="width: 0%"></div>
-        </div>
-
-        <div id="results">
-            <p class="info">等待开始测试...</p>
-        </div>
-
-        <textarea id="markdownOutputHidden"></textarea>
-    </div>
-
-    <script>
+<div class="container">
+<h1><span class="logo">🚀</span> 大模型 Prefill &amp; Decode 性能测试工具</h1>
+<div class="api-selector">
+<div class="api-option active" data-type="openai">OpenAI兼容接口</div>
+<div class="api-option" data-type="ollama">Ollama接口</div>
+</div>
+<div class="api-description" id="apiDescription">
+<h3>OpenAI兼容接口测试说明</h3>
+<ul>
+<li>使用流式响应(stream=true)测量首字延迟</li>
+<li>预填充速度 = 提示词长度 / (首字到达时间 - 请求开始时间)</li>
+<li>输出速度 = 输出token数 / (输出完成时间 - 首字到达时间)</li>
+<li>适用于所有兼容OpenAI API的大模型服务</li>
+</ul>
+</div>
+<div class="config-section">
+<h2>API 信息</h2>
+<div class="form-row">
+<div class="form-group">
+<label for="apiUrl">API 地址</label>
+<input id="apiUrl" type="text" value=""/>
+</div>
+<div class="form-group">
+<label for="modelName">模型名称</label>
+<input id="modelName" type="text" value=""/>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="apiKey">API-Key</label>
+<input id="apiKey" placeholder="未设置 API-Key 则留空" type="text" value=""/>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="notes">备注</label>
+<input id="notes" placeholder="请填写设备信息、模型信息、模型推理框架，以便在结果中显示" type="text" value=""/>
+</div>
+</div>
+</div>
+<div class="config-section">
+<h2>测试参数配置</h2>
+<div class="form-row">
+<div class="form-group">
+<label for="minLength">最小提示词长度</label>
+<input id="minLength" step="128" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="maxLength">最大提示词长度</label>
+<input id="maxLength" step="128" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="step">步长</label>
+<input id="step" step="128" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="outputLength">期望输出长度</label>
+<input id="outputLength" min="1" type="number" value=""/>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label for="temperatureInput">Temperature</label>
+<input id="temperatureInput" max="2" min="0" step="0.1" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="topPInput">Top P</label>
+<input id="topPInput" max="1" min="0" step="0.01" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="presencePenaltyInput">Presence Penalty</label>
+<input id="presencePenaltyInput" max="2" min="-2" step="0.1" type="number" value=""/>
+</div>
+<div class="form-group">
+<label for="frequencyPenaltyInput">Frequency Penalty</label>
+<input id="frequencyPenaltyInput" max="2" min="-2" step="0.1" type="number" value=""/>
+</div>
+</div>
+</div>
+<h2>执行测试</h2>
+<div class="action-buttons">
+<button id="startTest" style="background: #349bea;">开始测试</button>
+<button id="stopTest" style="display: none; background: #E74C3C;">停止测试</button>
+<button id="copyMarkdown" style="display: none; background: #4CAF50;">复制 Markdown 表格</button>
+<button id="exportCSV" style="display: none; background: #4eb8a6;">导出 CSV 数据</button>
+</div>
+<div class="progress-container">
+<div class="progress-bar" id="progressBar" style="width: 0%"></div>
+</div>
+<div id="results">
+<p class="info">等待开始测试...</p>
+</div>
+<textarea id="markdownOutputHidden"></textarea>
+</div>
+<script>
         // 默认参数设置
         // ===============================================================================
         // API 端点和模型名称配置
@@ -1065,5 +1054,4 @@
 
     </script>
 </body>
-
 </html>

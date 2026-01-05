@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
+<html dir="ltr" lang="zh">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/><meta content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n" name="description"/>
 <title>【Proxy】How to Build Proxy with Xray</title>
-
-<link rel='canonical' href='https://bitdove.github.io/posts/how-to-build-proxy-with-xray/'>
-
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【Proxy】How to Build Proxy with Xray">
-<meta property='og:description' content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
-<meta property='og:url' content='https://bitdove.github.io/posts/how-to-build-proxy-with-xray/'>
-<meta property='og:site_name' content='空山无我心自闲'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='Proxy' /><meta property='article:published_time' content='2024-09-18T16:26:03&#43;08:00'/><meta property='article:modified_time' content='2024-09-18T16:26:03&#43;08:00'/>
-<meta name="twitter:title" content="【Proxy】How to Build Proxy with Xray">
-<meta name="twitter:description" content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n">
-    <link rel="shortcut icon" href="/favicon.ico" />
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
+<link href="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/" rel="canonical"/>
+<link href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css" rel="stylesheet"/><meta content="【Proxy】How to Build Proxy with Xray" property="og:title"/>
+<meta content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n" property="og:description"/>
+<meta content="https://bitdove.github.io/posts/how-to-build-proxy-with-xray/" property="og:url"/>
+<meta content="空山无我心自闲" property="og:site_name"/>
+<meta content="article" property="og:type"/><meta content="Post" property="article:section"/><meta content="Proxy" property="article:tag"/><meta content="2024-09-18T16:26:03+08:00" property="article:published_time"/><meta content="2024-09-18T16:26:03+08:00" property="article:modified_time"/>
+<meta content="【Proxy】How to Build Proxy with Xray" name="twitter:title"/>
+<meta content=" 免责声明： 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。\n" name="twitter:description"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+</head>
+<body class="article-page">
+<script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
@@ -41,413 +36,231 @@
         }
     })();
 </script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
-            <h2 class="site-description"></h2>
-        </div>
-    </header><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button aria-label="" class="hamburger hamburger--spin" id="toggle-menu" type="button">
+<span class="hamburger-box">
+<span class="hamburger-inner"></span>
+</span>
+</button>
+<header>
+<figure class="site-avatar">
+<a href="/">
+<img alt="Avatar" class="site-logo" height="300" loading="lazy" src="/img/avatar_hu16717790870751216787.png" width="300"/>
+</a>
+</figure>
+<div class="site-meta">
+<h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
+<h2 class="site-description"></h2>
+</div>
+</header><ol class="menu" id="main-menu">
+<li>
+<a href="/">
+<svg class="icon icon-tabler icon-tabler-home" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>
+<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
 </svg>
-
-
-
-                
-                <span>首页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+<span>首页</span>
+</a>
+</li>
+<li>
+<a href="/%E5%85%B3%E4%BA%8E/">
+<svg class="icon icon-tabler icon-tabler-user" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="7" r="4"></circle>
+<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
 </svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
+<span>关于</span>
+</a>
+</li>
+<li>
+<a href="/archives/">
+<svg class="icon icon-tabler icon-tabler-archive" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<rect height="4" rx="2" width="18" x="3" y="4"></rect>
+<path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+<line x1="10" x2="14" y1="12" y2="12"></line>
 </svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
+<span>归档</span>
+</a>
+</li>
+<li>
+<a href="/search/">
+<svg class="icon icon-tabler icon-tabler-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="10" cy="10" r="7"></circle>
+<line x1="21" x2="15" y1="21" y2="15"></line>
 </svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E9%93%BE%E6%8E%A5/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+<span>搜索</span>
+</a>
+</li>
+<li>
+<a href="/%E9%93%BE%E6%8E%A5/">
+<svg class="icon icon-tabler icon-tabler-link" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
+<path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
 </svg>
-
-
-
-                
-                <span>链接</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<span>链接</span>
+</a>
+</li>
+<li class="menu-bottom-section">
+<ol class="menu">
+<li id="dark-mode-toggle">
+<svg class="icon icon-tabler icon-tabler-toggle-left" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="8" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<svg class="icon icon-tabler icon-tabler-toggle-right" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="16" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <span></span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
+<span></span>
+</li>
+</ol>
+</li>
+</ol>
 </aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class="widget-icon">
+<svg class="icon icon-tabler icon-tabler-hash" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<line x1="5" x2="19" y1="9" y2="9"></line>
+<line x1="5" x2="19" y1="15" y2="15"></line>
+<line x1="11" x2="7" y1="4" y2="20"></line>
+<line x1="17" x2="13" y1="4" y2="20"></line>
 </svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title"></h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#preface">Preface</a></li>
-    <li><a href="#buy-a-vps">Buy a VPS</a>
-      <ol>
-        <li><a href="#choose-vps-type-and-location">Choose VPS Type and Location</a></li>
-        <li><a href="#select-system-image">Select System Image</a></li>
-        <li><a href="#choose-a-plan">Choose a Plan</a></li>
-        <li><a href="#other-configs">Other Configs</a></li>
-        <li><a href="#place-an-order">Place an order</a></li>
-        <li><a href="#deployment-completed">Deployment Completed</a></li>
-        <li><a href="#check-if-the-ip-is-blocked">Check if the IP is blocked</a></li>
-      </ol>
-    </li>
-    <li><a href="#configuring-the-vps">Configuring the VPS</a>
-      <ol>
-        <li><a href="#ssh-login-to-vps">SSH login to VPS</a></li>
-        <li><a href="#update">Update</a></li>
-        <li><a href="#enable-ufw-firewall">Enable ufw firewall</a></li>
-        <li><a href="#change-ssh-default-port">Change SSH default port</a></li>
-        <li><a href="#set-up-key-only-login">Set up key-only login</a></li>
-        <li><a href="#create-a-new-common-user">Create a new common user</a></li>
-        <li><a href="#disable-root-login">Disable root login</a></li>
-        <li><a href="#install-fail2ban">Install Fail2Ban</a></li>
-      </ol>
-    </li>
-    <li><a href="#xray-installation-and-configuration">Xray installation and configuration</a>
-      <ol>
-        <li><a href="#install-xray">Install Xray</a></li>
-        <li><a href="#config-xray">Config Xray</a></li>
-      </ol>
-    </li>
-    <li><a href="#warp-unlock-chatgpt-client">Warp Unlock ChatGPT Client</a></li>
-    <li><a href="#references">References</a></li>
-  </ol>
+</div>
+<h2 class="widget-title section-title"></h2>
+<div class="widget--toc">
+<nav id="TableOfContents">
+<ol>
+<li><a href="#preface">Preface</a></li>
+<li><a href="#buy-a-vps">Buy a VPS</a>
+<ol>
+<li><a href="#choose-vps-type-and-location">Choose VPS Type and Location</a></li>
+<li><a href="#select-system-image">Select System Image</a></li>
+<li><a href="#choose-a-plan">Choose a Plan</a></li>
+<li><a href="#other-configs">Other Configs</a></li>
+<li><a href="#place-an-order">Place an order</a></li>
+<li><a href="#deployment-completed">Deployment Completed</a></li>
+<li><a href="#check-if-the-ip-is-blocked">Check if the IP is blocked</a></li>
+</ol>
+</li>
+<li><a href="#configuring-the-vps">Configuring the VPS</a>
+<ol>
+<li><a href="#ssh-login-to-vps">SSH login to VPS</a></li>
+<li><a href="#update">Update</a></li>
+<li><a href="#enable-ufw-firewall">Enable ufw firewall</a></li>
+<li><a href="#change-ssh-default-port">Change SSH default port</a></li>
+<li><a href="#set-up-key-only-login">Set up key-only login</a></li>
+<li><a href="#create-a-new-common-user">Create a new common user</a></li>
+<li><a href="#disable-root-login">Disable root login</a></li>
+<li><a href="#install-fail2ban">Install Fail2Ban</a></li>
+</ol>
+</li>
+<li><a href="#xray-installation-and-configuration">Xray installation and configuration</a>
+<ol>
+<li><a href="#install-xray">Install Xray</a></li>
+<li><a href="#config-xray">Config Xray</a></li>
+</ol>
+</li>
+<li><a href="#warp-unlock-chatgpt-client">Warp Unlock ChatGPT Client</a></li>
+<li><a href="#references">References</a></li>
+</ol>
 </nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/%E7%94%9F%E6%B4%BB%E4%B8%8E%E5%85%B4%E8%B6%A3/" style="background-color: #2a9d8f; color: #fff;">
+</div>
+</section>
+</aside>
+<main class="main full-width">
+<article class="main-article">
+<header class="article-header">
+<div class="article-details">
+<header class="article-category">
+<a href="/categories/%E7%94%9F%E6%B4%BB%E4%B8%8E%E5%85%B4%E8%B6%A3/" style="background-color: #2a9d8f; color: #fff;">
                 生活与兴趣
             </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/how-to-build-proxy-with-xray/">【Proxy】How to Build Proxy with Xray</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">2024/09/18</time>
-            </div>
-        
-
-        
-    </footer>
-    
-
-    
-</div>
-
 </header>
-
-    <section class="article-content">
-    
-    
-    <blockquote>
+<div class="article-title-wrapper">
+<h2 class="article-title">
+<a href="/posts/how-to-build-proxy-with-xray/">【Proxy】How to Build Proxy with Xray</a>
+</h2>
+</div>
+<footer class="article-time">
+<div>
+<svg class="icon icon-tabler icon-tabler-calendar-time" fill="none" height="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="56" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
+<circle cx="18" cy="18" r="4"></circle>
+<path d="M15 3v4"></path>
+<path d="M7 3v4"></path>
+<path d="M3 11h16"></path>
+<path d="M18 16.496v1.504l1 1"></path>
+</svg>
+<time class="article-time--published">2024/09/18</time>
+</div>
+</footer>
+</div>
+</header>
+<section class="article-content">
+<blockquote>
 <p><strong>免责声明</strong>：
 本文所述内容仅供技术学习和研究使用，不构成任何形式的非法行为指导。请读者严格遵守所在地区的法律法规，自行判断和承担使用相关技术可能带来的风险。作者不对因使用本文内容而产生的任何法律责任承担责任。</p>
 </blockquote>
 <h1 id="preface">Preface
-</h1><p>As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don&rsquo;t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.</p>
+</h1><p>As we all know, overseas websites like Google and Twitter cannot be directly accessed in mainland China. We also know that you can access these websites by connecting to a VPN. As for the details, most people don’t know, and there is really no need to know. But one thing we must understand is that an important reason why VPN can work is that GFW does not block all overseas websites. It is for this reason that we can find loopholes to exploit.</p>
 <blockquote>
 <p>Technically speaking, VPN ≠ circumventing the Great Firewall. However, in mainland China, VPN has become synonymous with circumventing the Great Firewall, so I won’t go into details here.</p>
 </blockquote>
-<p>On the Internet, IP addresses are our &ldquo;identity cards&rdquo;. These banned overseas websites also have their own IP addresses, but unfortunately they are blocked by GFW, so we cannot access them directly. There are still some IP addresses that are not blocked and we can access them. A series of wall-climbing technologies are built on this basis.</p>
+<p>On the Internet, IP addresses are our “identity cards”. These banned overseas websites also have their own IP addresses, but unfortunately they are blocked by GFW, so we cannot access them directly. There are still some IP addresses that are not blocked and we can access them. A series of wall-climbing technologies are built on this basis.</p>
 <p>Assume there is an IP address A, which is not blocked by GFW, and as a member of the Internet, A can access those blocked websites. We can send the request to access Google to A, and A will help us access it and then send the result to us. This is the principle of <strong>Proxy</strong>, and it is also the basis for a series of wall-circumvention technologies to be realized.</p>
 <h1 id="buy-a-vps">Buy a VPS
 </h1><p>First of all, we need an IP address that is not blocked. Purchasing an overseas VPS can meet this requirement. A VPS is actually a cloud server located overseas.</p>
 <p>There are many VPS providers, such as BandWagon, Vultr, CloudCone, etc. This article takes Vultr as an example, and other manufacturers are similar.</p>
-<p>Register and log in to <a class="link" href="https://www.vultr.com/"  target="_blank" rel="noopener"
-    >Vultr</a>, click the Deploy button in the upper right corner and follow the steps below to deploy a VPS.</p>
+<p>Register and log in to <a class="link" href="https://www.vultr.com/" rel="noopener" target="_blank">Vultr</a>, click the Deploy button in the upper right corner and follow the steps below to deploy a VPS.</p>
 <h2 id="choose-vps-type-and-location">Choose VPS Type and Location
 </h2><p>Select Shared CPU as the type.</p>
 <p>The location depends on your needs. Here we take Los Angeles, USA as an example.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/select_type_and_location.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="select_type_and_location"
-	
-	
-></p>
+<p><img alt="select_type_and_location" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/select_type_and_location.png"/></p>
 <h2 id="select-system-image">Select System Image
 </h2><p>Choose an operating system. For a server, you should naturally choose Linux. Debian is recommended as it is more stable.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_image.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="choose_image"
-	
-	
-></p>
+<p><img alt="choose_image" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_image.png"/></p>
 <h2 id="choose-a-plan">Choose a Plan
 </h2><p>Choose a configuration based on your needs. The higher the configuration, the more expensive it is. Here we choose the cheapest plan of 5$/month.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_plan.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="choose_plan"
-	
-	
-></p>
+<p><img alt="choose_plan" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose_plan.png"/></p>
 <h2 id="other-configs">Other Configs
 </h2><p>Remove Auto Backups, it costs money.</p>
 <p>Remove IPv6, it is not needed.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/additional_feature.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="additional_features"
-	
-	
-></p>
+<p><img alt="additional_features" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/additional_feature.png"/></p>
 <p>Here you can upload the SSH key and transfer the <strong>public key</strong> of your local computer <code>~/.ssh/</code> to Vultr. In this way, you can log in directly with the key after the deployment is completed without entering a password, which is much more convenient.</p>
 <p>Set the host name in Server Hostname. You can give it a name of your own. This article takes Test as an example.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/server_setting.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="server_settings"
-	
-	
-></p>
+<p><img alt="server_settings" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/server_setting.png"/></p>
 <h2 id="place-an-order">Place an order
 </h2><p>Now it’s ready. Confirm the quantity and price, and click Deploy Now to start deployment.</p>
 <blockquote>
 <p>The deployment process may take several minutes, so be patient.</p>
 </blockquote>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/order.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="order"
-	
-	
-></p>
+<p><img alt="order" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/order.png"/></p>
 <h2 id="deployment-completed">Deployment Completed
 </h2><p>When the Status changes to Running, the deployment is complete. The coded part is the public IP address of this VPS, which is represented by <code>100.200.300.400</code> below.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/deploy.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="deploy"
-	
-	
-></p>
+<p><img alt="deploy" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/deploy.png"/></p>
 <h2 id="check-if-the-ip-is-blocked">Check if the IP is blocked
-</h2><p>Enter your IP address in <a class="link" href="https://ping.chinaz.com/"  target="_blank" rel="noopener"
-    >Webmaster Tools - Ping Detection</a> and click Ping Detection. If most of the information is green, it means that your IP address is not blocked and you can use it with confidence.。</p>
+</h2><p>Enter your IP address in <a class="link" href="https://ping.chinaz.com/" rel="noopener" target="_blank">Webmaster Tools - Ping Detection</a> and click Ping Detection. If most of the information is green, it means that your IP address is not blocked and you can use it with confidence.。</p>
 <p>If it is all red, it means that this IP address has been blocked and cannot be used. According to the policy of your VPS manufacturer, find a way to change the IP until it is available.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/pingcheck.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="pingcheck"
-	
-	
-></p>
+<p><img alt="pingcheck" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/pingcheck.png"/></p>
 <h1 id="configuring-the-vps">Configuring the VPS
 </h1><h2 id="ssh-login-to-vps">SSH login to VPS
 </h2><p>To configure your VPS, first log in to your VPS via SSH. Open your terminal tool and enter the following command to log in to your VPS.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@100.200.300.400
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@100.200.300.400
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
@@ -457,11 +270,11 @@
 </h2><p>Update your package index and then upgrade all installed packages to their latest versions, ensuring your system is up to date with the latest features and security patches.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt update
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">apt update
 </span></span><span class="line"><span class="cl">apt upgrade
 </span></span></code></pre></td></tr></table>
 </div>
@@ -469,10 +282,10 @@
 </h2><p>The first thing to do after logging in is to enable the ufw firewall. First, confirm whether ufw has been installed. Execute the following command. If the ufw version number is returned, it means it has been installed.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ufw --version
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ufw --version
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
@@ -481,7 +294,7 @@
 <p>Run the following command to configure ufw.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -494,7 +307,7 @@
 </span><span class="lnt">11
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Setting ufw defaults</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Setting ufw defaults</span>
 </span></span><span class="line"><span class="cl">sudo ufw default deny incoming
 </span></span><span class="line"><span class="cl">sudo ufw default allow outgoing
 </span></span><span class="line"><span class="cl"><span class="c1"># Allow SSH connections</span>
@@ -510,7 +323,7 @@
 </div><p>Other common ufw commands：</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -519,7 +332,7 @@
 </span><span class="lnt">7
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check ufw status</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Check ufw status</span>
 </span></span><span class="line"><span class="cl">sudo ufw status
 </span></span><span class="line"><span class="cl"><span class="c1"># ufw status output with line number, and delete a line</span>
 </span></span><span class="line"><span class="cl">sudo ufw status numbered
@@ -534,34 +347,25 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="2">
 <li>Find the item <code>Port</code> in the opened file, remove the comment symbol <code>#</code>, and change 22 to the new port number (1025-65535). This article takes 9753 as an example.</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/changeport.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="changeport"
-	
-	
-></p>
+<p><img alt="changeport" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/changeport.png"/></p>
 <ol start="3">
 <li>Restart the ssh service for the changes to take effect.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">service sshd restart
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">service sshd restart
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
@@ -569,25 +373,16 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ufw allow 9753/tcp comment <span class="s2">&#34;SSH&#34;</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ufw allow 9753/tcp comment <span class="s2">"SSH"</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="5">
 <li>Delete the original port 22 in the firewall. The figure below deletes <code>22/tcp</code>. Use the same method to delete <code>22/tcp(v6)</code>.</li>
 </ol>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/delete_port22.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="delete_port22"
-	
-	
-></p>
+<p><img alt="delete_port22" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/delete_port22.png"/></p>
 <ol start="6">
 <li>
 <p>Test the new port number login</p>
@@ -597,10 +392,10 @@
 <p>In a new terminal window, log in to the VPS using the new port number.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@100.200.300.400 -p <span class="m">9753</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh root@100.200.300.400 -p <span class="m">9753</span>
 </span></span></code></pre></td></tr></table>
 </div>
 </div></li>
@@ -611,7 +406,7 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -621,12 +416,12 @@
 </span><span class="lnt">8
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a new .ssh folder in your home directory</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Create a new .ssh folder in your home directory</span>
 </span></span><span class="line"><span class="cl">mkdir ~/.ssh
 </span></span><span class="line"><span class="cl"><span class="c1"># Modify the .ssh folder permissions</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
 </span></span><span class="line"><span class="cl"><span class="c1"># Upload the public key. Replace the content in quotation marks with the public key value</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;Your public key content&#34;</span> &gt;&gt; ~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">"Your public key content"</span> &gt;&gt; ~/.ssh/authorized_keys
 </span></span><span class="line"><span class="cl"><span class="c1"># Modify the permissions of the authorized_keys file</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
 </span></span></code></pre></td></tr></table>
@@ -636,30 +431,21 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Find the item <code>PasswordAuthentication</code>, uncomment it and change it to <code>no</code>, then save and exit.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/banpasswdlogin.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="banpasswdlogin"
-	
-	
-></p>
+<p><img alt="banpasswdlogin" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/banpasswdlogin.png"/></p>
 <p>For some systems, it is useless to change only this one, and you also need to change the following one. If the system does not have this file, ignore this step.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config.d/50-cloud-init.conf
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">nano /etc/ssh/sshd_config.d/50-cloud-init.conf
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Similarly, uncomment the PasswordAuthentication option and change it to no, then save and exit.</p>
@@ -668,10 +454,10 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">service sshd restart
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">service sshd restart
 </span></span></code></pre></td></tr></table>
 </div>
 </div><ol start="4">
@@ -680,10 +466,10 @@
 <p>Open a new terminal and log into the VPS using the following command.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -i path/to/yourprivatekeyname -p <span class="m">9753</span> root@100.200.300.400
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">ssh -i path/to/yourprivatekeyname -p <span class="m">9753</span> root@100.200.300.400
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
@@ -695,10 +481,10 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">adduser leo
+<pre class="chroma" tabindex="0"><code class="language-fallback" data-lang="fallback"><span class="line"><span class="cl">adduser leo
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
@@ -709,28 +495,19 @@
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">visudo
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">visudo
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/addsudo.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="addsudo"
-	
-	
-></p>
+</div><p><img alt="addsudo" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/addsudo.png"/></p>
 <ol start="3">
 <li>Give the public key to the new user.</li>
 </ol>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -742,14 +519,14 @@
 </span><span class="lnt">10
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Switch to new user leo</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Switch to new user leo</span>
 </span></span><span class="line"><span class="cl">su leo
 </span></span><span class="line"><span class="cl"><span class="c1"># Create a .ssh folder in the home directory of the new user leo</span>
 </span></span><span class="line"><span class="cl">mkdir ~/.ssh
 </span></span><span class="line"><span class="cl"><span class="c1"># Modify the .ssh folder permissions</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">700</span> ~/.ssh
 </span></span><span class="line"><span class="cl"><span class="c1"># Upload the public key. Replace the content in quotation marks with the public key value</span>
-</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">&#34;公钥内容&#34;</span> &gt;&gt; ~/.ssh/authorized_keys
+</span></span><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s2">"公钥内容"</span> &gt;&gt; ~/.ssh/authorized_keys
 </span></span><span class="line"><span class="cl"><span class="c1"># Modify the permissions of the authorized_keys file</span>
 </span></span><span class="line"><span class="cl">chmod <span class="m">600</span> ~/.ssh/authorized_keys
 </span></span></code></pre></td></tr></table>
@@ -759,26 +536,26 @@
 </h2><p>Open <code>/etc/ssh/sshd_config</code>, find the item <code>PermitRootLogin</code>, uncomment it and change <code>yes</code> to <code>no</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/ssh/sshd_config
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/ssh/sshd_config
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Restart the sshd service for the changes to take effect.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service sshd restart
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo service sshd restart
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>In this way, the root user will not be able to log in, and the <code>leo</code> user will be used to manage the VPS in the future.</p>
 <h2 id="install-fail2ban">Install Fail2Ban
 </h2><div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -797,7 +574,7 @@
 </span><span class="lnt">17
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install Fail2Ban</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Install Fail2Ban</span>
 </span></span><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt install fail2ban
 </span></span><span class="line"><span class="cl"><span class="c1"># Create a configuration file</span>
 </span></span><span class="line"><span class="cl">sudo nano /etc/fail2ban/jail.local
@@ -822,7 +599,7 @@
 <p><code>Fail2Ban</code> common commands:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -836,7 +613,7 @@
 </span><span class="lnt">12
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Restart Fail2Ban</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Restart Fail2Ban</span>
 </span></span><span class="line"><span class="cl">sudo systemctl restart fail2ban
 </span></span><span class="line"><span class="cl"><span class="c1"># Check fail2ban status</span>
 </span></span><span class="line"><span class="cl">sudo systemctl status fail2ban
@@ -852,18 +629,15 @@
 </div>
 </div><p>At this point, the VPS security configuration has been completed. The next step is to actually build a proxy.</p>
 <h1 id="xray-installation-and-configuration">Xray installation and configuration
-</h1><p>It is not recommended to use any third-party one-click scripts. Who knows if there is anything hidden in them? The official documentation is detailed enough and the installation and configuration are simple enough. For details of this part, please refer to <a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
-    >Official Documentation</a>。</p>
+</h1><p>It is not recommended to use any third-party one-click scripts. Who knows if there is anything hidden in them? The official documentation is detailed enough and the installation and configuration are simple enough. For details of this part, please refer to <a class="link" href="https://xtls.github.io/document/" rel="noopener" target="_blank">Official Documentation</a>。</p>
 <h2 id="install-xray">Install Xray
-</h2><p>The GitHub repository <a class="link" href="https://github.com/XTLS/Xray-install"  target="_blank" rel="noopener"
-    >Xray-install</a> is the installation method provided by <a class="link" href="https://github.com/XTLS"  target="_blank" rel="noopener"
-    >Xray official</a>. The official installation script can be found on the repository&rsquo;s <code>README</code> page:</p>
+</h2><p>The GitHub repository <a class="link" href="https://github.com/XTLS/Xray-install" rel="noopener" target="_blank">Xray-install</a> is the installation method provided by <a class="link" href="https://github.com/XTLS" rel="noopener" target="_blank">Xray official</a>. The official installation script can be found on the repository’s <code>README</code> page:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bash -c <span class="s2">&#34;</span><span class="k">$(</span>curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh<span class="k">)</span><span class="s2">&#34;</span> @ install
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bash -c <span class="s2">"</span><span class="k">$(</span>curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh<span class="k">)</span><span class="s2">"</span> @ install
 </span></span></code></pre></td></tr></table>
 </div>
 </div><blockquote>
@@ -876,38 +650,29 @@
 <p>Generate a valid <code>UUID</code> and save it for future use (<code>UUID</code> can be roughly understood as an ID that is almost never repeated, like a fingerprint).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">xray uuid
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">xray uuid
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/uuidgennerate.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="uuidgenerate"
-	
-	
-></p>
+</div><p><img alt="uuidgenerate" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/uuidgennerate.png"/></p>
 <p>This <code>uuid</code> should be retained and will be used in the subsequent configuration.</p>
 </li>
 <li>
 <p>Modify the Xray configuration file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Paste the following content. You only need to modify <code>port</code> and <code>id</code>. In this article, <code>port</code> takes <code>12345</code> as an example, and <code>id</code> takes the one generated in the previous step as an example.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -950,44 +715,44 @@
 </span><span class="lnt">41
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">The</span> <span class="err">original</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">cannot</span> <span class="err">access</span> <span class="err">the</span> <span class="err">ChatGPT</span> <span class="err">client</span>
+<pre class="chroma" tabindex="0"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">The</span> <span class="err">original</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">cannot</span> <span class="err">access</span> <span class="err">the</span> <span class="err">ChatGPT</span> <span class="err">client</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;warning&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// This is the path for Linux
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/error.log&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"log"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">"loglevel"</span><span class="p">:</span> <span class="s2">"warning"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">"access"</span><span class="p">:</span> <span class="s2">"/var/log/xray/access.log"</span><span class="p">,</span> <span class="c1">// This is the path for Linux
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">"error"</span><span class="p">:</span> <span class="s2">"/var/log/xray/error.log"</span>
 </span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"inbounds"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"port"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"vmess"</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"settings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"clients"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">          <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuid，The client and server must be the same
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">&#34;alterId&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"0061c282-49f7-41d7-b223-0a9b6d8675dd"</span><span class="p">,</span>  <span class="c1">// uuid，The client and server must be the same
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">"alterId"</span><span class="p">:</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">]</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;kcpSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;uplinkCapacity&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;downlinkCapacity&#34;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;congestion&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;readBufferSize&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;writeBufferSize&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;header&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;wireguard&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"streamSettings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"network"</span><span class="p">:</span> <span class="s2">"kcp"</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">"kcpSettings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"uplinkCapacity"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"downlinkCapacity"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"congestion"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"readBufferSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"writeBufferSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"header"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"wireguard"</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"outbounds"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{}</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"freedom"</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"settings"</span><span class="p">:</span> <span class="p">{}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">]</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -998,30 +763,21 @@
 <p>Open the port number specified in the configuration file.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ufw allow 12345/tcp comment <span class="s2">&#34;Xray&#34;</span>
-</span></span><span class="line"><span class="cl">sudo ufw allow 12345/udp comment <span class="s2">&#34;Xray&#34;</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ufw allow 12345/tcp comment <span class="s2">"Xray"</span>
+</span></span><span class="line"><span class="cl">sudo ufw allow 12345/udp comment <span class="s2">"Xray"</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/openport12345.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="openport12345"
-	
-	
-></p>
+</div><p><img alt="openport12345" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/openport12345.png"/></p>
 </li>
 <li>
 <p>Start Xray</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span><span class="lnt">3
 </span><span class="lnt">4
@@ -1029,7 +785,7 @@
 </span><span class="lnt">6
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start Xray</span>
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Start Xray</span>
 </span></span><span class="line"><span class="cl">sudo systemctl start xray
 </span></span><span class="line"><span class="cl"><span class="c1"># Set Xray to start at boot</span>
 </span></span><span class="line"><span class="cl">sudo systemctl <span class="nb">enable</span> xray
@@ -1038,92 +794,83 @@
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>When you see the green <code>active(running)</code> as shown in the figure below, it means that Xray has been successfully started and the server is configured.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/startxray.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="startxray"
-	
-	
-></p>
+<p><img alt="startxray" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/startxray.png"/></p>
 </li>
 <li>
 <p>Enable BBR acceleration.</p>
 <p>Add the official <code>backports</code> repository for Debian 10 to get updated software repositories.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/apt/sources.list
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/apt/sources.list
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Then add the following line at the end, save and exit.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">deb http://archive.debian.org/debian buster-backports main
+<pre class="chroma" tabindex="0"><code class="language-text" data-lang="text"><span class="line"><span class="cl">deb http://archive.debian.org/debian buster-backports main
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Refresh the software repository and query the latest version of the official Debian kernel and install it. Please be sure to install the version corresponding to your VPS (this article takes the more common [amd64] as an example).</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt -t buster-backports install linux-image-amd64
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo apt update <span class="o">&amp;&amp;</span> sudo apt -t buster-backports install linux-image-amd64
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Modify the kernel parameter configuration file sysctl.conf and enable BBR.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/sysctl.conf
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /etc/sysctl.conf
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Add the following content</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-text" data-lang="text"><span class="line"><span class="cl">net.core.default_qdisc=fq
+<pre class="chroma" tabindex="0"><code class="language-text" data-lang="text"><span class="line"><span class="cl">net.core.default_qdisc=fq
 </span></span><span class="line"><span class="cl">net.ipv4.tcp_congestion_control=bbr
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Reboot the VPS to take effect of the kernel update and the <code>BBR</code> configuration.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo reboot
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo reboot
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Make sure BBR is enabled.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep bbr
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep bbr
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>At this point, a result like <code>tcp_bbr</code> should be returned.</p>
 <p>If you want to confirm that the <code>fq</code> algorithm is enabled correctly, you can use the following command:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep fq
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">lsmod <span class="p">|</span> grep fq
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>At this point, a result like <code>sch_fq</code> should be returned.</p>
@@ -1139,110 +886,47 @@
 </ol>
 <h1 id="warp-unlock-chatgpt-client">Warp Unlock ChatGPT Client
 </h1><blockquote>
-<p>ChatGPT blocks the IP addresses of VPS vendors, but Cloudflare&rsquo;s Warp can provide us with IP addresses, so we use the IP addresses provided by Warp to access ChatGPT. However, the IPv4 addresses provided by Warp have been abused and cannot access the ChatGPT client, so we use Warp IPv6. The goal is to use the public IPv4 address of the VPS when accessing ordinary websites, and use the IPv6 address of Warp when accessing ChatGPT.</p>
+<p>ChatGPT blocks the IP addresses of VPS vendors, but Cloudflare’s Warp can provide us with IP addresses, so we use the IP addresses provided by Warp to access ChatGPT. However, the IPv4 addresses provided by Warp have been abused and cannot access the ChatGPT client, so we use Warp IPv6. The goal is to use the public IPv4 address of the VPS when accessing ordinary websites, and use the IPv6 address of Warp when accessing ChatGPT.</p>
 </blockquote>
 <p>Execute the following script to install WGCF.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh <span class="o">&amp;&amp;</span> bash menu.sh
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">wget -N https://gitlab.com/fscarmen/warp/-/raw/main/menu.sh <span class="o">&amp;&amp;</span> bash menu.sh
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Select the language as needed. This article selects Chinese.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="chooselanguage"
-	
-	
-></p>
+<p><img alt="chooselanguage" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose.png"/></p>
 <p>Because our VPS is an IPv4 only machine and does not have an IPv6 address, we only need Warp to provide an IPv6 address, so choose 2. Add a Warp IPv6 network interface for IPv4 only.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/add.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="addv6forv4only"
-	
-	
-></p>
+<p><img alt="addv6forv4only" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/add.png"/></p>
 <p>Select 1. Global (default) as the working mode.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/workmode.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="workmode"
-	
-	
-></p>
+<p><img alt="workmode" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/workmode.png"/></p>
 <p>Select the account type. Choose according to your needs. I have the team version of WARP, which is Zero Trust, so I choose 3. Teams.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/loginaccount.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="accountchoose"
-	
-	
-></p>
+<p><img alt="accountchoose" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/loginaccount.png"/></p>
 <p>The next step is to log in to the selected account. Teams account selection 2. It is more convenient to log in by organization name and email verification code.</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/logincf.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="login"
-	
-	
-></p>
+<p><img alt="login" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/logincf.png"/></p>
 <p>Select 3 for priority level. Use the VPS initial settings (default).</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose46priority.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="46"
-	
-	
-></p>
+<p><img alt="46" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/choose46priority.png"/></p>
 <p>WGCF will start installing. Wait for the installation to complete and run the following command. You can see that there is a network card called <code>warp</code>.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ifconfig
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo ifconfig
 </span></span></code></pre></td></tr></table>
 </div>
-</div><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/warpinter.png"
-	
-	
-	
-	loading="lazy"
-	
-		alt="warpcard"
-	
-	
-></p>
+</div><p><img alt="warpcard" loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/BuildYourOwnLadder/warpinter.png"/></p>
 <p>This way the VPS has an IPv6 address.</p>
 <p>Modify the Xray configuration file</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo nano /usr/local/etc/xray/config.json
 </span></span></code></pre></td></tr></table>
 </div>
 </div><p>Overwrite with the following content. Replace the <code>IPv4</code> address with your VPS public IPv4 address, and replace the <code>IPv6</code> address with the address of the warp network card. Also replace <code>uuid</code> and <code>port</code> with your own. Leave the rest unchanged.</p>
@@ -1251,7 +935,7 @@
 </blockquote>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt"> 1
+<pre class="chroma" tabindex="0"><code><span class="lnt"> 1
 </span><span class="lnt"> 2
 </span><span class="lnt"> 3
 </span><span class="lnt"> 4
@@ -1329,78 +1013,78 @@
 </span><span class="lnt">76
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">Warp</span> <span class="err">takes</span> <span class="err">over</span> <span class="err">IPv</span><span class="mi">6</span> <span class="err">traffic</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">unlocks</span> <span class="err">ChatGPT</span> <span class="err">client</span>
+<pre class="chroma" tabindex="0"><code class="language-json" data-lang="json"><span class="line"><span class="cl"><span class="err">#</span> <span class="err">Warp</span> <span class="err">takes</span> <span class="err">over</span> <span class="err">IPv</span><span class="mi">6</span> <span class="err">traffic</span> <span class="err">version,</span> <span class="err">VMess+Kcp,</span> <span class="err">unlocks</span> <span class="err">ChatGPT</span> <span class="err">client</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;log&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;loglevel&#34;</span><span class="p">:</span> <span class="s2">&#34;warning&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;access&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/access.log&#34;</span><span class="p">,</span> <span class="c1">// This is the path for Linux
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">&#34;error&#34;</span><span class="p">:</span> <span class="s2">&#34;/var/log/xray/error.log&#34;</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"log"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">"loglevel"</span><span class="p">:</span> <span class="s2">"warning"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">"access"</span><span class="p">:</span> <span class="s2">"/var/log/xray/access.log"</span><span class="p">,</span> <span class="c1">// This is the path for Linux
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="nt">"error"</span><span class="p">:</span> <span class="s2">"/var/log/xray/error.log"</span>
 </span></span><span class="line"><span class="cl">  <span class="p">},</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;inbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"inbounds"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;port&#34;</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;vmess&#34;</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;clients&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"port"</span><span class="p">:</span> <span class="mi">12345</span><span class="p">,</span> <span class="c1">// Server listening port
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"vmess"</span><span class="p">,</span>    <span class="c1">// Main Incoming Protocol
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"settings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"clients"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">          <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;id&#34;</span><span class="p">:</span> <span class="s2">&#34;0061c282-49f7-41d7-b223-0a9b6d8675dd&#34;</span><span class="p">,</span>  <span class="c1">// uuID，The client and server must be the same
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">&#34;alterId&#34;</span><span class="p">:</span> <span class="mi">0</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">"id"</span><span class="p">:</span> <span class="s2">"0061c282-49f7-41d7-b223-0a9b6d8675dd"</span><span class="p">,</span>  <span class="c1">// uuID，The client and server must be the same
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>            <span class="nt">"alterId"</span><span class="p">:</span> <span class="mi">0</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">]</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;streamSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;network&#34;</span><span class="p">:</span> <span class="s2">&#34;kcp&#34;</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">&#34;kcpSettings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;uplinkCapacity&#34;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;downlinkCapacity&#34;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;congestion&#34;</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;readBufferSize&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;writeBufferSize&#34;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="nt">&#34;header&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">            <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;wireguard&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"streamSettings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"network"</span><span class="p">:</span> <span class="s2">"kcp"</span><span class="p">,</span> <span class="c1">//Here, kcp can also be written as mkcp. Both writing methods have the same effect.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="nt">"kcpSettings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"uplinkCapacity"</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"downlinkCapacity"</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"congestion"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"readBufferSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"writeBufferSize"</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="nt">"header"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">            <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"wireguard"</span>
 </span></span><span class="line"><span class="cl">          <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;outbounds&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"outbounds"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv4&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"freedom"</span><span class="p">,</span>  <span class="c1">// Main Outgoing Protocol
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>      <span class="nt">"settings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"domainStrategy"</span><span class="p">:</span> <span class="s2">"UseIPv4"</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;100.200.300.400&#34;</span> <span class="c1">// VPS public IPv4 address
+</span></span><span class="line"><span class="cl">      <span class="nt">"sendThrough"</span><span class="p">:</span> <span class="s2">"100.200.300.400"</span> <span class="c1">// VPS public IPv4 address
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;warp&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;freedom&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;settings&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;domainStrategy&#34;</span><span class="p">:</span> <span class="s2">&#34;UseIPv6&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"tag"</span><span class="p">:</span> <span class="s2">"warp"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"freedom"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"settings"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"domainStrategy"</span><span class="p">:</span> <span class="s2">"UseIPv6"</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;sendThrough&#34;</span><span class="p">:</span> <span class="s2">&#34;2606:4700:110:88b8:5141:4387:4a3:20d1&#34;</span> <span class="c1">// warp network card IPv6 address
+</span></span><span class="line"><span class="cl">      <span class="nt">"sendThrough"</span><span class="p">:</span> <span class="s2">"2606:4700:110:88b8:5141:4387:4a3:20d1"</span> <span class="c1">// warp network card IPv6 address
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">},</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;tag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">      <span class="nt">&#34;protocol&#34;</span><span class="p">:</span> <span class="s2">&#34;blackhole&#34;</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"tag"</span><span class="p">:</span> <span class="s2">"block"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">      <span class="nt">"protocol"</span><span class="p">:</span> <span class="s2">"blackhole"</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">],</span>
-</span></span><span class="line"><span class="cl">  <span class="nt">&#34;routing&#34;</span><span class="p">:</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="nt">&#34;rules&#34;</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">  <span class="nt">"routing"</span><span class="p">:</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nt">"rules"</span><span class="p">:</span> <span class="p">[</span>
 </span></span><span class="line"><span class="cl">      <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;domain&#34;</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">          <span class="s2">&#34;geosite:openai&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="s2">&#34;geosite:bing&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">          <span class="s2">&#34;geosite:netflix&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"domain"</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">          <span class="s2">"geosite:openai"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="s2">"geosite:bing"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">          <span class="s2">"geosite:netflix"</span>
 </span></span><span class="line"><span class="cl">        <span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;outboundTag&#34;</span><span class="p">:</span> <span class="s2">&#34;warp&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;field&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"outboundTag"</span><span class="p">:</span> <span class="s2">"warp"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"field"</span>
 </span></span><span class="line"><span class="cl">      <span class="p">},</span>
 </span></span><span class="line"><span class="cl">      <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;domain&#34;</span><span class="p">:</span> <span class="p">[</span>
-</span></span><span class="line"><span class="cl">          <span class="s2">&#34;geosite:category-porn&#34;</span>  <span class="c1">// block porn
+</span></span><span class="line"><span class="cl">        <span class="nt">"domain"</span><span class="p">:</span> <span class="p">[</span>
+</span></span><span class="line"><span class="cl">          <span class="s2">"geosite:category-porn"</span>  <span class="c1">// block porn
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">],</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;outboundTag&#34;</span><span class="p">:</span> <span class="s2">&#34;block&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">        <span class="nt">&#34;type&#34;</span><span class="p">:</span> <span class="s2">&#34;field&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"outboundTag"</span><span class="p">:</span> <span class="s2">"block"</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="nt">"type"</span><span class="p">:</span> <span class="s2">"field"</span>
 </span></span><span class="line"><span class="cl">      <span class="p">}</span>
 </span></span><span class="line"><span class="cl">    <span class="p">]</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
@@ -1410,11 +1094,11 @@
 </div><p>Restart Xray and confirm that Xray has run successfully.</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
-<pre tabindex="0" class="chroma"><code><span class="lnt">1
+<pre class="chroma" tabindex="0"><code><span class="lnt">1
 </span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
-<pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start xray
+<pre class="chroma" tabindex="0"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">sudo systemctl start xray
 </span></span><span class="line"><span class="cl">sudo systemctl status xray
 </span></span></code></pre></td></tr></table>
 </div>
@@ -1422,229 +1106,123 @@
 <h1 id="references">References
 </h1><blockquote>
 <ol>
-<li><a class="link" href="https://xtls.github.io/document/"  target="_blank" rel="noopener"
-    >Project X official documentation</a></li>
-<li><a class="link" href="https://blog.laoda.de/archives/how-to-secure-a-linux-server"  target="_blank" rel="noopener"
-    >保护好你的小鸡！保姆级服务器安全教程！</a></li>
-<li><a class="link" href="https://cn.v2ex.com/t/942922"  target="_blank" rel="noopener"
-    >vps 解锁 chatgpt</a></li>
-<li><a class="link" href="https://surge.tel/13/2116/"  target="_blank" rel="noopener"
-    >注册Cloudflare并加入ZeroTrust教程</a></li>
+<li><a class="link" href="https://xtls.github.io/document/" rel="noopener" target="_blank">Project X official documentation</a></li>
+<li><a class="link" href="https://blog.laoda.de/archives/how-to-secure-a-linux-server" rel="noopener" target="_blank">保护好你的小鸡！保姆级服务器安全教程！</a></li>
+<li><a class="link" href="https://cn.v2ex.com/t/942922" rel="noopener" target="_blank">vps 解锁 chatgpt</a></li>
+<li><a class="link" href="https://surge.tel/13/2116/" rel="noopener" target="_blank">注册Cloudflare并加入ZeroTrust教程</a></li>
 </ol>
 </blockquote>
-
 </section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/proxy/">Proxy</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+<footer class="article-footer">
+<section class="article-tags">
+<a href="/tags/proxy/">Proxy</a>
+</section>
+<section class="article-copyright">
+<svg class="icon icon-tabler icon-tabler-copyright" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M14.5 9a3.5 4 0 1 0 0 6"></path>
 </svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
 </article>
-
-    
-
-    
-
 <aside class="related-content--wrapper">
-    <h2 class="section-title"></h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
+<h2 class="section-title"></h2>
+<div class="related-content">
+<div class="flex article-list--tile">
 <article class="">
-    <a href="/posts/%E4%BB%A3%E7%90%86%E5%9C%A8%E4%B8%80%E5%8F%B0%E5%BA%9F%E5%BC%83vps%E4%B8%8A%E9%87%8D%E6%96%B0%E8%B5%B0%E4%B8%80%E9%81%8Dxray-core%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【代理】在一台废弃VPS上重新走一遍Xray-core代理配置流程</h2>
-        </div>
-    </a>
+<a href="/posts/%E4%BB%A3%E7%90%86%E5%9C%A8%E4%B8%80%E5%8F%B0%E5%BA%9F%E5%BC%83vps%E4%B8%8A%E9%87%8D%E6%96%B0%E8%B5%B0%E4%B8%80%E9%81%8Dxray-core%E4%BB%A3%E7%90%86%E9%85%8D%E7%BD%AE%E6%B5%81%E7%A8%8B/">
+<div class="article-details">
+<h2 class="article-title">【代理】在一台废弃VPS上重新走一遍Xray-core代理配置流程</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/xray-core-as-client/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">[TODO] You Don&#39;t Need a GUI Proxy Client</h2>
-        </div>
-    </a>
+<a href="/posts/xray-core-as-client/">
+<div class="article-details">
+<h2 class="article-title">[TODO] You Don't Need a GUI Proxy Client</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E8%A7%84%E8%8C%83%E5%91%8A%E5%88%AB%E6%B7%B7%E4%B9%B1%E5%BD%A2%E6%88%90%E8%87%AA%E5%B7%B1%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E8%A7%84%E8%8C%83/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【文件组织规范】告别混乱形成自己的文件组织规范</h2>
-        </div>
-    </a>
+<a href="/posts/%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E8%A7%84%E8%8C%83%E5%91%8A%E5%88%AB%E6%B7%B7%E4%B9%B1%E5%BD%A2%E6%88%90%E8%87%AA%E5%B7%B1%E7%9A%84%E6%96%87%E4%BB%B6%E7%BB%84%E7%BB%87%E8%A7%84%E8%8C%83/">
+<div class="article-details">
+<h2 class="article-title">【文件组织规范】告别混乱形成自己的文件组织规范</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/wipenglish-learningthe-system-of-english-grammar/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【WIP】【English Learning】The System of English Grammar</h2>
-        </div>
-    </a>
+<a href="/posts/wipenglish-learningthe-system-of-english-grammar/">
+<div class="article-details">
+<h2 class="article-title">【WIP】【English Learning】The System of English Grammar</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/wip%E5%81%A5%E5%BA%B7%E4%B8%80%E5%9C%BA%E6%89%8B%E6%9C%AF%E8%AE%A9%E6%88%91%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86%E7%94%B2%E7%8A%B6%E8%85%BA/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【WIP】【健康】一场手术让我重新认识甲状腺</h2>
-        </div>
-    </a>
+<a href="/posts/wip%E5%81%A5%E5%BA%B7%E4%B8%80%E5%9C%BA%E6%89%8B%E6%9C%AF%E8%AE%A9%E6%88%91%E9%87%8D%E6%96%B0%E8%AE%A4%E8%AF%86%E7%94%B2%E7%8A%B6%E8%85%BA/">
+<div class="article-details">
+<h2 class="article-title">【WIP】【健康】一场手术让我重新认识甲状腺</h2>
+</div>
+</a>
 </article>
-
-            
-        </div>
-    </div>
+</div>
+</div>
 </aside>
-
-     
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
+<footer class="site-footer">
+<section class="copyright">
+        © 
         
             2018 - 
         
         2026 bitdove. All Rights Reserved.
     </section>
-    
-    <section class="powerby">
-         <br />
-        
-    </section>
+<section class="powerby">
+<br/>
+</section>
 </footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+</div>
+</div>
+</div>
+</div><script crossorigin="anonymous" defer="" integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js">
+</script><script crossorigin="anonymous" defer="" integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js">
+</script><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet"/><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet"/>
+</main>
+</div>
+<script crossorigin="anonymous" integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js">
+</script><script defer="" src="/ts/main.js" type="text/javascript"></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
@@ -1656,6 +1234,5 @@
         document.head.appendChild(customFont);
     }());
 </script>
-
-    </body>
+</body>
 </html>

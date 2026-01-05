@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html lang="zh" dir="ltr">
-    <head><meta charset='utf-8'>
-<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n">
+<html dir="ltr" lang="zh">
+<head><meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/><meta content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n" name="description"/>
 <title>【一文读懂】ARP协议</title>
-
-<link rel='canonical' href='https://bitdove.github.io/posts/arp-protocol/'>
-
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="【一文读懂】ARP协议">
-<meta property='og:description' content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n">
-<meta property='og:url' content='https://bitdove.github.io/posts/arp-protocol/'>
-<meta property='og:site_name' content='空山无我心自闲'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='计算机网络' /><meta property='article:published_time' content='2024-05-09T00:28:32-07:00'/><meta property='article:modified_time' content='2024-05-09T00:28:32-07:00'/>
-<meta name="twitter:title" content="【一文读懂】ARP协议">
-<meta name="twitter:description" content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n">
-    <link rel="shortcut icon" href="/favicon.ico" />
-
-    </head>
-    <body class="
-    article-page
-    ">
-    <script>
+<link href="https://bitdove.github.io/posts/arp-protocol/" rel="canonical"/>
+<link href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css" rel="stylesheet"/><meta content="【一文读懂】ARP协议" property="og:title"/>
+<meta content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n" property="og:description"/>
+<meta content="https://bitdove.github.io/posts/arp-protocol/" property="og:url"/>
+<meta content="空山无我心自闲" property="og:site_name"/>
+<meta content="article" property="og:type"/><meta content="Post" property="article:section"/><meta content="计算机网络" property="article:tag"/><meta content="2024-05-09T00:28:32-07:00" property="article:published_time"/><meta content="2024-05-09T00:28:32-07:00" property="article:modified_time"/>
+<meta content="【一文读懂】ARP协议" name="twitter:title"/>
+<meta content="什么是ARP？ ARP是Address Resolution Protocol的首字母缩写，即地址解析协议。\n如果一台主机要将一个帧发送到另一台主机，只知道这台主机的IP地址是不够的，还需要知道主机的硬件地址。\n" name="twitter:description"/>
+<link href="/favicon.ico" rel="shortcut icon"/>
+</head>
+<body class="article-page">
+<script>
         (function() {
             const colorSchemeKey = 'StackColorScheme';
             if(!localStorage.getItem(colorSchemeKey)){
@@ -41,277 +36,169 @@
         }
     })();
 </script>
-<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky ">
-    <button class="hamburger hamburger--spin" type="button" id="toggle-menu" aria-label="">
-        <span class="hamburger-box">
-            <span class="hamburger-inner"></span>
-        </span>
-    </button>
-
-    <header>
-        
-            
-            <figure class="site-avatar">
-                <a href="/">
-                
-                    
-                    
-                    
-                        
-                        <img src="/img/avatar_hu16717790870751216787.png" width="300"
-                            height="300" class="site-logo" loading="lazy" alt="Avatar">
-                    
-                
-                </a>
-                
-            </figure>
-            
-        
-        
-        <div class="site-meta">
-            <h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
-            <h2 class="site-description"></h2>
-        </div>
-    </header><ol class="menu" id="main-menu">
-        
-        
-        
-        <li >
-            <a href='/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <polyline points="5 12 3 12 12 3 21 12 19 12" />
-  <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
-  <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" />
+<div class="container main-container flex on-phone--column extended"><aside class="sidebar left-sidebar sticky">
+<button aria-label="" class="hamburger hamburger--spin" id="toggle-menu" type="button">
+<span class="hamburger-box">
+<span class="hamburger-inner"></span>
+</span>
+</button>
+<header>
+<figure class="site-avatar">
+<a href="/">
+<img alt="Avatar" class="site-logo" height="300" loading="lazy" src="/img/avatar_hu16717790870751216787.png" width="300"/>
+</a>
+</figure>
+<div class="site-meta">
+<h1 class="site-name"><a href="/">空山无我心自闲</a></h1>
+<h2 class="site-description"></h2>
+</div>
+</header><ol class="menu" id="main-menu">
+<li>
+<a href="/">
+<svg class="icon icon-tabler icon-tabler-home" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<polyline points="5 12 3 12 12 3 21 12 19 12"></polyline>
+<path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+<path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6"></path>
 </svg>
-
-
-
-                
-                <span>首页</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E5%85%B3%E4%BA%8E/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-user" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="7" r="4" />
-  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+<span>首页</span>
+</a>
+</li>
+<li>
+<a href="/%E5%85%B3%E4%BA%8E/">
+<svg class="icon icon-tabler icon-tabler-user" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="7" r="4"></circle>
+<path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2"></path>
 </svg>
-
-
-
-                
-                <span>关于</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/archives/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-archive" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <rect x="3" y="4" width="18" height="4" rx="2" />
-  <path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10" />
-  <line x1="10" y1="12" x2="14" y2="12" />
+<span>关于</span>
+</a>
+</li>
+<li>
+<a href="/archives/">
+<svg class="icon icon-tabler icon-tabler-archive" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<rect height="4" rx="2" width="18" x="3" y="4"></rect>
+<path d="M5 8v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-10"></path>
+<line x1="10" x2="14" y1="12" y2="12"></line>
 </svg>
-
-
-
-                
-                <span>归档</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/search/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="10" cy="10" r="7" />
-  <line x1="21" y1="21" x2="15" y2="15" />
+<span>归档</span>
+</a>
+</li>
+<li>
+<a href="/search/">
+<svg class="icon icon-tabler icon-tabler-search" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="10" cy="10" r="7"></circle>
+<line x1="21" x2="15" y1="21" y2="15"></line>
 </svg>
-
-
-
-                
-                <span>搜索</span>
-            </a>
-        </li>
-        
-        
-        <li >
-            <a href='/%E9%93%BE%E6%8E%A5/' >
-                
-                
-                
-                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-link" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5" />
-  <path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5" />
+<span>搜索</span>
+</a>
+</li>
+<li>
+<a href="/%E9%93%BE%E6%8E%A5/">
+<svg class="icon icon-tabler icon-tabler-link" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M10 14a3.5 3.5 0 0 0 5 0l4 -4a3.5 3.5 0 0 0 -5 -5l-.5 .5"></path>
+<path d="M14 10a3.5 3.5 0 0 0 -5 0l-4 4a3.5 3.5 0 0 0 5 5l.5 -.5"></path>
 </svg>
-
-
-
-                
-                <span>链接</span>
-            </a>
-        </li>
-        
-        <li class="menu-bottom-section">
-            <ol class="menu">
-
-                
-                    <li id="dark-mode-toggle">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-left" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="8" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<span>链接</span>
+</a>
+</li>
+<li class="menu-bottom-section">
+<ol class="menu">
+<li id="dark-mode-toggle">
+<svg class="icon icon-tabler icon-tabler-toggle-left" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="8" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-toggle-right" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="16" cy="12" r="2" />
-  <rect x="2" y="6" width="20" height="12" rx="6" />
+<svg class="icon icon-tabler icon-tabler-toggle-right" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="16" cy="12" r="2"></circle>
+<rect height="12" rx="6" width="20" x="2" y="6"></rect>
 </svg>
-
-
-
-                        <span></span>
-                    </li>
-                
-            </ol>
-        </li>
-    </ol>
+<span></span>
+</li>
+</ol>
+</li>
+</ol>
 </aside>
-
-    <aside class="sidebar right-sidebar sticky">
-        
-            
-                
-    <section class="widget archives">
-        <div class="widget-icon">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-hash" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <line x1="5" y1="9" x2="19" y2="9" />
-  <line x1="5" y1="15" x2="19" y2="15" />
-  <line x1="11" y1="4" x2="7" y2="20" />
-  <line x1="17" y1="4" x2="13" y2="20" />
+<aside class="sidebar right-sidebar sticky">
+<section class="widget archives">
+<div class="widget-icon">
+<svg class="icon icon-tabler icon-tabler-hash" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<line x1="5" x2="19" y1="9" y2="9"></line>
+<line x1="5" x2="19" y1="15" y2="15"></line>
+<line x1="11" x2="7" y1="4" y2="20"></line>
+<line x1="17" x2="13" y1="4" y2="20"></line>
 </svg>
-
-
-
-        </div>
-        <h2 class="widget-title section-title"></h2>
-        
-        <div class="widget--toc">
-            <nav id="TableOfContents">
-  <ol>
-    <li><a href="#什么是arp">什么是ARP？</a></li>
-    <li><a href="#arp帧的格式">ARP帧的格式</a>
-      <ol>
-        <li><a href="#以太网帧的格式">以太网帧的格式</a></li>
-        <li><a href="#arp消息的格式">ARP消息的格式</a></li>
-        <li><a href="#arp帧的格式-1">ARP帧的格式</a></li>
-      </ol>
-    </li>
-    <li><a href="#arp缓存">ARP缓存</a></li>
-    <li><a href="#arp如何工作">ARP如何工作？</a>
-      <ol>
-        <li><a href="#arp请求">ARP请求</a></li>
-        <li><a href="#arp应答">ARP应答</a></li>
-      </ol>
-    </li>
-    <li><a href="#代理arp">代理ARP</a></li>
-    <li><a href="#免费arp">免费ARP</a></li>
-    <li><a href="#acd">ACD</a>
-      <ol>
-        <li><a href="#arp探测消息">ARP探测消息</a></li>
-        <li><a href="#arp通告消息">ARP通告消息</a></li>
-      </ol>
-    </li>
-  </ol>
+</div>
+<h2 class="widget-title section-title"></h2>
+<div class="widget--toc">
+<nav id="TableOfContents">
+<ol>
+<li><a href="#什么是arp">什么是ARP？</a></li>
+<li><a href="#arp帧的格式">ARP帧的格式</a>
+<ol>
+<li><a href="#以太网帧的格式">以太网帧的格式</a></li>
+<li><a href="#arp消息的格式">ARP消息的格式</a></li>
+<li><a href="#arp帧的格式-1">ARP帧的格式</a></li>
+</ol>
+</li>
+<li><a href="#arp缓存">ARP缓存</a></li>
+<li><a href="#arp如何工作">ARP如何工作？</a>
+<ol>
+<li><a href="#arp请求">ARP请求</a></li>
+<li><a href="#arp应答">ARP应答</a></li>
+</ol>
+</li>
+<li><a href="#代理arp">代理ARP</a></li>
+<li><a href="#免费arp">免费ARP</a></li>
+<li><a href="#acd">ACD</a>
+<ol>
+<li><a href="#arp探测消息">ARP探测消息</a></li>
+<li><a href="#arp通告消息">ARP通告消息</a></li>
+</ol>
+</li>
+</ol>
 </nav>
-        </div>
-    </section>
-
-            
-        
-    </aside>
-
-
-            <main class="main full-width">
-    <article class="main-article">
-    <header class="article-header">
-
-    <div class="article-details">
-    
-    <header class="article-category">
-        
-            <a href="/categories/%E6%8A%80%E6%9C%AF%E4%B8%8E%E9%A1%B9%E7%9B%AE/" style="background-color: #2a9d8f; color: #fff;">
+</div>
+</section>
+</aside>
+<main class="main full-width">
+<article class="main-article">
+<header class="article-header">
+<div class="article-details">
+<header class="article-category">
+<a href="/categories/%E6%8A%80%E6%9C%AF%E4%B8%8E%E9%A1%B9%E7%9B%AE/" style="background-color: #2a9d8f; color: #fff;">
                 技术与项目
             </a>
-        
-    </header>
-    
-
-    <div class="article-title-wrapper">
-        <h2 class="article-title">
-            <a href="/posts/arp-protocol/">【一文读懂】ARP协议</a>
-        </h2>
-    
-        
-    </div>
-
-    
-    
-    
-    
-    <footer class="article-time">
-        
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-calendar-time" width="56" height="56" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4" />
-  <circle cx="18" cy="18" r="4" />
-  <path d="M15 3v4" />
-  <path d="M7 3v4" />
-  <path d="M3 11h16" />
-  <path d="M18 16.496v1.504l1 1" />
-</svg>
-                <time class="article-time--published">2024/05/09</time>
-            </div>
-        
-
-        
-    </footer>
-    
-
-    
-</div>
-
 </header>
-
-    <section class="article-content">
-    
-    
-    <h1 id="什么是arp">什么是ARP？
+<div class="article-title-wrapper">
+<h2 class="article-title">
+<a href="/posts/arp-protocol/">【一文读懂】ARP协议</a>
+</h2>
+</div>
+<footer class="article-time">
+<div>
+<svg class="icon icon-tabler icon-tabler-calendar-time" fill="none" height="56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="56" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<path d="M11.795 21h-6.795a2 2 0 0 1 -2 -2v-12a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v4"></path>
+<circle cx="18" cy="18" r="4"></circle>
+<path d="M15 3v4"></path>
+<path d="M7 3v4"></path>
+<path d="M3 11h16"></path>
+<path d="M18 16.496v1.504l1 1"></path>
+</svg>
+<time class="article-time--published">2024/05/09</time>
+</div>
+</footer>
+</div>
+</header>
+<section class="article-content">
+<h1 id="什么是arp">什么是ARP？
 </h1><blockquote>
 <p>ARP是<strong>A</strong>ddress <strong>R</strong>esolution <strong>P</strong>rotocol的首字母缩写，即<strong>地址解析协议</strong>。</p>
 </blockquote>
@@ -332,14 +219,7 @@
 <p>注：这里所说的ARP帧实际上是指ARP消息封装成的以太网帧。</p>
 </blockquote>
 <h2 id="以太网帧的格式">以太网帧的格式
-</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+</h2><p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ethernet-frame.png"/></p>
 <p>上图描述了链路层以太网帧的基本格式及各个字段的大小：</p>
 <ul>
 <li>DST：填写目的MAC地址，占6字节。</li>
@@ -363,14 +243,7 @@
 <p>有效载荷部分的最大长度，即1500字节，也被称为以太网的MTU（最大传输单元）。</p>
 </blockquote>
 <h2 id="arp消息的格式">ARP消息的格式
-</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+</h2><p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/structure-of-ARP-message.png"/></p>
 <p>上图描述了ARP消息的格式及各个字段的大小：</p>
 <ul>
 <li>硬件类型：指出硬件地址类型，占2字节。对于以太网，该值为1；</li>
@@ -388,28 +261,14 @@
 <p>当所请求的系统接收到ARP请求，它填充自己的硬件地址，将两个源地址和两个目的地址互换，将Op字段设置为2，然后发送生成的应答。</p>
 </blockquote>
 <h2 id="arp帧的格式-1">ARP帧的格式
-</h2><p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+</h2><p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-frame-structure.png"/></p>
 <blockquote>
 <p>ARP帧中存在重复信息：以太网头部和ARP消息中均包含<strong>发送方的MAC地址</strong>。</p>
 </blockquote>
 <h1 id="arp缓存">ARP缓存
 </h1><p>ARP高效运行的关键是每个主机和路由器上的<strong>ARP缓存</strong>。</p>
 <p>在Linux下，我们可以使用arp命令查看本机的ARP缓存。</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/arp-command.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/arp-command.png"/></p>
 <blockquote>
 <p>Flags字段的C表示该条目是由ARP协议动态学习而来；若为M表示是手工输入的；若为P表示“发布”。</p>
 <p>从上图看，我的云服务器上只有其默认网关的ARP缓存。</p>
@@ -430,26 +289,12 @@
 </blockquote>
 <h2 id="arp请求">ARP请求
 </h2><p>主机A发现自己不知道主机B的MAC地址，无法封装以太网帧，所以发出如下ARP请求帧：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-asking.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-asking.png"/></p>
 <p>这个ARP请求帧相当于主机A在子网内<strong>广播</strong>了这样一条消息：IP地址为10.0.0.3的主机，请把你的MAC地址告诉我！</p>
 <p>由于是广播，所以子网内的所有主机的以太网接口都可以接收到该ARP请求帧，IP地址不是10.0.0.3的主机将主动丢弃该帧。</p>
 <h2 id="arp应答">ARP应答
 </h2><p>而主机B接收到ARP请求后，发现自己的IP地址与请求中的IP地址一致，所以它做出反应：发送ARP应答帧：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-response.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-response.png"/></p>
 <p>同时，主机B还会把主机A的IP地址及对应的MAC地址添加到自己的ARP缓存中。</p>
 <p>主机A收到ARP应答帧后，就有了主机B的MAC地址，加上之前已知的主机B的IP地址，也一同添加到自己的ARP缓存中。</p>
 <blockquote>
@@ -457,14 +302,7 @@
 </blockquote>
 <h1 id="代理arp">代理ARP
 </h1><p>代理ARP的原理就是当出现跨网段的ARP请求时，路由器将自己的MAC地址返回给发送ARP请求的发送者，实现MAC地址代理（善意的欺骗），最终使得主机能够通信。</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/proxy-ARP.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/proxy-ARP.png"/></p>
 <h1 id="免费arp">免费ARP
 </h1><p>免费ARP的特殊之处在于，ARP请求中的源IP地址和目的IP地址均为请求发送者的IP地址，即：主机发送ARP请求寻找自己的MAC地址。</p>
 <p>免费ARP有两个用处：</p>
@@ -473,14 +311,7 @@
 <li>更新自己的MAC地址。如果主机的MAC地址变了（如更换了网卡），而IP地址没变。则可以发送一个免费ARP，告诉其他主机：我换MAC地址了，你们注意下。收到免费ARP的其他主机，就可以在自己的ARP缓存里找IP地址与免费ARP里的IP地址一致的条目，然后把这个IP地址对应的MAC地址更新为免费ARP里指明的新MAC地址。</li>
 </ul>
 <p>如上述主机A检测自己的IP地址是否冲突，可发送免费ARP如下：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/free-ARP.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/free-ARP.png"/></p>
 <h1 id="acd">ACD
 </h1><p>ACD是IPv4地址冲突检测的简称，用途顾名思义，就是检测IP地址是否冲突的，一般在通过DHCP获取IP地址后，DHCP客户机通过ACD技术检测分配的IP地址是否冲突。</p>
 <blockquote>
@@ -490,14 +321,7 @@
 <h2 id="arp探测消息">ARP探测消息
 </h2><p>ARP探测消息是一个特殊的ARP请求，特殊在其源IP地址字段被设置为0。ARP探测分组用于查看IP地址是否被其他主机占用。</p>
 <p>还是以上述的主机A为例，ARP探测消息如下：</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-detect.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-detect.png"/></p>
 <blockquote>
 <p>ARP探测消息的源IP地址设置为0，是为了避免候选IP地址（10.0.0.56）被另一台主机使用时的缓存污染。</p>
 </blockquote>
@@ -509,14 +333,7 @@
 <p>以上两种情况，主机A都会生成一个地址冲突消息，如果是DHCP分配的该IP地址，则发送DHCPDECLINE消息拒绝该IP地址。</p>
 <h2 id="arp通告消息">ARP通告消息
 </h2><p>如果通过ARP探测消息发现，10.0.0.56没有被其他主机占用，即没有出现IP地址冲突，则主机A会间隔2秒向子网广播发送2个ARP通告消息，以表明它现在占用这个IP地址（10.0.0.56）。</p>
-<p><img src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-announcement.png"
-	
-	
-	
-	loading="lazy"
-	
-	
-></p>
+<p><img loading="lazy" src="https://raw.githubusercontent.com/bitdove/PicsBed_1/main/ARP-protocol/ARP-announcement.png"/></p>
 <blockquote>
 <p>可以看到ARP通告消息其实跟免费ARP没有区别。</p>
 </blockquote>
@@ -526,221 +343,117 @@
 <li>保留该地址，但发送一个防御性的ARP通告，如果冲突继续，则停止使用该地址；</li>
 <li>不理会冲突，继续使用。</li>
 </ul>
-
 </section>
-
-
-    <footer class="article-footer">
-    
-    <section class="article-tags">
-        
-            <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
-        
-    </section>
-
-
-    
-    <section class="article-copyright">
-        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-copyright" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-  <path stroke="none" d="M0 0h24v24H0z"/>
-  <circle cx="12" cy="12" r="9" />
-  <path d="M14.5 9a3.5 4 0 1 0 0 6" />
+<footer class="article-footer">
+<section class="article-tags">
+<a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/">计算机网络</a>
+</section>
+<section class="article-copyright">
+<svg class="icon icon-tabler icon-tabler-copyright" fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 0h24v24H0z" stroke="none"></path>
+<circle cx="12" cy="12" r="9"></circle>
+<path d="M14.5 9a3.5 4 0 1 0 0 6"></path>
 </svg>
-
-
-
-        <span>Licensed under CC BY-NC-SA 4.0</span>
-    </section>
-    </footer>
-
-
-    
+<span>Licensed under CC BY-NC-SA 4.0</span>
+</section>
+</footer>
 </article>
-
-    
-
-    
-
 <aside class="related-content--wrapper">
-    <h2 class="section-title"></h2>
-    <div class="related-content">
-        <div class="flex article-list--tile">
-            
-                
+<h2 class="section-title"></h2>
+<div class="related-content">
+<div class="flex article-list--tile">
 <article class="">
-    <a href="/posts/tcp-introduction-deeper/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】TCP协议（下）</h2>
-        </div>
-    </a>
+<a href="/posts/tcp-introduction-deeper/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】TCP协议（下）</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/tcp-introduction/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】TCP协议（上）</h2>
-        </div>
-    </a>
+<a href="/posts/tcp-introduction/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】TCP协议（上）</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/dns-protocol/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】DNS协议</h2>
-        </div>
-    </a>
+<a href="/posts/dns-protocol/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】DNS协议</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/dhcp-protocol/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】DHCP协议</h2>
-        </div>
-    </a>
+<a href="/posts/dhcp-protocol/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】DHCP协议</h2>
+</div>
+</a>
 </article>
-
-            
-                
 <article class="">
-    <a href="/posts/cpp-constructor-destructor-calling-order/">
-        
-        
-
-        <div class="article-details">
-            <h2 class="article-title">【一文读懂】C&#43;&#43;构造函数与析构函数的调用顺序</h2>
-        </div>
-    </a>
+<a href="/posts/cpp-constructor-destructor-calling-order/">
+<div class="article-details">
+<h2 class="article-title">【一文读懂】C++构造函数与析构函数的调用顺序</h2>
+</div>
+</a>
 </article>
-
-            
-        </div>
-    </div>
+</div>
+</div>
 </aside>
-
-     
-    
-        
-    
-
-    <footer class="site-footer">
-    <section class="copyright">
-        &copy; 
+<footer class="site-footer">
+<section class="copyright">
+        © 
         
             2018 - 
         
         2026 bitdove. All Rights Reserved.
     </section>
-    
-    <section class="powerby">
-         <br />
-        
-    </section>
+<section class="powerby">
+<br/>
+</section>
 </footer>
-
-
-    
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    
-    <div class="pswp__bg"></div>
-
-    
-    <div class="pswp__scroll-wrap">
-
-        
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                
-                
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
-            </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo="crossorigin="anonymous"
-                defer
-                >
-            </script><script 
-                src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU="crossorigin="anonymous"
-                defer
-                >
-            </script><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css"crossorigin="anonymous"
-            ><link 
-                rel="stylesheet" 
-                href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css"crossorigin="anonymous"
-            >
-
-            </main>
-        </div>
-        <script 
-                src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js"integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z&#43;KMkF24hUW8WePSA9HM="crossorigin="anonymous"
-                
-                >
-            </script><script type="text/javascript" src="/ts/main.js" defer></script>
+<div aria-hidden="true" class="pswp" role="dialog" tabindex="-1">
+<div class="pswp__bg"></div>
+<div class="pswp__scroll-wrap">
+<div class="pswp__container">
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+<div class="pswp__item"></div>
+</div>
+<div class="pswp__ui pswp__ui--hidden">
+<div class="pswp__top-bar">
+<div class="pswp__counter"></div>
+<button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+<button class="pswp__button pswp__button--share" title="Share"></button>
+<button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+<button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+<div class="pswp__preloader">
+<div class="pswp__preloader__icn">
+<div class="pswp__preloader__cut">
+<div class="pswp__preloader__donut"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+<div class="pswp__share-tooltip"></div>
+</div>
+<button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+</button>
+<button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+</button>
+<div class="pswp__caption">
+<div class="pswp__caption__center"></div>
+</div>
+</div>
+</div>
+</div><script crossorigin="anonymous" defer="" integrity="sha256-ePwmChbbvXbsO02lbM3HoHbSHTHFAeChekF1xKJdleo=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js">
+</script><script crossorigin="anonymous" defer="" integrity="sha256-UKkzOn/w1mBxRmLLGrSeyB4e1xbrp4xylgAWb3M42pU=" src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js">
+</script><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css" rel="stylesheet"/><link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css" rel="stylesheet"/>
+</main>
+</div>
+<script crossorigin="anonymous" integrity="sha256-awcR2jno4kI5X0zL8ex0vi2z+KMkF24hUW8WePSA9HM=" src="https://cdn.jsdelivr.net/npm/node-vibrant@3.1.6/dist/vibrant.min.js">
+</script><script defer="" src="/ts/main.js" type="text/javascript"></script>
 <script>
     (function () {
         const customFont = document.createElement('link');
@@ -752,6 +465,5 @@
         document.head.appendChild(customFont);
     }());
 </script>
-
-    </body>
+</body>
 </html>
